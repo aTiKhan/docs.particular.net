@@ -1,11 +1,8 @@
 ---
 title: Transaction Support
-reviewed: 2019-02-07
+reviewed: 2020-12-07
 component: ASBS
 versions: '[1,)'
-tags:
- - Azure
- - Transactions
 ---
 
 

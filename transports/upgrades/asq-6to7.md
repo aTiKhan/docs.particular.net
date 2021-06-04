@@ -10,7 +10,6 @@ redirects:
  - nservicebus/upgrades/asq-6to7
 isUpgradeGuide: true
 upgradeGuideCoreVersions:
- - 5
  - 6
 ---
 
@@ -42,7 +41,7 @@ Setting the configuration values can now be done via API in the following way:
  * [ConnectionString](/transports/azure-storage-queues/configuration.md#configuration-parameters-connectionstring)
  * [BatchSize](/transports/azure-storage-queues/configuration.md#configuration-parameters-batchsize)
  * [MaximumWaitTimeWhenIdle](/transports/azure-storage-queues/configuration.md#configuration-parameters-maximumwaittimewhenidle)
- * [DegreeOfReceiveParallelism](/transports/azure-storage-queues/configuration.md#configuration-parameters-degreeofreceiveparallelism)
+ * [DegreeOfReceiveParallelism](/transports/azure-storage-queues/configuration.md?version=asq_7#configuration-parameters-degreeofreceiveparallelism)
  * [PeekInterval](/transports/azure-storage-queues/configuration.md#configuration-parameters-peekinterval)
  * [MessageInvisibleTime](/transports/azure-storage-queues/configuration.md#configuration-parameters-messageinvisibletime)
 
@@ -60,7 +59,7 @@ snippet: AzureStorageQueuePurgeOnStartup
 
 ### DefaultQueuePerInstance
 
-The `DefaultQueuePerInstance` setting is deprecated. For setting this behavior, refer to the [Data distribution](/nservicebus/azure/data-distribution.md) article.
+The `DefaultQueuePerInstance` setting is deprecated.
 
 
 ### Default value changes
@@ -86,4 +85,4 @@ In version 7, the public API has been reduced. As a result, multiple classes tha
 
 > This class served only internal purposes without providing any extensibility point and as such was removed from the public API. For more information, refer to the documentation.
 
-If code exists that depends on classes that were deprecated with the above message, and it is not clear how to update it, [contact support](https://particular.net/contactus) to get help in resolving that issue. 
+If code exists that depends on classes that were deprecated with the above message, and it is not clear how to update it, [contact support](https://particular.net/contactus) to get help in resolving that issue.

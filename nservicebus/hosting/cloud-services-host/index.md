@@ -2,11 +2,6 @@
 title: Hosting in Azure Cloud Services
 summary: Using Azure Cloud Services to host NServiceBus.
 component: CloudServicesHost
-isLearningPath: true
-tags:
- - Hosting
- - Azure
- - Logging
 redirects:
  - nservicebus/hosting-nservicebus-in-windows-azure-cloud-services
  - nservicebus/azure/hosting-nservicebus-in-windows-azure-cloud-services
@@ -14,7 +9,7 @@ redirects:
 related:
  - samples/azure/shared-host
  - nservicebus/lifecycle
-reviewed: 2018-08-09
+reviewed: 2020-04-26
 ---
 
 include: cloudserviceshost-deprecated-warning

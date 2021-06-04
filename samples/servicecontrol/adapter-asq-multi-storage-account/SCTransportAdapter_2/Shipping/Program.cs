@@ -6,8 +6,11 @@ class Program
 {
     static async Task Main()
     {
-        Console.Title = "Samples.ServiceControl.ASQAdapter.Shipping";
-        var endpointConfiguration = new EndpointConfiguration("Samples.ServiceControl.ASQAdapter.Shipping");
+        var endpointName = "Samples.ServiceControl.ASQAdapter.Shipping";
+
+        Console.Title = endpointName;
+
+        var endpointConfiguration = new EndpointConfiguration("Samples-ServiceControl-ASQAdapter-Shipping");
 
         var transport = endpointConfiguration.UseTransport<AzureStorageQueueTransport>();
         var connectionString = Environment.GetEnvironmentVariable("AzureStorageQueue.ConnectionString.Endpoints");
@@ -17,13 +20,10 @@ class Program
         }
 
         transport.ConnectionString(connectionString);
-        transport.UseAccountAliasesInsteadOfConnectionStrings();
         transport.DefaultAccountAlias("storage_account");
 
         // Required to address https://github.com/Particular/NServiceBus.AzureStorageQueues/issues/308
         transport.AccountRouting().AddAccount("storage_account", connectionString);
-
-        transport.SanitizeQueueNamesWith(s => s.Replace(".", "-"));
 
         endpointConfiguration.UsePersistence<InMemoryPersistence>();
         endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
@@ -58,7 +58,7 @@ class Program
 
         endpointConfiguration.SendFailedMessagesTo("error");
         endpointConfiguration.AuditProcessedMessagesTo("audit");
-        endpointConfiguration.SendHeartbeatTo("Particular.ServiceControl");
+        endpointConfiguration.SendHeartbeatTo("Particular-ServiceControl");
         endpointConfiguration.EnableInstallers();
 
         var endpointInstance = await Endpoint.Start(endpointConfiguration)
@@ -78,7 +78,7 @@ class Program
             {
                 chaos.IsFailing = !chaos.IsFailing;
                 Console.WriteLine($"Failure simulation is now turned {(chaos.IsFailing ? "on" : "off")}");
-                ConsoleHelper.ToggleTitle();
+                ConsoleHelper.ToggleTitle(endpointName);
             }
         }
         await endpointInstance.Stop()

@@ -1,6 +1,6 @@
 NServiceBus is the heart of a distributed system and the Particular Service Platform. It helps create systems that are scalable, reliable, and flexible.
 
-At its core, NServiceBus works by routing _messages_ between _endpoints_. [Messages](/nservicebus/concept-overview.md#message) are plain C# classes that contain meaningful data for the business process that is being modeled.
+At its core, NServiceBus works by routing _messages_ between _endpoints_. [Messages](/nservicebus/concepts/glossary.md#message) are plain C# classes that contain meaningful data for the business process that is being modeled.
 
 ```csharp
 public class ProcessOrder
@@ -9,7 +9,7 @@ public class ProcessOrder
 }
 ```
 
-[Endpoints](/nservicebus/concept-overview.md#endpoint) are logical entities that send and/or receive messages.
+[Endpoints](/nservicebus/concepts/glossary.md#endpoint) are logical entities that send and/or receive messages.
 
 ```csharp
 // Sending endpoint
@@ -35,6 +35,12 @@ NServiceBus offers different ways of ensuring information is not lost due to fai
 
 In other cases, NServiceBus has [built-in recoverability](/nservicebus/recoverability) that can automatically adapt to common failures in a system. For intermittent failures, such as network outages, messages can be retried at regular intervals. For more serious errors, messages are set aside in a separate error queue so that they can be investigated at a later time without impacting the overall performance of the system.
 
+Watch this video for a better picture of how failures can lead to lost data, and how using NServiceBus keeps data safe.
+
+<div style="display:block;width:80%;margin:50px auto;position:relative;height:0;padding-bottom:45%"><iframe src="https://www.youtube.com/embed/_Br9Me4tqPI" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen frameborder="0" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe></div>
+
+NOTE: To see how NServiceBus prevents loss of data, adds failure recovery, and makes systems easier to extend, try the [NServiceBus Quick Start](/tutorials/quickstart/).
+
 ## Scalable
 
 NServiceBus is designed to handle a large number of messages. Endpoints are configured for high performance by default, handling multiple messages in parallel. Depending on the workload, the number of messages handled concurrently can be [increased to improve message throughput](/nservicebus/operations/tuning.md).
@@ -47,17 +53,19 @@ Each endpoint tracks [key performance metrics](/monitoring/metrics/definitions.m
 
 NServiceBus is designed with simplicity in mind. Message handlers don't need additional code to manage logging, exception handling, serialization, transactions, or the specifics of a queueing technology. This allows message handler code to focus on business logic.
 
-Long-running business workflows can be modeled in NServiceBus using [sagas](/nservicebus/sagas/). A saga is a C# class that handles a number of different messages over time, persisting its state between each step in the workflow. NServiceBus makes sure that each saga instance only processes a single message at a time, keeping its internal state consistent. The [NServiceBus sagas: Getting started](/nservicebus/sagas/) tutorial provides more details.
+Long-running business workflows can be modeled in NServiceBus using [sagas](/nservicebus/sagas/). A saga is a C# class that handles a number of different messages over time, persisting its state between each step in the workflow. NServiceBus makes sure that each saga instance only processes a single message at a time, keeping its internal state consistent. The [NServiceBus saga tutorials](/tutorials/nservicebus-sagas/) provide more details.
 
 Message handlers and sagas can be [tested in isolation](/nservicebus/testing/). Simulating an incoming message is as simple as creating a new C# message object and passing it to the appropriate handler or saga. The framework includes a suite of testing tools that capture the behavior of message handlers and sagas under test, allowing assertions to be made about them.
 
 ## Flexible
 
-NServiceBus endpoints can be hosted anywhere code can be executed, such as in a Windows Service, a Docker container, or in the cloud with Azure or AWS. NServiceBus is compiled against .NET Standard 2.0 and endpoints can be run on [a variety of platforms](/nservicebus/upgrades/supported-platforms.md).  
+NServiceBus endpoints can be hosted anywhere code can be executed, such as in a Windows Service, a Docker container, or in the cloud with Azure or AWS. Endpoints can be run on [a variety of platforms](/nservicebus/upgrades/supported-platforms.md).  
 
 NServiceBus works with many different technology stacks, offering choices for [transport](/transports/) and [persistence](/persistence/). Out of the box, defaults are provided for [serialization](/nservicebus/serialization/), [dependency injection](/nservicebus/dependency-injection/), and [logging](/nservicebus/logging/). These defaults can be overridden if a specific technology is required. 
 
-The NServiceBus message processing and dispatching pipeline is modular and extensible. [Message mutators](/nservicebus/pipeline/message-mutators.md) inject code into the pipeline to modify messages as they are being sent or received. More complex pipeline manipulation can be done with [behaviors](/nservicebus/pipeline/manipulate-with-behaviors.md). NServiceBus extensions can be packaged up as [features](/nservicebus/pipeline/features.md), which can add behaviors to the pipeline and create tasks that get run when an endpoint starts and stops. Many of the existing capabilities of NServiceBus are implemented as behaviors and features. 
+The NServiceBus message processing and dispatching pipeline is modular and extensible. [Message mutators](/nservicebus/pipeline/message-mutators.md) inject code into the pipeline to modify messages as they are being sent or received. More complex pipeline manipulation can be done with [behaviors](/nservicebus/pipeline/manipulate-with-behaviors.md). NServiceBus extensions can be packaged up as [features](/nservicebus/pipeline/features.md), which can add behaviors to the pipeline and create tasks that get run when an endpoint starts and stops. Many of the existing capabilities of NServiceBus are implemented as behaviors and features.
+
+
 
 ## Particular Service Platform
 

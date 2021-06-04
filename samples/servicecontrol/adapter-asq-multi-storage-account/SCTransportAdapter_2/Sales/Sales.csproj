@@ -1,14 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFrameworks>net5.0;netcoreapp3.1;netcoreapp2.1;net48</TargetFrameworks>
     <OutputType>Exe</OutputType>
-    <LangVersion>7.1</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Shared\Shared.csproj" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.*" />
-    <PackageReference Include="NServiceBus.Azure.Transports.WindowsAzureStorageQueues" Version="8.*" />
+    <PackageReference Include="NServiceBus.Transport.AzureStorageQueues" Version="9.*" />
     <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="2.*" />
-    <PackageReference Include="WindowsAzure.Storage " Version="9.*" />
+  </ItemGroup>
+  <ItemGroup Label="Force a later version of a transitive dependency">
+    <PackageReference Include="Newtonsoft.Json" Version="13.*" />
+    <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
   </ItemGroup>
 </Project>

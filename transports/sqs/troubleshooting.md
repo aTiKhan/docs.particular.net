@@ -2,12 +2,10 @@
 title: Troubleshooting
 summary: Tips on what to do when the SQS transport is not behaving as expected
 component: SQS
-reviewed: 2019-02-22
+reviewed: 2021-01-04
 related:
  - transports/sqs
  - samples/sqs/simple
-tags:
-- AWS
 ---
 
 ## Viewing the message ID on the SQS message
@@ -27,7 +25,7 @@ Amazon.SQS.AmazonSQSException: Request is throttled. ---> Amazon.Runtime.Interna
 
 Throttling is more likely to happen when sending a large number messages concurrently. For example, using a list of tasks when using async/await.
 
-To avoid Amazon throttling errors, limit the maximum number of concurrent sends. For example, allow only a small amount of messages to be sent concurrently as outlined in the [sending large amount of messages](/nservicebus/handlers/async-handlers.md#concurrency-large-amount-of-concurrent-message-operations) guidelines or send messages sequentially.
+To avoid Amazon throttling errors, it is possible to [tune the client retry behavior](https://docs.aws.amazon.com/sdk-for-net/latest/developer-guide/retries-timeouts.html) or limit the maximum number of concurrent sends. For example, allow only a small amount of messages to be sent concurrently as outlined in the [sending large amount of messages](/nservicebus/handlers/async-handlers.md#concurrency-large-amount-of-concurrent-message-operations) guidelines or send messages sequentially.
 
 Throttling can happen during any send or receive operation and can happen during the following scenarios:
 
@@ -48,12 +46,15 @@ A throttling error could result in partial message delivery while the incoming m
 
 Throttling errors are similar to any other technical error that can occur.
 
-
 ### Sending outside of a handler
 
 As message sending does not happen within a handler context any failures during sending will not rely or be covered by the [recoverability feature](/nservicebus/recoverability/) mechanism. Any retry logic must be manually implemented.
 
 When throttling occurs with no custom error logic implemented, one or more messages might not have been transmitted to Amazon SQS. The custom retry logic could either retry all messages to be sent again, including already succeeded messages or only retry individual messages that failed.
+
+## Deduplication and outbox
+
+Because the throttling errors are common when using SQS, it is very important to make sure that the whole message processing logic is idempotent (including both updating the business state and generating outgoing messages). The simplest way to achieve this is to use the [Outbox](/nservicebus/outbox/) feature.
 
 ## On endpoint shutdown messages might be only visible after the visibility timeout has expired
 

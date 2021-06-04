@@ -39,7 +39,6 @@ include: supported-versions-nservicebus
 
 For other NServiceBus packages, refer to [the list of supported versions of all packages](supported-versions.md).
 
-
 ## Extended support
 
 Extended support is offered on major versions of NServiceBus for a period of 2 years after the expiration of mainstream support, for an additional fee. Because major versions of NServiceBus are generally supported for at least 3 years (or longer, depending upon the cadence of NServiceBus major releases), extended support affords the peace of mind that a major version of NServiceBus will be supported for at least 5 years. To qualify for extended support, a valid support agreement with Particular Software is required.
@@ -55,31 +54,28 @@ The following table describes the extended support status for all major versions
 |Version|Released|Current Support|Mainstream Support Expires|Extended Support Expires|
 |:-:|:-:|:-:|:-:|:-:|
 |NServiceBus 7|2018-03-30|Mainstream|Current Version|Current Version|
-|NServiceBus 6|2016-10-11|Mainstream|2020-05-29|2022-05-29|
-|NServiceBus 5|2014-09-29|Extended|2018-10-11|2020-10-12|
+|NServiceBus 6|2016-10-11|Extended|2020-05-29|2022-05-29|
+|NServiceBus 5|2014-09-29|Unsupported|2018-10-11|2020-10-12|
 |NServiceBus 4|2013-07-11|Unsupported|2016-09-29|2018-09-29|
 |NServiceBus 3|2012-03-08|Unsupported|2015-07-11|2017-07-11|
-
 
 ## Compatibility guarantees
 
 All new features are backward compatible by default. In rare cases when this is not possible, the new feature will be disabled by default and require an explicit opt-in in order to be enabled. These features are covered in the [upgrade guide](/nservicebus/upgrades/) for the new target version.
 
-
 ## Upgrading
 
 NServiceBus versions are wire-compatible; endpoints using different versions of NServiceBus can exchange messages with each other.
 
-However, some features might require data migration (e.g. converting from an old to a new format), and the conversion might be performed in the background after upgrade.
+However, some features might require data migration (e.g. converting from an old to a new format). The migration might be performed as a one-off automated action done through [installers](/nservicebus/operations/installers.md) or in the background by a running endpoint. If the conversion cannot be automated, the applicable upgrade guide will contain a description of the manual process (e.g. what script to run).
 
-Therefore the recommended approach is to upgrade *one* major version at a time, including a full regression test of the system and deployment to production after each major version upgrade.
-
+Therefore the recommended approach is to upgrade *one* major version at a time, including a full regression test of the system and deployment to production after each major version upgrade. For example, if a system is using a 4.x.x version and the intention is to upgrade to the latest 6.x.x version, it is recommended to first upgrade to the latest 5.x.x version, following the relevant upgrade guides and deprecation messages. After the system is confirmed to work with the latest 5.x.x version, it may be upgraded to the latest 6.x.x version using the same process.
 
 ## FAQ
 
 **Does this policy apply to the [ServiceControl](/servicecontrol/), [ServiceInsight](/serviceinsight/), [ServicePulse](/servicepulse/) applications, or [previews](/previews/)?**
 
-No, the policy applies only to the supported NServiceBus packages listed on the [NServiceBus Packages Supported Versions](supported-versions.md) page. The ServiceControl support policy is outlined [here](/servicecontrol/upgrades/support-policy.md). See the [support policy for previews](/previews/support-policy.md) for more information.
+No, the policy applies only to the supported NServiceBus packages listed on the [NServiceBus Packages Supported Versions](supported-versions.md) page. ServiceControl is governed by the [ServiceControl support policy](/servicecontrol/upgrades/support-policy.md). Previews are governed by the [support policy for previews](/previews/support-policy.md).
 
 **Which version of NServiceBus should be used to start a new project?**
 
@@ -94,3 +90,5 @@ In accordance with the [release policy](release-policy.md), important fixes are 
 Component packages, such as [transports](/transports/), [persisters](/persistence/), [dependency injection](/nservicebus/dependency-injection/), or [serializers](/nservicebus/serialization/), have much less upgrade risk than the NServiceBus package. Therefore, the commitment to backporting fixes affecting the NServiceBus package is higher than for the many component packages.
 
 The support dates for NServiceBus and each component package can be found on the [supported versions](supported-versions.md) page.
+
+<script type="text/javascript" src="supported-versions.js"></script>

@@ -14,6 +14,12 @@ upgradeGuideCoreVersions:
 
 Endpoints using the Azure Service Bus transport can be run side-by-side with endpoints using the legacy Azure Service Bus transport as long as the [backward compatibility](/transports/azure-service-bus/compatibility.md) requirements are met.
 
+## Infrastructure differences
+
+The Azure Service Bus transport uses ports 5671, 5672, and 443 to communicate with Azure servers. Configure firewall rules to allow outbound traffic through these ports.
+
+The legacy Azure Service Bus transport uses ports 9350 to 9354 to communicate with Azure servers. These ports are not used by the latest (non-legacy) Azure Service Bus transport. Any previously configured firewall rules to allow outbound traffic through these ports can be decommissioned.
+
 ## API Differences
 
 There are differences between the API for the legacy Azure Service Bus and the Azure Service Bus transports.
@@ -71,4 +77,6 @@ The configuration options for controlling connectivity as well as the physical a
   * `NamespacePartitioning`
   * `Composition`
 
-NOTE: some of the legacy transport features, such as namespace partitioning for high availability, were removed in favor of the native broker features. Customers are advised to evaluate the Service Bus Premium tier to take advantage of those native features.
+The [message lock renewal](/transports/azure-service-bus/legacy/message-lock-renewal.md) feature was removed. A custom pipeline behavior may be used instead. See the message lock renewal [sample](/samples/azure-service-bus-netstandard/lock-renewal) for more details.
+
+NOTE: Some legacy transport features, such as namespace partitioning for high availability, were removed in favor of the native broker features. Customers are advised to evaluate the Service Bus Premium tier to take advantage of those native features.

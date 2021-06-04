@@ -2,11 +2,9 @@
 title: Migrating from NServiceBus.MongoDB
 component: mongodb
 versions: '[1,)'
-tags:
- - Persistence
 related:
  - persistence/mongodb/migrating-from-tekmaven
-reviewed: 2019-05-29
+reviewed: 2021-05-11
 ---
 
 This package was designed to be fully compatible with the community [`NServiceBus.MongoDB`](https://github.com/sbmako/NServiceBus.MongoDB) package with some minor configuration.
@@ -60,7 +58,7 @@ Subscriptions are recreated by restarting the subscribing endpoints. Alternative
 
 ## Migrating subscriptions
 
-In the sbmako implementation subscriptions are stored in the collection named `Subscription`. Each document maps to an event type containing a set of subscribers using the type `Subscriber` from the NServiceBus package.
+In the [Carlos Sandoval](https://github.com/sbmako) implementation subscriptions are stored in the collection named `Subscription`. Each document maps to an event type containing a set of subscribers using the type `Subscriber` from the NServiceBus package.
 
 The following migration script iterates through the documents and insert each subscriber value as a new document.
 

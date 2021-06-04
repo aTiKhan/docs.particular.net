@@ -1,9 +1,7 @@
 ---
 title: Disconnect Workers
 summary: How a worker can be disconnected from its distributor using PowerShell cmdlets
-reviewed: 2019-04-02
-tags:
- - Scalability
+reviewed: 2021-03-02
 redirects:
  - nservicebus/disconnect-workers-from-running-distributor
  - nservicebus/scalability-and-ha/disconnect-workers
@@ -11,6 +9,10 @@ redirects:
 ---
 
 The Distributor starts sending messages to a Worker once it is aware of it. A Worker registers itself with a Distributor by sending a message containing a `SessionID` that identifies the current running Worker and the number of messages it can handle concurrently.
+
+## Prerequisites
+
+Prior to installation ensure that PowerShell 2 or higher is installed. NServiceBus PowerShell modules are compatible with PowerShell 5. Versions of PowerShell later than 5 (including PowerShell Core) are not supported and might not work as expected.
 
 ## Disconnecting a Worker
 

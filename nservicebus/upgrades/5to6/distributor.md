@@ -1,6 +1,6 @@
 ---
 title: Migrating the distributor to use sender-side distribution
-reviewed: 2018-08-09
+reviewed: 2020-04-30
 related:
  - samples/scaleout/distributor-upgrade
 redirects:
@@ -153,9 +153,9 @@ After:
 Remove the distributor from the publisher's subscription storages by removing all subscriptions related to the distributor's address. See [NHibernate Persistence Scripting](/persistence/nhibernate/scripting.md) on how to remove subscriptions.
 
 
-### Removing subscriptions from [Azure Storage persistence](/persistence/azure-storage)
+### Removing subscriptions from [Azure Storage persistence](/persistence/azure-table)
 
-Remove the distributor from the publisher's subscription storages by removing all subscriptions related to the distributor's address. See [Azure Storage Persistence Scripting](/persistence/azure-storage/scripting.md) on how to remove subscriptions.
+Remove the distributor from the publisher's subscription storages by removing all subscriptions related to the distributor's address. See [Azure Storage Persistence Scripting](/persistence/azure-table/scripting.md) on how to remove subscriptions.
 
 
 ## Use of the distributor in mixed version environments

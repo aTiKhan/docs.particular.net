@@ -2,10 +2,7 @@
 title: Azure Cloud Services Host FAQ
 summary: Frequently asked questions related to the Azure Cloud Services host.
 component: CloudServicesHost
-tags:
-- Azure
-- Hosting
-reviewed: 2018-08-16
+reviewed: 2020-05-05
 ---
 
 include: cloudserviceshost-deprecated-warning
@@ -42,4 +39,4 @@ snippet: EndpointNameInCodeForAzureHost
 
 The cloud services role entry point takes care of updating these values, used for identification of the endpoint instance in ServiceControl, automatically, i.e. the `$.diagnostics.hostdisplayname` defaults to the role name and the `$.diagnostics.hostid` contains the instance ID.
 
-In web roles these values must be set manually, refer to [Override Host Id](/nservicebus/hosting/override-hostid.md) for more information on this topic.
+In web roles these values must be set manually, refer to [Override Host ID](/nservicebus/hosting/override-hostid.md) for more information on this topic.

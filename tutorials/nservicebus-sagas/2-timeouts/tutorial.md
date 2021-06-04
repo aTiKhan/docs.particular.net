@@ -3,6 +3,11 @@ title: "NServiceBus sagas: Timeouts"
 reviewed: 2019-10-30
 isLearningPath: true
 summary: "Implement the buyer's remorse pattern using NServiceBus, a common business case to cancel orders within a certain amount of time after the purchase."
+previewImage: feature-image.png
+extensions:
+- !!tutorial
+  nextText: "Next Lesson: Third-party integration"
+  nextUrl: tutorials/nservicebus-sagas/3-integration
 ---
 
 Being able to model the concept of time as part of a long-running process is incredibly powerful. Batch jobs are a feeble attempt at this but fail at handling things in real-time and makes every instance of a long-running process dependent on every other instance, but what if the batch job fails?
@@ -28,9 +33,9 @@ In this tutorial, we'll model the delay period using a saga timeout. We'll chang
 {{NOTE:
 **What if I didn't do the previous tutorial?**
 
-No problem! You can get started learning sagas with the completed solution from the [previous lesson](/tutorials/nservicebus-sagas/1-getting-started/):
+No problem! You can get started learning sagas with the completed solution from the [previous lesson](/tutorials/nservicebus-sagas/1-saga-basics/):
 
-downloadbutton(Download Previous Solution, /tutorials/nservicebus-sagas/1-getting-started)
+downloadbutton(Download Previous Solution, /tutorials/nservicebus-sagas/1-saga-basics)
 
 The solution contains 5 projects. **ClientUI**, **Sales**, **Billing**, and **Shipping** define endpoints that communicate with each other using messages. The **ClientUI** endpoint mimics a web application and is an entry point to the system. **Sales**, **Billing**, and **Shipping** contain business logic related to processing, fulfilling, and shipping orders. Each endpoint references the **Messages** assembly, which contains the classes that define the messages exchanged in our system. To see how to start building this system from scratch, check out the [NServiceBus step-by-step tutorial](/tutorials/nservicebus-step-by-step/).
 
@@ -89,7 +94,7 @@ Handling a timeout method is similar to how other handlers work. But instead of 
 
 snippet: BuyersRemorseTimeoutHandling
 
-Most of the code in the `Timeout` method is business logic; stuff that is supposed to happen when an order is placed, like logging and storing data. When we're done, we publish an `OrderPlaced` event to let any other handlers know that something important has happened. Remember, our `ShippingPolicy` saga still needs to know that an order has been placed so it can be shipped.
+The code in the `Timeout` method is business logic; stuff that is supposed to happen when an order is placed. When we're done, we publish an `OrderPlaced` event to let other handlers know that something important has happened. Remember, our `ShippingPolicy` saga still needs to know that an order has been placed so it can be shipped.
 
 The last line of the method is a call to the `MarkAsComplete` method. This is important because it tells the saga instance that it's finished. Any further messages to this instance will be ignored because there is no further work to be done for the saga. We'll return to this concept in the next section when handling cancellation.
 

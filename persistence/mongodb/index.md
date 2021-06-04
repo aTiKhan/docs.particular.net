@@ -2,8 +2,6 @@
 title: MongoDB Persistence
 component: mongodb
 versions: '[2,)'
-tags:
-- Persistence
 related:
 - samples/mongodb
 redirects:
@@ -16,11 +14,17 @@ Uses the [MongoDB document database](https://www.mongodb.com/) for storage.
 
 NOTE: NServiceBus.Storage.MongoDB supports MongoDB server versions 3.6 and higher
 
-## Supported persistence types
+## Persistence at a glance
 
-* [Subscriptions](/nservicebus/messaging/publish-subscribe/)
-* [Sagas](/nservicebus/sagas/)
-* [Outbox](/nservicebus/outbox/)
+For a description of each feature, see the [persistence at a glance legend](/persistence/#persistence-at-a-glance).
+
+|Feature                    |   |
+|:---                       |---
+|Supported storage types    |Sagas, Outbox, Subscriptions
+|Transactions               |Enabled and required by default
+|Concurrency control        |Pessimistic concurrency only
+|Scripted deployment        |Not supported
+|Installers                 |None. Documents are created in database at runtime as needed.
 
 
 ## Usage
@@ -43,7 +47,7 @@ snippet: MongoDBDatabaseName
 
 ## Transactions
 
-MongoDB [transactions](https://docs.mongodb.com/manual/core/transactions/) are enabled and required by default. This allows the persister to update multiple saga instances and commit them atomically during message processing.
+MongoDB [transactions](https://docs.mongodb.com/manual/core/transactions/) are enabled and required by default. This allows the persister to use pessimistic locking and to update multiple saga instances and commit them atomically during message processing.
 
 WARN: MongoDB transactions require a replica set or sharded cluster. Refer to the [MongoDB transaction documentation](https://docs.mongodb.com/manual/core/transactions/#transactions-and-atomicity) for more information about supported configurations and required MongoDB server versions.
 
@@ -54,6 +58,8 @@ NOTE: The MongoDB persister supports transactions on shared clusters starting fr
 The following configuration API is available for compatibility with MongoDB server configurations which don't support transactions:
 
 snippet: MongoDBDisableTransactions
+
+Note that this disables the ability to use pessimistic locking for sagas which might result in higher contention in the database.
 
 ### Shared transactions
 

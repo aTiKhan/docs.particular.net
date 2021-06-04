@@ -1,9 +1,7 @@
 ---
 title: Performance Tuning
 component: ASB
-tags:
- - Azure
-reviewed: 2019-04-18
+reviewed: 2021-04-06
 related:
  - nservicebus/operations
 redirects:
@@ -14,4 +12,3 @@ redirects:
 include: legacy-asb-warning
 
 partial: body
-

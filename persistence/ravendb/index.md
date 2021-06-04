@@ -2,8 +2,6 @@
 title: RavenDB Persistence
 component: raven
 versions: '[2,)'
-tags:
- - Persistence
 related:
  - samples/ravendb
  - samples/multi-tenant/ravendb
@@ -16,8 +14,14 @@ redirects:
 
 include: dtc-warning
 
+include: cluster-configuration-warning
+
 Uses the [RavenDB document database](https://ravendb.net/) for storage.
 
+
+## Persistence at a glance
+
+partial: glance
 
 ## RavenDB versions
 
@@ -25,7 +29,7 @@ Specific versions of RavenDB Persistence are tied to a major version of NService
 
 | NServiceBus | RavenDB Persistence | RavenDB Client | Platform    |
 |:-----------:|:-------------------:|:--------------:|:-----------:|
-|     7.x     |        6.0.x        |       4.2      | .NET 4.7.2 / .NET Core 2.1  |
+|     7.x     |        6.x          |       4.2      | .NET 4.7.2 / .NET Core 2.1  |
 |     7.x     |        5.0.x        |       3.5      | .NET 4.5.2 / .NET Core 2.0  |
 |     6.x     |        4.2.x        |       3.5      | .NET 4.5.2  |
 |     6.x     |        4.0.x        |       3.0      | .NET 4.5.2  |
@@ -79,3 +83,8 @@ partial: subscription-versioning
 ## Viewing the data
 
 Open a web browser and type the URL of the RavenDB server. This opens the [RavenDB Studio](https://ravendb.net/docs/search/latest/csharp?searchTerm=management-studio).
+
+
+## Migrating timeouts
+
+Timeouts can be migrated to the native-delay delivery implementation with the [migration tool](/nservicebus/tools/migrate-to-native-delivery.md).

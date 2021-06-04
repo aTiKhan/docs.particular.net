@@ -1,16 +1,16 @@
 ---
 title: Ninject
 summary: Configure NServiceBus to use Ninject for dependency injection.
-reviewed: 2018-12-05
+reviewed: 2020-07-28
 component: Ninject
-tags:
- - Dependency Injection
 related:
  - samples/dependency-injection/ninject
  - nservicebus/dependency-injection/child-lifetime
 redirects:
  - nservicebus/containers/ninject
 ---
+
+include: container-deprecation-notice
 
 NServiceBus can be configured to use [Ninject](http://www.ninject.org/) for dependency injection.
 
@@ -41,6 +41,10 @@ snippet: NinjectUnitOfWork
 Services using `InUnitOfWorkScope()` can only be injected into code which is processing messages. To inject the service somewhere else (e.g. because of an user interaction) define conditional bindings:
 
 snippet: NinjectConditionalBindings
+
+Funcs can only be injected when using the [ContextPreservation Ninject extension](https://github.com/ninject/Ninject.Extensions.ContextPreservation/).
+
+snippet: NinjectContextPreservationFuncBinding
 
 ### Multi hosting
 

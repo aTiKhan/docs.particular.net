@@ -3,9 +3,6 @@ title: Simple SQL Persistence Usage
 summary: Using SQL Persistence to store sagas and timeouts.
 reviewed: 2020-03-26
 component: SqlPersistence
-tags:
- - Saga
- - Timeout
 related:
  - nservicebus/sagas
 ---
@@ -80,12 +77,20 @@ snippet: OracleConfig
 partial: postgresql
 
 
-## Order Saga Data
+## Order saga data
 
 snippet: sagadata
 
-
-## Order Saga
+## Order saga
 
 snippet: thesaga
+
+## Querying the saga data
+
+SQL persistence uses the [Newtonsoft.Json](https://www.nuget.org/packages/Newtonsoft.Json/) package to serialize saga data and metadata.
+
+The saga data can be queried using the [JSON querying capababilities of SQL Server](https://docs.microsoft.com/en-us/sql/relational-databases/json/json-data-sql-server).
+It is stored inside the `Data` column and can be queried as shown here:
+
+snippet: SqlServerSagaJsonQuery
 

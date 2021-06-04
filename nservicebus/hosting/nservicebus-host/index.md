@@ -1,9 +1,6 @@
 ---
 title: NServiceBus Host
 summary: Avoid writing repeat configuration code, host the endpoints in a Windows Service, and change technologies without code.
-tags:
- - Hosting
- - Logging
 redirects:
  - nservicebus/the-nservicebus-host
 related:
@@ -11,7 +8,7 @@ related:
  - nservicebus/operations/installers
  - nservicebus/lifecycle
 component: Host
-reviewed: 2019-01-27
+reviewed: 2020-12-01
 ---
 
 include: host-deprecated-warning

@@ -3,8 +3,6 @@ title: Hosting
 summary: Describes the various approaches to endpoint hosting
 component: Core
 reviewed: 2020-01-03
-tags:
-- Hosting
 redirects:
 - nservicebus/hosting/self-hosting
 - nservicebus/hosting/self-hosting-v4.x
@@ -14,6 +12,11 @@ redirects:
 At its core NServiceBus is a library; as such it can be hosted in any .NET process.
 
 There are several approaches to hosting.
+
+## Microsoft Generic Host
+
+The [Microsoft Generic Host](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host) is the most common way to host NServiceBus on .NET Core. NServiceBus can be integrated with the generic host using the [NServiceBus.Extensions.Hosting package](/nservicebus/hosting/extensions-hosting.md).
+
 
 ## Self-hosting
 
@@ -26,7 +29,7 @@ There are several approaches to hosting.
  * [Endpoint Lifecycle](/nservicebus/lifecycle/)
  * [Critical Error handling](critical-errors.md)
 
-Note: Override the default critical error callback when self-hosting NServiceBus. By default NServiceBus will stop the endpoint instance without exiting the process. Refer to the [Critical Errors](/nservicebus/hosting/critical-errors.md) article for more information.
+Note: Override the default critical error callback when self-hosting NServiceBus. Refer to the [Critical Errors](/nservicebus/hosting/critical-errors.md) article for more information.
 
 When self-hosting, the user is responsible for creating and starting the endpoint instance:
 
@@ -44,27 +47,22 @@ partial: dispose
 A [Windows Service](https://docs.microsoft.com/en-us/dotnet/framework/windows-services/introduction-to-windows-service-applications) is the most common way to host NServiceBus in Windows.
 
 Related:
- * [Generic Host as Windows Service](/samples/hosting/generic-host)
+ * [Generic host as Windows Service](/samples/hosting/generic-host)
  * [NServiceBus Windows Service template](/nservicebus/dotnet-templates.md#nservicebus-windows-service)
- * [Windows Service Installation](windows-service.md)
- * [Endpoint Configuration Choices](/samples/endpoint-configuration/)
+ * [Windows Service installation](windows-service.md)
+ * [Endpoint configuration choices](/samples/endpoint-configuration/)
 
-### Generic Host hosting
 
-The [Generic Host](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host) is the most common way to host NServiceBus on .NET Core.
-
-Related:
- * [Generic Host](/samples/hosting/generic-host)
 
 ### Docker container hosting
 
 An endpoint can be hosted inside a [Docker](https://www.docker.com/) container.
 
 Related:
- * [Docker Container Host](/nservicebus/hosting/docker-host/)
- * [NServiceBus Docker Container template](/nservicebus/dotnet-templates.md#nservicebus-docker-container)
+ * [Docker container host](/nservicebus/hosting/docker-host/)
+ * [NServiceBus Docker container template](/nservicebus/dotnet-templates.md#nservicebus-docker-container)
  * [Hosting endpoints in Docker Linux containers](/samples/hosting/docker/)
- * [Generic Host](/samples/hosting/generic-host)
+ * [Generic host](/samples/hosting/generic-host)
 
 ### Send-only hosting
 
@@ -87,6 +85,9 @@ NServiceBus can be hosted in a WebJob. See [Self-Hosting in Azure WebJobs](/samp
 
 [Service Fabric](https://docs.microsoft.com/en-us/azure/service-fabric/) can be used to host NServiceBus endpoints in several ways. See [Service Fabric Hosting](/nservicebus/hosting/service-fabric-hosting).
 
+### Serverless hosting
+
+NServiceBus can be hosted in several serverless environments such as [Azure Functions](/nservicebus/hosting/azure-functions/service-bus.md) and [AWS Lambda](/previews/aws-lambda-simple-queue-service.md).
 
 ### Multi-hosting
 
@@ -96,19 +97,13 @@ It is safe for multiple endpoints to share the same AppDomain or use multiple Ap
 
 Related:
 
- * [Multi-Hosting Sample](/samples/hosting/multi-hosting/).
+ * [Multi-Hosting in the generic host](/samples/hosting/generic-multi-hosting/).
 
+partial: reusing-endpointconfig
 
 ### Accessing the bus
 
 Most usages of the bus will occur where the NServiceBus APIs are used, for example [handlers](/nservicebus/handlers/) and [sagas](/nservicebus/sagas/). However, there are other scenarios that may require an alternate approach where the user needs to directly access the bus from outside of the framework.
-
-
-#### Using dependency injection
-
-NServiceBus supports [dependency injection](/nservicebus/dependency-injection/). At startup, the instance of a bus session will be injected into the configured dependency injection and can be access via that instance.
-
-partial: injecting
 
 
 #### Static variable
@@ -127,25 +122,6 @@ snippet: Hosting-Static
 
 A "Custom host" is a process or library that wraps the NServiceBus library to take partial control of configuration, startup and shutdown. This host exposes extension points for common activities and uses conventions and/or sensible defaults for many other configuration options.
 
-
-### NServiceBus host
-
-The [NServiceBus host](/nservicebus/hosting/nservicebus-host/) takes a more opinionated approach to hosting. It allows the execution as both a Windows service and a console application (for development). It also adds the concepts of [profiles](/nservicebus/hosting/nservicebus-host/profiles.md) and [custom installation](/nservicebus/hosting/nservicebus-host/installation.md).
-
-Related:
-
- * [NServiceBus Host Sample](/samples/hosting/nservicebus-host/)
-
-
-### Hosting in Azure
-
-There are multiple ways to host in Azure. Depending on the requirements, self-hosting may be an option or a custom Azure host may be required. See [Hosting in Azure Cloud Services](/nservicebus/hosting/cloud-services-host/) for more information.
-
-Related:
-
- * [Shared Hosting in Azure Cloud Services Sample](/samples/azure/shared-host/)
- * [Self-Hosting in Azure WebJobs](/samples/azure/webjob-host/)
- 
 
 ## ILMerging NServiceBus assemblies
 

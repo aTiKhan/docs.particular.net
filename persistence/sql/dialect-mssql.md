@@ -52,6 +52,6 @@ When an endpoint uses SQL Persistence combined with the SQL Server Transport wit
 partial: Connection
 
 
+## SQL Always Encrypted
 
-
-
+partial: alwaysencrypted

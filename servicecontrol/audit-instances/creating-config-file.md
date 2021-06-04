@@ -30,6 +30,7 @@ The port to bind the embedded HTTP server.
 
 Type: int
 
+Default: `44444`
 
 #### ServiceControl.Audit/DatabaseMaintenancePort
 
@@ -143,6 +144,14 @@ Valid range for this setting is from 1 hour to 364 days.
 ## Performance tuning
 
 
+#### ServiceControl.Audit/MaximumConcurrencyLevel
+
+This setting controls how many messages can be processed concurrently (in parallel) by ServiceControl. The default value is 32.
+
+In some cases, the ingestion rate can be too high and the underlying database cannot keep up with indexing the new messages. In this case, consider lowering the maximum concurrency level to a value that still allows a suitable ingestion rate while easing the pressure on the database.
+
+Warning: The maximum concurrency level should be incremented only if there are no verified bottlenecks in CPU, RAM, network I/O, storage I/O, and storage index lag.
+
 #### ServiceControl.Audit/MaxBodySizeToStore
 
 This setting specifies the upper limit on body size to be configured.
@@ -159,6 +168,20 @@ The maximum number of concurrent connections allowed by ServiceControl. When wor
 Type: string
 
 Default: `100`
+
+
+#### ServiceControl.Audit/MaximumConcurrencyLevel
+
+The maximum number of messages that can be concurrently pulled from the message transport. Higher numbers can result in faster audit message ingestion, but also consume more server resources, and can increase costs in the case of cloud transports that have associated per-operation costs.
+
+ServiceControl version 4.12.0 introduces batch ingestion, which allows for multiple audit messsages (up to the maximum concurrency level) to be persisted to the database in a batch. With this change, the default was changed from `10` to `32`. Cloud transports with higher latency can benefit from higher concurrency values, but costs can increase as well. Local transports using fast local SSD drives and low latency do not benefit as much.
+
+Type: int
+
+Default:
+
+* In ServiceControl version 4.12 and above: `32`
+* In ServiceControl version 4.11 and below: `10`
 
 
 ## Transport

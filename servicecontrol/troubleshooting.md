@@ -1,7 +1,7 @@
 ---
 title: Troubleshooting
 summary: Troubleshooting ServiceControl installation and common issues
-reviewed: 2018-10-10
+reviewed: 2020-06-26
 ---
 
 ### Check the configuration via ServiceControl Management
@@ -72,3 +72,104 @@ If ServiceControl fails to start and the logs contain a `Microsoft.Isam.Esent.In
  1. If having issues remotely connecting to ServiceControl. Verify that firewall settings do not block access to the ServiceControl port specified in the URL.
 
 NOTE: Before changing firewall setting to expose ServiceControl read [Securing ServiceControl](securing-servicecontrol.md).
+
+### Method not found: 'Void System.Net.Http.Formatting.BaseJsonMediaTypeFormatter.set_SerializerSettings(Newtonsoft.Json.JsonSerializerSettings)'
+
+If the following exception occurs at startup, this is likely because there are one or more versions of `Newtonsoft.Json` registered in the Global Assembly Cache (GAC).
+
+```txt
+Service cannot be started. System.MissingMethodException: Method not found: 'Void System.Net.Http.Formatting.BaseJsonMediaTypeFormatter.set_SerializerSettings(Newtonsoft.Json.JsonSerializerSettings)'.
+```
+
+This problem can be resolved by removing `Newtonsoft.Json` entries from the GAC. It can be done with the [gacutil command](https://docs.microsoft.com/en-us/dotnet/framework/tools/gacutil-exe-gac-tool) in an elevated (administrator) console:
+
+```cmd
+gacutil /u Newtonsoft.Json
+```
+
+It may be required to first remove all `HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Installer\Assemblies\Global Newtonsoft.Json` keys from the registry before using `gacutil /u Newtonsoft.Json`.
+
+## Resolve messages that cannot be retried 
+
+If certain messages are not scheduled for retry and the logs show the following message then the database could be in an inconsistent state:
+
+```txt
+2020-10-16 13:31:58.9863|190|Info|ServiceControl.Recoverability.RetryProcessor|Retry batch RetryBatches/1c33af76-8177-494d-ae9a-af060cefae02 cancelled as all matching unresolved messages are already marked for retry as part of another batch.
+2020-10-16 13:31:59.2826|173|Info|ServiceControl.Recoverability.InMemoryRetry|Retry operation bf05499a-9261-41ec-9b49-da40e22a6f20 completed. 1 messages skipped, 0 forwarded. Total 1.
+```
+
+The internal *FailedMessageRetries* collection must be purged in order to restore retries for such messages.
+
+1. Upgrade to the [latest ServiceControl version](https://github.com/particular/servicecontrol/releases)
+1. Ensure that currently there are no retry operations active
+1. Start the instance in Maintenance Mode
+1. Open the embedded RavenDB Management Studio
+1. Select the "FailedMessageRetries" collection in the left tree
+1. Delete all documents in the collection
+1. Stop maintenance mode
+
+## SmartScreen blocks the installer
+
+The installer is [code signed](https://en.wikipedia.org/wiki/Code_signing), but [SmartScreen](https://en.wikipedia.org/wiki/Microsoft_SmartScreen) (called Windows SmartScreen, Windows Defender SmartScreen and SmartScreen Filter in different places) may classify the code signing certificate as "untrusted" and block the installer from running until permission is granted by the user.
+
+Although the installer is code signed correctly with a certificate owned by "NServiceBus Ltd", SmartScreen will block it from running until Microsoft has built enough "trust" in the certificate. One of the main inputs to building that trust is when users grant permission to run the installer. To grant permission to run the installer, click "Run Anyway". This will no longer be required when Microsoft decides to trust the certificate.
+
+When building ServiceControl, all build artifacts are virus scanned to ensure no viruses or malware are shipped with the installer packages.
+
+## Stale indexes
+
+The database technology used for ServiceControl is based on asynchronous index updates. Indexes are not updated immediately, but very soon after data updates. A healthy system has indexes updated in milliseconds or up to several seconds under load. When indexes get very stale, this means that indexes lag behind for a long duration and can affect data presented and started tasks.
+
+Systems are affected by severe index lag when the following custom check message is presented:
+
+> At least one index significantly stale. Please run maintenance mode if this custom check persists to ensure index(es) can recover. See log file in `{LogPath}` for more details.
+
+After launching a ServiceControl instance in maintenance mode, message ingestion stops but the database engine still runs and messages will continue to queue. This ensures that any tasks related to index rebuilding or index scanning can run without interruption. This is useful when the storage isn't fast enough to do both message ingestion and index operations.
+
+Consider upgrading the storage if these errors persists.
+
+Contact [Particular support](https://particular.net/support) for assistance.
+
+## Index errors
+
+Index issues are usually automatically corrected at start-up time but sometimes index issues require manual intervention. When unrecoverable index issues occur the following custom check message is visible:
+
+> Detected RavenDB index errors, please start maintenance mode and resolve the following issues:
+
+Often [indexes get corrupted](#corrupted-indexes). Resolve these errors by inspecting the errors in [ServiceControl (audit or error) maintenance mode](maintenance-mode.md).
+
+Contact [Particular support](https://particular.net/support) for assistance.
+
+## Corrupted indexes
+
+Sometimes the following error may be observed:
+
+```txt
+Raven.Abstractions.Exceptions.IndexDisabledException: The index has been disabled due to errors
+```
+
+or
+
+```txt
+2021-03-23 09:27:50.0593|14|Warn|Raven.Database.DocumentDatabase|Could not create index batch
+System.InvalidOperationException: Cannot modify indexes while indexing is in progress (already waited full minute). Try again later
+```
+
+This risk of these error occurring is mitigated by:
+
+- [Excluding the database storage folder from virus scanning](servicecontrol-in-practice.md#anti-virus-checks)
+- [Ensuring enough storage space is available](capacity-and-planning.md#storage-size)
+- [Setting up server monitoring and proactively monitoring free storage space](servicecontrol-in-practice.md#server-monitoring)
+
+To resolve these errors, the affected indexes must be rebuilt:
+
+- Start the [ServiceControl (audit or error) in maintenance mode](maintenance-mode.md)
+- In RavenDB Management Studio, navigate to the Indexes view
+- [Reset the relevant index(es)](https://ravendb.net/docs/article-page/3.5/csharp/server/administration/index-administration)
+
+If many indexes are affected it may be easier to rebuild all indexes, although this can take a very long time if the database is large, and it will use a lot of CPU and storage IO capacity:
+
+- Stop the ServiceControl (audit or error) instance
+- Navigate to the [database folder](configure-ravendb-location.md) on disk
+- Delete the `Indexes` folder
+- Start the ServiceControl instance

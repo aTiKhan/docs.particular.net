@@ -1,9 +1,7 @@
 ---
 title: Data Bus Samples
-reviewed: 2019-04-09
+reviewed: 2021-03-02
 component: Core
-tags:
- - DataBus
 related:
  - nservicebus/messaging/databus
 ---

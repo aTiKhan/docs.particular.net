@@ -1,7 +1,7 @@
 ---
 title: NServiceBus Packages Supported Versions
 summary: Supported versions of all NServiceBus packages
-reviewed: 2019-02-04
+reviewed: 2020-12-02
 related:
  - nservicebus/upgrades/all-versions
  - nservicebus/upgrades/support-policy
@@ -13,3 +13,5 @@ This page lists both currently and recently supported versions of all NServiceBu
 
 include: supported-versions-nservicebus
 include: supported-versions-downstreams
+
+<script type="text/javascript" src="supported-versions.js"></script>

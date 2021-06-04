@@ -1,9 +1,10 @@
 ---
 title: MySql Scripts
 component: SqlPersistence
-reviewed: 2018-10-26
+reviewed: 2020-07-16
 related:
  - nservicebus/operations
+ - persistence/sql/operational-scripting
 redirects:
  - nservicebus/sql-persistence/mysql-scripts
 ---
@@ -103,7 +104,7 @@ snippet: MySql_OutboxSetAsDispatchedSql
 
 Used by `IOutboxStorage.Store`.
 
-snippet: MySql_OutboxStoreSql
+partial: outbox
 
 
 ### Saga

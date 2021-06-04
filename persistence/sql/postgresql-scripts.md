@@ -4,6 +4,7 @@ component: SqlPersistence
 reviewed: 2019-08-21
 related:
  - nservicebus/operations
+ - persistence/sql/operational-scripting
 versions: '[3,)'
 ---
 
@@ -102,8 +103,7 @@ snippet: PostgreSQL_OutboxSetAsDispatchedSql
 
 Used by `IOutboxStorage.Store`.
 
-snippet: PostgreSQL_OutboxStoreSql
-
+partial: outbox
 
 ### Saga
 

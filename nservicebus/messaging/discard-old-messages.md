@@ -1,7 +1,7 @@
 ---
 title: Discarding Old Messages
 summary: Automatically discard messages if they have not been processed within a given period of time.
-reviewed: 2018-12-17
+reviewed: 2020-09-04
 component: Core
 related:
  - nservicebus/operations/auditing
@@ -13,7 +13,7 @@ A message sent through the Particular Service Platform may have Time-To-Be-Recei
 
 Setting TimeToBeReceived might be beneficial in environments with high volumes of messages where there is little business value in processing a delayed message since it will already be replaced by a newer, more relevant version.
 
-TTBR applies only to messages that have not been handled. A failed message moved to the error queue or a successfully processed message is considered handled, as well as audit message when generated. Removing TTBR from handeled messages ensures no messages are lost. The TTBR value from the original message can be inspected by looking at the `NServiceBus.TimeToBeReceived` [header](/nservicebus/messaging/headers.md).
+TTBR applies only to messages that have not been handled. A failed message moved to the error queue or a successfully processed message is considered handled, as well as audit message when generated. Removing TTBR from handled messages ensures no messages are lost. The TTBR value from the original message can be inspected by looking at the `NServiceBus.TimeToBeReceived` [header](/nservicebus/messaging/headers.md).
 
 If there is no value in a message being received by the target process after a given time period it may be desirable to indicate that it can be discarded by specifying TimeToBeReceived.
 
@@ -57,9 +57,11 @@ TimeToBeReceived relies on the transport infrastructure to discard expired messa
 
 MSMQ continuously checks the TimeToBeReceived of all queued messages. As soon as the message has expired, it is removed from the queue, and disk space gets reclaimed. 
 
-NOTE: MSMQ enforces single TimeToBeReceived value for all messages in a transaction. If multiple messages enlist in a single transaction, then TimeToBeReceived from the first message will be used for all messages, leading to potentially, unintentional message expiration. To prevent message loss, `TimeToBeReceived` is not supported for endpoints with [transaction mode](/transports/transactions.md) `TransportTransactionMode.AtomicSendsWithReceive` or `Transaction Scope (Distributed Transaction)`.
+NOTE: MSMQ enforces a single TimeToBeReceived value for all messages in a transaction. To prevent message loss, `TimeToBeReceived` is not supported for endpoints with [transaction mode](/transports/transactions.md) `SendsAtomicWithReceive` or `TransactionScope` by default. 
 
 partial: msmq
+
+For more details about how the MSMQ transport handles TimeToBeReceived, see [discarding expired messages in MSMQ](/transports/msmq/discard-expired-messages.md).
 
 
 ### RabbitMQ transport

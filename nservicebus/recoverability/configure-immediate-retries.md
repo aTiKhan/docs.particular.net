@@ -2,12 +2,7 @@
 title: Configure immediate retries
 summary: Shows how to configure immediate retries which happen as a first stage of the default recoverability behavior.
 component: Core
-reviewed: 2018-12-11
-tags:
- - Error Handling
- - Exceptions
- - Retry
- - Recoverability
+reviewed: 2020-09-02
 related:
  - samples/faulttolerance
 ---

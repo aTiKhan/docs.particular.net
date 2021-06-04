@@ -1,11 +1,8 @@
 ---
 title: Using centralized routing configuration
 summary: Using file to control message routing in entire NServiceBus system
-reviewed: 2018-11-15
+reviewed: 2020-08-03
 component: FileBasedRouting
-tags:
- - Routing
- - MSMQ
 related:
 - nservicebus/messaging/file-based-routing
 ---

@@ -7,7 +7,7 @@ suppressRelated: true
 
 NServiceBus makes it quick and easy to send, process, and publish messages across a wide variety of on-premises and cloud-based queuing technologies. With all the low-level serialization, threading, and transaction management handled out-of-the box, just grab the NuGet package and go.
 
-NOTE: Don't know where to start? Follow our [Learning Path](https://particular.net/learn/getting-started).
+NOTE: For more resources to get started, follow our [learning path](https://particular.net/learn/getting-started).
 
 
 ### Installing
@@ -48,9 +48,9 @@ Jump into our [Quick Start](/tutorials/quickstart/) and build your first end-to-
 
 ## Other resources
 
-* [High-level content](/get-started/high-level-content.md) - Recommended articles to gain an understanding of the key concepts and technologies used within the Particular Service Platform.
 * [Tutorials](/tutorials/) - Step-by-step guides to help master NServiceBus and the Particular Service Platform
 * [Samples](/samples/) - Learn by exploring code in fully functional solutions that can be run from Visual Studio. Go to the [introduction to samples](/samples/) or [skip to the list of samples](/samples/#related-samples) 
+* [High-level content](/get-started/high-level-content.md) - Recommended articles to gain an understanding of the key concepts and technologies used within the Particular Service Platform.
 
 
 ## Getting Help

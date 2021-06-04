@@ -27,19 +27,22 @@ As guidance, this decision chart can be used to select an appropriate persister.
 ```mermaid
 graph TD
 start((start)) --> A{Using sagas<br /> or outbox?}
-A -->  |Yes|B{Additional<br />requirements?}
+A --> |Yes|B{Additional<br />requirements?}
 A --> |No| I{Which transport?}
-I --> |Other|L[SQL Persistence]
-I --> |RabbitMQ/ASB|J[No persistence]
-I --> |ASQ|K[ASP]
-B --> |ServiceFabric|C[ServiceFabric]
+I --> |Other|L[SQL]
+I --> |RabbitMQ/Azure Service Bus|J[No persistence]
+I --> |Azure Storage Queues|K[Azure Table]
+B --> |Service Fabric|C[Service Fabric]
 B --> |RavenDB|E[RavenDB]
 B --> |MongoDB|M[MongoDB]
-B --> |Azure|Q{IAAS/PAAS ?}
+B --> |Azure|Q{IaaS/PaaS ?}
 B --> |No|L
-Q --> |PAAS|S[ASP]
-Q --> |IAAS|L
+Q --> |PaaS|G{Optimize for}
+Q --> |IaaS|L
+G --> |Features|N["Cosmos DB (preview)"]
+G --> |Cost|S[Azure Table]
 ```
+
 ## Making the decision
 
 This section provides considerations that aren’t included or immediately visible in the decision chart. The selected transport might influence the decision for a persister. See [Selecting a Transport](/transports/selecting.md) for more information.
@@ -52,15 +55,17 @@ If a datastore has already been selected to store business data and NServiceBus 
 
 The learning persister is not meant for production usage.
 
-### In-Memory
+### Non-durable
 
-The in-memory persister is not mentioned in the decision chart, as it is appropriate only in very specific scenarios where the volatility of data is not an issue. 
+The non-durable persister is not mentioned in the decision chart, as it is appropriate only in very specific scenarios where the volatility of data is not an issue.
 
 ### Azure
 
-There are several options available when endpoints are hosted in Windows Azure. The most commonly used persisters are Azure Storage and Azure SQL, the fully managed SQL Server solution in Azure.
+There are several options available when endpoints are hosted in Microsoft Azure. The most commonly used persisters are Azure Storage, Azure Cosmos DB and Azure SQL, the fully managed SQL Server solution in Azure.
 
-One factor in the decision is whether the system is fully platform-as-a-service-enabled and whether it is designed to run fully on Azure (in which case, the Azure Storage persister may be appropriate). Alternatively, some organizations are more comfortable managing SQL Server and may choose an infrastructure-as-a-service solution (using the SQL persister with Azure SQL).
+One factor in the decision is whether the system is fully platform-as-a-service-enabled and whether it is designed to run fully on Azure in which case, the Azure Storage Table or Azure Cosmos DB persistence may be appropriate. The choice between Azure Storage Table and Azure Cosmos DB boils down to a difference in cost vs capabilities.
+
+Alternatively, some organizations are more comfortable managing SQL Server and may choose an infrastructure-as-a-service solution (using the SQL persister with SQL Server on a Virtual Machine).
 
 **Azure SQL**
 
@@ -71,6 +76,15 @@ One factor in the decision is whether the system is fully platform-as-a-service-
 **Azure Storage**
 
 - Usually cheaper
+- Automatically scales
+- A turn-key solution, meaning no maintenance
+
+**Azure Cosmos DB (preview)**
+
+- Supports transactions on the same partition
+- Supports outbox
+- Geo redundancy
+- Lower latency
 - Automatically scales
 - A turn-key solution, meaning no maintenance
 
@@ -101,10 +115,6 @@ This option is relevant only if endpoints are hosted in Service Fabric.
 If a business system already stores its data in RavenDB, NServiceBus supports storing data inside RavenDB as well. This removes the need to introduce additional storage.
 
 RavenDB Persistence [allows accessing the `IAsyncRavenSession`](/persistence/ravendb/#shared-session) from within message handlers to enable saving business data and NServiceBus data with the same `SaveChanges()` call.
-
-### Other options
-
-If the NServiceBus persisters are lacking an option for a specific data store, there are additional options to be found in the [community extensions](/components/#persisters). Although Particular Software will do its best to help with these extensions, they are not officially supported.
 
 ### The recommended choice
 

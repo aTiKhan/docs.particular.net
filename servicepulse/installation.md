@@ -3,8 +3,6 @@ title: Installing ServicePulse
 summary: Describes how ServicePulse is installed - and its basic requirements
 component: ServicePulse
 reviewed: 2020-02-24
-tags:
-- Installation
 related:
 - servicepulse/troubleshooting
 ---
@@ -13,12 +11,10 @@ related:
 ## Prerequisites
 
  * .NET Framework 4.5 or later
- * A currently-supported version of Internet Explorer, Chrome, Firefox, or Safari
+ * A currently-supported version of Microsoft Edge, Chrome, Firefox, or Safari
  * A running instance of [ServiceControl](/servicecontrol)
 
 ## Installation
-
-Install ServicePulse using the [Particular Service Platform Installer](/platform/installer) (recommended) or independently using the following procedure:
 
  1. Download and install [ServiceControl](https://github.com/Particular/ServiceControl/releases)
  1. Download and install [ServicePulse](https://github.com/Particular/ServicePulse/releases)
@@ -60,6 +56,11 @@ For details on ServiceControl, ServiceControl Monitoring and ServicePulse config
 
 NOTE: ServiceControl consumes messages from the Audit queue and stores it temporarily (by default, for 30 days) in its embedded database. Set the message storage timespan by [setting automatic expiration for ServiceControl data](/servicecontrol/how-purge-expired-data.md).
 
+## Migrating / Moving
+
+ServicePulse does not contain any message data; it has only a few configuration values stored in the following file `\app\js\app.constants.js`. By default ServicePulse is intalled in `C:\Program Files (x86)\Particular Software\ServicePulse`.
+
+Run the ServicePulse installer on the new server manually or via [scripting powershell or a batch file](#installation-available-installation-parameters) and copy the `\app\js\app.constants.js` to the new location.
 
 ## ServicePulse license
 

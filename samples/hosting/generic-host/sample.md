@@ -3,14 +3,12 @@ title: Endpoint hosting with the Generic Host
 summary: Hosting an endpoint with the Generic Host.
 reviewed: 2020-02-27
 component: Core
-tags:
-- Hosting
 related:
 - nservicebus/hosting
 - nservicebus/hosting/assembly-scanning
 ---
 
-The sample uses the Generic Host and the [`Microsoft.Extensions.Hosting.WindowsServices`](https://www.nuget.org/packages/Microsoft.Extensions.Hosting.WindowsServices/) nuget package to host NServiceBus as a Windows Service using the Generic Host underneath.
+The sample uses the Generic Host and the [`Microsoft.Extensions.Hosting.WindowsServices`](https://www.nuget.org/packages/Microsoft.Extensions.Hosting.WindowsServices/) NuGet package to host NServiceBus as a Windows Service using the Generic Host underneath.
 
 downloadbutton
 
@@ -41,6 +39,8 @@ Received message #{Number}
 ```
 - Once done, run `Stop-Service WorkerTest` and `Remove-Service WorkerTest`
 
+NOTE: Currently to use the `Microsoft.Extensions.Logging` library, the `NServiceBus.MicrosoftLogging` community package should be used.
+
 ## Code walk-through
 
 snippet: generic-host-service-lifetime
@@ -66,6 +66,6 @@ To simulate work, a BackgroundService called `Worker` is registered as a hosted 
 
 snippet: generic-host-worker-registration
 
-The worker takes a dependency on `IServiceProvider` in order to retrieve the message session. This is required because all hosted services are resolved from the container first and then started in the order of having been added. Therefore it is not possible to inject `IMessageSession` directly because the hosted service that starts the NServiceBus endpoint has not been started yet when the worker service constructor is being resolved from the container.
+The `IMessageSession` is injected into the `Worker` constructor, and the `Worker` sends messages when it is executed.
 
 snippet: generic-host-worker

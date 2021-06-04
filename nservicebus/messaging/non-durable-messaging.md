@@ -2,7 +2,7 @@
 title: Non-Durable Messaging
 summary: Information on how non-durable messaging affects the behaviors of endpoints and message delivery.
 component: Core
-reviewed: 2018-10-04
+reviewed: 2020-06-17
 redirects:
  - nservicebus/messaging/express-messages
  - samples/non-durable-messaging
@@ -14,34 +14,7 @@ The use of non-durable messages involves relaxing message delivery guarantees in
 
 WARNING: This can make an endpoint more susceptible to message loss during server crashes and restarts. See [effect on transports](#effect-on-transports) for more details.
 
-
-## Enabling non-durable messaging
-
-This feature can be enabled in two ways
-
-
-### For specific message types
-
-#### Via an Express attribute
-
-A message can be configured to be non-durable via the use of an `[ExpressAttribute]`.
-
-snippet: ExpressMessageAttribute
-
-
-#### Using the configuration API
-
-A subset of messages can be configured to be non-durable by using a convention.
-
-snippet: ExpressMessageConvention
-
-
-### Global for the endpoint
-
-Allows messages to be non-durable via the configuration API.
-
-snippet: set-to-non-durable
-
+partial: enable
 
 ## Effect on transports
 

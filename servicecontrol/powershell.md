@@ -1,9 +1,6 @@
 ---
 title: Managing ServiceControl via PowerShell
-reviewed: 2019-05-03
-tags:
- - Installation
- - PowerShell
+reviewed: 2021-04-17
 ---
 
 
@@ -14,17 +11,16 @@ ServiceControl version 1.7 introduced a new graphical management utility to add,
 
 ## Prerequisites
 
-The ServiceControlMgmt module requires:
+ServiceControlMgmt PowerShell module is compatible with PowerShell 5. Versions of PowerShell later than 5 (including PowerShell Core) are not supported and might not work as expected.
 
- * Microsoft PowerShell 3.0
-
+NOTE: In order to run PowerShell cmdlets, the PowerShell execution policy needs to be set to `Unrestricted` or a bypass neds to be granted to the module file. Refer to the PowerShell documentation on how to change the execution policy.
 
 ## Loading and running the PowerShell module
 
-The majority of the ServiceControlMgmt PowerShell module cmdlets will only work if the PowerShell session is running with administrator privileges. The ServiceControl installer creates a shortcut in the Windows start menu to launch an administrative PowerShell Session with the module automatically loaded. Alternatively, the module can be loaded directly into an an existing PowerShell session by loading `ServiceControlMgmt.psd1` using the `Import-Module` cmdlet as show below:
+The majority of the cmdlets will only work if the PowerShell session is running with administrator privileges. The ServiceControl installer creates a shortcut in the Windows start menu to launch an administrative PowerShell Session with the module automatically loaded. Alternatively, the module can be loaded directly into an an existing PowerShell session by loading `ServiceControlMgmt.psd1` using the `Import-Module` cmdlet as show below:
 
 ```ps
-Import-Module "C:\Program Files (x86)\Particular Software\ServiceControl Management\ServiceControlMgmt.psd1"
+Import-Module "C:\Program Files (x86)\Particular Software\ServiceControl Management\ServiceControlMgmt\ServiceControlMgmt.psd1"
 ```
 
 
@@ -57,14 +53,11 @@ Get-Help Get-ServiceControlLicense
 
 ### Licensing
 
-Add the license file to the registry:
+Copies the license file to the correct location on the file system (`%PROGRAMDATA%/ParticularSoftware/license.xml`) so it is available to all instances of ServiceControl installed on the machine.
 
 ```ps
 Import-ServiceControlLicense <License-File>
 ```
-
-The license file is added to the `HKEY_LOCAL_MACHINE` registry hive so it is available to all instances of ServiceControl installed on the machine.
-
 
 ## Troubleshooting via PowerShell
 

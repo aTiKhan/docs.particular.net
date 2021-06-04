@@ -3,8 +3,6 @@ title: Configuring RavenDB DTC
 summary: Guidance on how to change the RavenDB ResourceManagerID and TransactionRecoveryStorage.
 versions: '[,5)'
 component: Raven
-tags:
- - Persistence
 related:
  - nservicebus/operations
 redirects:
@@ -15,6 +13,8 @@ reviewed: 2019-06-10
 ---
 
 include: dtc-warning
+
+include: cluster-configuration-warning
 
 DANGER: Since distributed transactions are not supported for RavenDB persistence, this page remains for archival purposes only.
 

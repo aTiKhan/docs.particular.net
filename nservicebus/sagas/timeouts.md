@@ -3,8 +3,6 @@ title: Saga Timeouts
 summary: Call back into a saga after a defined period of time.
 reviewed: 2019-12-24
 component: Core
-tags:
-- Saga
 related:
 - samples/saga
 - nservicebus/sagas
@@ -15,8 +13,6 @@ Assumptions can not be made in a message-driven environment regarding the order 
 The upper wait time is modeled in NServiceBus as a `Timeout`:
 
 snippet: saga-with-timeout
-
-NOTE: The Timeouts feature is enabled by default. To turn it off it's necessary to disable the `TimeoutManager` feature.
 
 After calling `RequestTimeout<T>`, a timeout message will be persisted and scheduled to run after a specified delay or at specified time.
 
@@ -31,6 +27,12 @@ include: non-null-task
 A timeout may be requested specifying either a `DateTime` or `TimeSpan`. When specifying a `DateTime`, the `Kind` property must be set. If the timeout specifies a time of day, the calculation must take into account any change to or from DST. Timezone and DST conversion may be done using [`TimeZoneInfo.ConvertTime`](https://docs.microsoft.com/en-us/dotnet/api/system.timezoneinfo.converttime).
 
 NOTE: Timezone and DST information may change in the future, for timeouts that are already set. A saga containing business logic which is dependent on such changes must react to those changes appropriately.
+
+## Requesting multiple timeouts
+
+Multiple timeouts can be requested when processing a message. The individual timeouts can be different types and different timeout durations.
+
+snippet: saga-multiple-timeouts
 
 ## Revoking timeouts
 
@@ -61,6 +63,6 @@ As a shortcut an incoming saga message can be re-used as timeout state by passin
 
 Some form of [Persistence](/persistence/) is required to store the timestamp and the state of a timeout.
 
-WARNING: A durable persistence (i.e. NOT [InMemory](/persistence/in-memory/) or [Learning Persistence](/persistence/learning/)) should be chosen before moving to production.
+WARNING: A durable persistence (i.e. NOT [Non-Durable](/persistence/non-durable/) or [Learning Persistence](/persistence/learning/)) should be chosen before moving to production.
 
 In order to learn how delayed delivery works in more detail, refer to the [Delayed Delivery - How it works](/nservicebus/messaging/delayed-delivery.md#how-it-works) section.

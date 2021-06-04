@@ -1,6 +1,6 @@
 ---
 title: Multi-Site Deployments
-reviewed: 2018-11-14
+reviewed: 2020-07-28
 summary: How to handle multi-site communication.
 component: Gateway
 redirects:
@@ -97,7 +97,7 @@ Follow the steps for [configuring SSL](https://docs.microsoft.com/en-us/dotnet/f
 
 ## Automatic de-duplication
 
-Going through alternate channels like HTTP(S) means that the MSMQ safety guarantees of exactly-once message delivery are not available. This means that communication errors resulting in retries can lead to receiving messages more than once. To avoid being burdened with de-duplication, the NServiceBus gateway supports this out of the box. Message IDs are stored in the configured [Persistence](/persistence/) so duplicates can be detected and discarded.
+Going through alternate channels like HTTP(S) means that the MSMQ safety guarantees of exactly-once message delivery are not available. This means that communication errors resulting in retries can lead to receiving messages more than once. To avoid being burdened with de-duplication, the NServiceBus gateway supports this out of the box. Message IDs are stored in the configured [Persistence](/persistence) so duplicates can be detected and discarded.
 
 
 partial: dedup

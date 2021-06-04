@@ -1,15 +1,8 @@
 ---
 title: Platform Releases
 summary: Links to current and previous releases as well as release notes for the Particular Service Platform applications
-reviewed: 2018-09-28
+reviewed: 2020-06-15
 ---
-
-
-### Platform Installer
-
- * [Download and launch the Platform Installer](https://s3.amazonaws.com/particular.downloads/PlatformInstaller/PlatformInstaller.application)
- * [Release notes](installer)
-
 
 ### Applications and tools
 
@@ -34,7 +27,7 @@ The Particular Service Platform source code, current and previous releases, and 
 |**Azure Service Bus (Legacy)** | [Releases](https://github.com/Particular/NServiceBus.AzureServiceBus/tags)| [Release Notes](https://github.com/Particular/NServiceBus.AzureServiceBus/releases)
 |**Azure Storage Queues** | [Releases](https://github.com/Particular/NServiceBus.AzureStorageQueues/tags)| [Release Notes](https://github.com/Particular/NServiceBus.AzureStorageQueues/releases)
 |**MSMQ**|[Releases](https://github.com/Particular/NServiceBus.Transport.Msmq/tags)| [Release Notes](https://github.com/Particular/NServiceBus.Transport.Msmq/releases)
-
+|**Amazon SQS**| [Releases](https://github.com/Particular/NServiceBus.AmazonSQS/tags)| [Release Notes](https://github.com/Particular/NServiceBus.AmazonSQS/releases)
 
 ### NServiceBus persisters
 

@@ -1,7 +1,7 @@
 ---
 title: NServiceBus Version 6 ServiceControl Plugins Upgrade Version 1 to 2
 summary: Instructions on how to upgrade NServiceBus version 6 ServiceControl Plugins Version 1 to 2.
-reviewed: 2018-11-09
+reviewed: 2020-07-27
 component: ServiceControl
 related:
  - servicecontrol/plugins
@@ -33,14 +33,26 @@ The location of the ServiceControl queue can be specified via plugin-specific ex
 
 #### Heartbeats
 
-snippet: Heartbeats_Configure_ServiceControl
+```csharp
+var endpointConfiguration = new EndpointConfiguration("myendpoint");
+endpointConfiguration.HeartbeatPlugin(
+    serviceControlQueue: "ServiceControl_Queue");
+```
 
 
 #### CustomChecks
 
-snippet: CustomCheck_Configure_ServiceControl
+```csharp
+var endpointConfiguration = new EndpointConfiguration("myendpoint");
+endpointConfiguration.CustomCheckPlugin(
+    serviceControlQueue: "ServiceControl_Queue");
+```
 
 
 #### SagaAudit
 
-snippet: SagaAudit_Configure_ServiceControl
+```csharp
+var endpointConfiguration = new EndpointConfiguration("myendpoint");
+endpointConfiguration.SagaPlugin(
+    serviceControlQueue: "particular.servicecontrol@machine");
+```

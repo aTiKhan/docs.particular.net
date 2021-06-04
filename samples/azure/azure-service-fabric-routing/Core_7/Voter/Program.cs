@@ -22,7 +22,6 @@ class Program
             throw new Exception("Could not read the 'AzureServiceBus.ConnectionString' environment variable. Check the sample prerequisites.");
         }
         transport.ConnectionString(connectionString);
-        transport.UseForwardingTopology();
 
         #region ConfigureSenderSideRouting-Voter
 
@@ -91,7 +90,7 @@ class Program
 
         Console.WriteLine("Press any key to exit the sample");
         Console.ReadKey(true);
-        
+
         await endpointInstance.Stop()
             .ConfigureAwait(false);
     }

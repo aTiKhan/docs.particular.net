@@ -4,8 +4,6 @@ summary: List of built-in NServiceBus message headers.
 reviewed: 2019-10-04
 component: Core
 versions: '[5.0,)'
-tags:
- - Header
 redirects:
  - nservicebus/message-headers
  - nservicebus/messaging/headers
@@ -101,18 +99,20 @@ Identifier of the conversation that this message is part of. It enables the trac
 
 The first message sent in a new flow is automatically assigned a unique `Conversation Id` that is then propagated to all the messages that are sent afterward, forming a _conversation_. Each message sent within a conversation has a `RelatedTo` value that identifies the message that caused it to be sent.
 
-In certain scenarios, the `Conversation Id` must be assigned manually in cases where NServiceBus can't infer when messages belong to the same conversation. For example, when a `CancelOrder` message needs to be part of an existing order conversation, then the Order Id can be used for as the Conversation Id. Manually assigning a `Conversation Id` can be achieved by overriding the header with a custom value:
+In certain scenarios, the `Conversation Id` must be assigned manually in cases where NServiceBus can't infer when messages belong to the same conversation. For example, when a `CancelOrder` message needs to be part of an existing order conversation, then the Order ID can be used for as the Conversation ID. Manually assigning a `Conversation Id` can be achieved by overriding the header with a custom value:
 
 snippet: override-conversation-id
 
 partial: conversationid
 
-WARN: Attempting to override an existing Conversation Id is not supported and will produce the following error:
+WARN: Attempting to override an existing Conversation ID is not supported and will produce the following error:
 ```
 Cannot set the NServiceBus.ConversationId header to 'XXXXX' as it cannot override the incoming header value ('2f4076a0-d8de-4297-9d18-a830015dd42a').
 ```
 
 NOTE: `Conversation Id` is very similar to `Correlation Id`. Both headers are copied to each new message that an endpoint produces. Whereas `Conversation Id` is always copied from the incoming message being handled, `Correlation Id` can come from another source (such as when replying from a saga using `ReplyToOriginator(...)`).
+
+partial: newconversationid
 
 
 ### NServiceBus.RelatedTo

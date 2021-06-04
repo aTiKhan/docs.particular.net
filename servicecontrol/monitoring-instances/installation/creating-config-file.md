@@ -1,7 +1,7 @@
 ---
 title: Monitoring Instance Configuration Settings
 summary: Categorized list of ServiceControl Monitoring instance configuration settings.
-reviewed: 2019-05-06
+reviewed: 2021-04-30
 ---
 
 
@@ -91,3 +91,11 @@ The error queue name.
 Type: string
 
 Default: `error`
+
+### Monitoring/MaximumConcurrencyLevel
+
+The maximum concurrency that will be used for ingesting metric messages. 
+
+Type: int
+
+Default: `32`

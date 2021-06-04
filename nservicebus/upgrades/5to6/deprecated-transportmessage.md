@@ -1,7 +1,7 @@
 ---
 title: Deprecated TransportMessage in NServiceBus Version 6
 summary: How to migrate away from TransportMessage in NServiceBus 6
-reviewed: 2018-08-17
+reviewed: 2020-05-07
 component: Core
 isUpgradeGuide: true
 upgradeGuideCoreVersions:
@@ -24,7 +24,7 @@ When setting the body, raw sending is the most likely scenario. See [Raw sending
 Both `IncomingMessage` and `OutgoingMessage` provide a headers dictionary to get or set headers of the property `Headers`.
 
 
-## Id
+## ID
 
 Both `IncomingMessage` and `OutgoingMessage` provide a message ID of the property `MessageId`.
 

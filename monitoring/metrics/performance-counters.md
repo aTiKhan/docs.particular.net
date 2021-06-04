@@ -1,7 +1,7 @@
 ---
 title: Windows Performance Counters
 summary: Monitoring through the use of Windows performance counters.
-reviewed: 2019-11-08
+reviewed: 2020-11-11
 component: PerfCounters
 redirects:
  - nservicebus/monitoring-nservicebus-endpoints
@@ -29,3 +29,5 @@ partial: note
 partial: counters
 
 partial: installing
+
+NOTE: [Send-only endpoints](/nservicebus/hosting/#self-hosting-send-only-hosting) are currently not supported since they don't receive messages.

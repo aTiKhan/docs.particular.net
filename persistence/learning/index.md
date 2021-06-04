@@ -1,7 +1,7 @@
 ---
 title: Learning Persistence
 component: LearningPersistence
-reviewed: 2019-02-04
+reviewed: 2020-12-01
 related:
  - samples/saga/simple
  - transports/learning
@@ -18,6 +18,19 @@ Added in NServiceBus 6.3.
 include: learning-usages
 
 
+## Persistence at a glance
+
+For a description of each feature, see the [persistence at a glance legend](/persistence/#persistence-at-a-glance).
+
+|Feature                    |   |
+|:---                       |---
+|Storage Types              |Sagas only. Subscriptions/Timeouts handled natively by Learning Transport.
+|Transactions               |None
+|Concurrency control        |Optimistic concurrency via file locks
+|Scripted deployment        |Not supported
+|Installers                 |None. The required folder structure is always created at runtime.
+
+
 ## Usage
 
 snippet: LearningPersistence
@@ -31,7 +44,7 @@ To configure the storage location:
 
 snippet: LearningPersistenceSagaStorageDirectory
 
-Each saga will be stored a sub-directory matching the saga type name with the saga data being serialized into a `.json` file named based on the saga Id.
+Each saga will be stored a sub-directory matching the saga type name with the saga data being serialized into a `.json` file named based on the saga ID.
 
 ## Saga concurrency
 

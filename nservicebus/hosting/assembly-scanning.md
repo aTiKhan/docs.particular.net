@@ -1,7 +1,7 @@
 ---
 title: Assembly scanning
 summary: To enable automatic detection of various features NServiceBus scans assemblies for well known types
-reviewed: 2019-01-10
+reviewed: 2020-10-24
 component: core
 redirects:
  - nservicebus/assembly-scanning
@@ -55,3 +55,5 @@ partial: mixing
 partial: appdomain
 
 partial: suppress
+
+partial: additional-path

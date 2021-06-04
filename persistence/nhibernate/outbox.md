@@ -4,8 +4,6 @@ summary: How to use the outbox with NHibernate
 versions: '[6.0,)'
 component: NHibernate
 reviewed: 2020-02-18
-tags:
- - Outbox
 related:
 - nservicebus/outbox
 redirects:
@@ -18,6 +16,10 @@ The [outbox](/nservicebus/outbox) feature requires persistent storage in order t
 ## Table
 
 To keep track of duplicate messages, the NHibernate implementation of the outbox requires the creation of an `OutboxRecord` table.
+
+partial: table-name
+
+partial: modes
 
 partial: customizing
 

@@ -3,9 +3,6 @@ title: Stack Trace Cleaning
 summary: Shows how to minimize the stack trace written to the Error queue and the log output.
 reviewed: 2019-07-22
 component: Core
-tags:
-- Pipeline
-- Logging
 related:
 - nservicebus/pipeline
 - nservicebus/logging
@@ -117,7 +114,7 @@ snippet: customization-config
 
 ## Manipulate Logging Output
 
-The [default logging](/nservicebus/logging/) included in NServiceBus does not support overwriting how exceptions are written to the log. So this sample uses NLog with a custom `LayoutRenderer` for exceptions. Similar approaches are supported in the [other supported logging libraries](/components#loggers).
+The [default logging](/nservicebus/logging/) included in NServiceBus does not support overwriting how exceptions are written to the log. So this sample uses NLog with a custom `LayoutRenderer` for exceptions.
 
 
 ### Layout Renderer

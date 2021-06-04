@@ -3,9 +3,6 @@ title: Publish-Subscribe
 summary: Subscribers tell the publisher they are interested. Publishers store addresses for sending messages.
 reviewed: 2019-12-23
 component: Core
-tags:
-- Publish Subscribe
-- Messaging Patterns
 redirects:
  - nservicebus/how-pub-sub-works
  - nservicebus/messaging/publish-subscribe/how-to-pub-sub
@@ -35,6 +32,10 @@ Or in simpler terms
 Depending on the features provided by a given transport there are two possible implementations of Publish-Subscribe mechanics: message-driven (persistence-based) and native.
 
 Note: For simplicity these explanations refer to specific endpoints as "Subscribers" and "Publishers". However in reality any endpoint can be both a publisher and/or and a subscriber.
+
+### All subscribers gets their own copy of the event
+
+To ensure that each subscriber can process, and potentially retry, the event independent of other subscribers, NServiceBus makes sure that each subscriber gets a copy of the published event delivered to their input queue.
 
 
 ### Message-driven (persistence-based)
@@ -73,15 +74,15 @@ Available subscription persisters include
  * [MSMQ](/persistence/msmq)
  * [RavenDB](/persistence/ravendb)
  * [NHibernate](/persistence/nhibernate)
- * [In-Memory](/persistence/in-memory)
- * [Azure Storage](/persistence/azure-storage)
+ * [Non-Durable](/persistence/non-durable)
+ * [Azure Storage](/persistence/azure-table)
  * [SQL Server](/persistence/sql)
 
 The publish workflow for [unicast transports](/transports/types.md#unicast-only-transports) is as follows:
 
  1. Some code (e.g. a saga or a handler) requests that a message be published.
  1. Publisher queries the storage for a list of subscribers.
- 1. Publisher loops through the list and sends a copy of that message to each subscriber.
+ 1. Publisher loops through the list and sends a **copy of that message** to each subscriber.
 
 ```mermaid
 sequenceDiagram
@@ -100,7 +101,7 @@ partial: disable-publishing
 
 ### Native
 
-For multicast transports that [support publish–subscribe natively](/transports/types.md#multicast-enabled-transports) neither persistence nor control message exchange is required to complete the publish-subscribe workflow. 
+For multicast transports that [support publish–subscribe natively](/transports/types.md#multicast-enabled-transports) neither persistence nor control message exchange is required to complete the publish-subscribe workflow.
 
 
 #### Subscribe
@@ -130,7 +131,7 @@ The publish workflow for multicast transports is as follows
 
  1. Some code (e.g. a saga or a handler) request that a message be published.
  1. Publisher sends the message to the Broker.
- 1. Broker sends a copy of that message to each subscriber.
+ 1. Broker sends a **copy of that message** to each subscriber.
 
 ```mermaid
 sequenceDiagram

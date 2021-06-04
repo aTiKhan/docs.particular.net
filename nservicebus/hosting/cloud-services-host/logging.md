@@ -3,10 +3,7 @@ title: Logging
 summary: Setting up logging in Azure Cloud Services.
 component: CloudServicesHost
 versions: '[6,)'
-tags:
- - Azure
- - Logging
-reviewed: 2018-08-09
+reviewed: 2020-04-30
 related:
  - nservicebus/logging
 ---

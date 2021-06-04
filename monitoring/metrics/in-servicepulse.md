@@ -42,20 +42,52 @@ All graphs present the data collected during this reporting period. Where an ave
 NOTE: The screen is refreshed more frequently when a shorter reporting period is selected.
 
 
+## Managing the list of endpoints
+
+The list of endpoints in the monitoring view can be managed in several ways.
+
+Endpoints can be filtered using a keyword in the filter input:
+
+![Filtering endpoints in the monitoring view](monitored-endpoints-filtering.png)
+
+Grouping can be applied in order to group endpoints that share similar prefixes in their names. The prefix of an endpoint is subdivided in segments delimited by periods (`.`). The number of segments available for grouping can be selected and can go up to the total number of segments detected in the prefix.
+
+![Grouping endpoints in the monitoring view](monitored-endpoints-grouping.png)
+
+Results can be sorted by clicking the respective column label. If clicked again, sorting is toggled between ascending and descending order. When sorting by any of the metrics, the average metric value will be used for sorting. If the list switches sorting positions too quickly, then a longer period of time may need to be selected to obtain more stable averages.
+
+NOTE: Sorting can only be used if no endpoint grouping is applied.
+
+![Sorting endpoints in the monitoring view](monitored-endpoints-sorting.png)
+
+
 ## Data retention
 
 All performance metric data is retained in memory in the ServiceControl Monitoring instance. Restarting the ServiceControl Monitoring instance will cause all performance metric data to be lost.
 
 Performance metric data is only kept by the ServiceControl Monitoring instance long enough to support the most prolonged reporting period (1 hour).
 
-
 ## Disconnected endpoints
 
-If an endpoint instance stops sending metric data, it will appear with a warning indicator.
+Overview:
 
-![ServicePulse disconnected endpoint warning indicator](servicepulse-warningindicator.png)
+If all instances of an endpoint stop sending metric data, a connectivity warning indicator will appear.
 
-This warning indicator will show in the instances break down on the endpoint details page for each instance that is not sending metric data.
+![ServicePulse disconnected endpoint warning indicator on monitoring endpoint overview](servicepulse-warningindicator.png)
+
+Details:
+
+This connectivity warning indicator appears in the instances breakdown on the endpoint details page for each instance that is not sending metric data.
+
+![ServicePulse disconnected endpoint warning indicator on monitoring endpoint details](servicepulse-warningindicator-details.png)
+
+### Removing disconnected endpoints
+
+If the endpoint instance should be removed from the set of instances for a logical endpoint, this can be done by hovering over the stale instance row and clicking the "Remove endpoint" icon.
+
+![Remove endpoint](remove-endpoint-instance.png)
+
+This removes the endpoint instance from the list of tracked endpoint instances for that logical endpoint.
 
 
 ## Endpoints with failed messages

@@ -4,7 +4,7 @@ summary: Receiving messages from external systems
 component: Core
 related:
 - nservicebus/messaging/headers
-reviewed: 2018-12-04
+reviewed: 2021-05-12
 ---
 
 Endpoints can receive messages from external systems (such as BizTalk, TIBCO, etc). To ensure those messages can be handled correctly by NServiceBus, additional information might be required which are otherwise provided by NServiceBus automatically.
@@ -14,15 +14,15 @@ Endpoints can receive messages from external systems (such as BizTalk, TIBCO, et
 
 In order to [deserialize](/nservicebus/serialization/) a message coming from a third party system, NServiceBus needs to know the .NET type to use.
 
-The sender can specify a message type with the [NServiceBus.EnclosedMessageTypes header](/nservicebus/messaging/headers.md#serialization-headers-nservicebus-enclosedmessagetypes).
+Starting from NServiceBus version 7.4, the [NServiceBus.EnclosedMessageTypes header](/nservicebus/messaging/headers.md#serialization-headers-nservicebus-enclosedmessagetypes) is automatically populated when missing. When using NServiceBus version 7.3 and below, the sender should set that header.
 
 Some serializers can infer the message type from information embedded in the message body. 
 
- * [Xml](/nservicebus/serialization/xml.md) 
- * [Json](/nservicebus/serialization/json.md)
+ * [XML](/nservicebus/serialization/xml.md) 
+ * [JSON](/nservicebus/serialization/json.md)
  * [Newtonsoft](/nservicebus/serialization/newtonsoft.md)
 
-The [RabbitMQ](/samples/rabbitmq/native-integration/), [SQL](/samples/sqltransport/native-integration/), and [Azure Service Bus](/samples/azure/native-integration-asb/) native integration samples demonstrate inferring message type from the message body.
+The [RabbitMQ](/samples/rabbitmq/native-integration/), [SQL](/samples/sqltransport/native-integration/), and [Azure Service Bus](/samples/azure-service-bus-netstandard/native-integration/) native integration samples demonstrate inferring message type from the message body.
 
 
 ## Visualization

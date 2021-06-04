@@ -2,10 +2,8 @@
 title: Configuration order for persistence
 summary: When configuring persistence, order is important
 component: Core
-reviewed: 2018-10-26
+reviewed: 2020-07-11
 versions: '[5.0,)'
-tags:
-- Persistence
 redirects:
 - nservicebus/persistence-order
 - nservicebus/persistence/order
@@ -16,7 +14,7 @@ When using different persistence options for storage types, the configuration or
 
 ### Example 1
 
-In this example, RavenDB persistence is used for all storage types as it overwrites the configuration for the Outbox and GatewayDeduplication storage types.
+In this example, RavenDB persistence is used for all storage types as it overwrites the configuration for the outbox and subscription storage types.
 
 snippet: PersistenceOrder_Incorrect
 
@@ -30,6 +28,6 @@ snippet: PersistenceOrder_Explicit
 
 ### Example 3
 
-Instead of explicitly defining all storage types, the generic persistence option can specified before the explicit overwrites. In this example, RavenDB persistence will be used for all storage types except for the Outbox and GatewayDeduplication.
+Instead of explicitly defining all storage types, the generic persistence option can specified before the explicit overwrites. In this example, RavenDB persistence will be used for all storage types except for the outbox and subscriptions.
 
 snippet: PersistenceOrder_Correct

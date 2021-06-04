@@ -11,8 +11,6 @@ reviewed: 2020-01-30
 redirects:
  - nservicebus/msmq-information
  - nservicebus/msmq
-tags:
- - Transport
 ---
 
 WARNING: As Microsoft is not making MSMQ available for .NET Core, building new systems using MSMQ is not recommended. 
@@ -53,7 +51,7 @@ partial: default
 
 NServiceBus requires a specific MSMQ configuration to operate.
 
-The supported configuration is to have only the base MSMQ service installed with no optional features. To enable the supported configuration, use either `NServiceBus Prerequisites` in the [Platform Installer](/platform/installer/), or the `Install-NServiceBusMSMQ` cmdlet from the [NServiceBus PowerShell Module](/nservicebus/operations/management-using-powershell.md).
+The supported configuration is to have only the base MSMQ service installed with no optional features. To enable the supported configuration, use the `Install-NServiceBusMSMQ` cmdlet from the [NServiceBus PowerShell Module](/nservicebus/operations/management-using-powershell.md).
 
 Alternatively, the MSMQ service can be installed manually. When installing manually **do not** enable the following components:
 
@@ -158,6 +156,12 @@ See also [Message Queuing Security Overview](https://docs.microsoft.com/en-us/pr
 
 ## Distributed Transaction Coordinator
 
-To support guaranteed [once delivery of messages,](/nservicebus/operations/transactions-message-processing.md) NServiceBus makes use of the Distributed Transaction Coordinator (DTC) to synchronize transactions between MSMQ and the database. For this to work, the DTC must be started and configured correctly.
+NServiceBus makes use of the Microsoft Distributed Transaction Coordinator (MSDTC) to synchronize transactions between MSMQ and the database in order to support [guaranteed once delivery of messages](/nservicebus/operations/transactions-message-processing.md). For this to work, MSDTC must be started and configured correctly. This can be done manually or using the [NServiceBus PowerShell module](/nservicebus/operations/management-using-powershell.md).
 
-In NServiceBus versions 5 and above, there is a _non-DTC_ mode of operation available. In this mode NServiceBus uses a concept of _Outbox_, a message store backed by the same database as the user code, to temporarily store messages that need to be sent as a result of processing an incoming message. To read more about this subject see [Outbox](/nservicebus/outbox/).
+Alternatively, there is a _non-MSDTC mode of operation available. In this mode NServiceBus uses the _outbox_, a message store backed by the same database as the user code, to temporarily store messages that must be sent as a result of processing an incoming message. To read more about this subject see [Outbox](/nservicebus/outbox/).
+
+If neither the MSDTC nor the outbox is configured, an exception message will appear when an MSMQ-enabled endpoint is started:
+
+```
+Transaction mode is set to `TransactionScope`. This depends on Microsoft Distributed Transaction Coordinator (MSDTC) which is not available. Either enable MSDTC, enable Outbox, or lower the transaction mode to `SendsAtomicWithReceive`.
+```

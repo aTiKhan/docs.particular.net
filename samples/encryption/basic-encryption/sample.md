@@ -1,10 +1,10 @@
 ---
 title: Message property encryption
 summary: Encrypting specific parts of a message using the message property encryption feature.
-reviewed: 2018-12-11
+reviewed: 2020-08-24
 component: PropertyEncryption
-tags:
-- Encryption
+related:
+- serviceinsight/custom-message-viewers
 redirects:
 - nservicebus/encryption-sample
 ---

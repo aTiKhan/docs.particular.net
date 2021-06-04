@@ -1,12 +1,8 @@
 ---
 title: Custom Exception Handling
 summary: With custom exception handling, it is possible to fine-tune how exceptions should be handled after they have been retried
-reviewed: 2019-02-15
+reviewed: 2020-12-22
 component: Core
-tags:
- - Error Handling
- - Exceptions
- - Retry
 related:
  - nservicebus/recoverability
  - nservicebus/pipeline/customizing-error-handling

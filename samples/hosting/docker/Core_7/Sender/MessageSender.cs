@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using NServiceBus;
 using Shared;
 
@@ -10,19 +10,15 @@ namespace Sender
 {
     class MessageSender : IHostedService
     {
-        public MessageSender(IServiceProvider serviceProvider)
+        public MessageSender(ILogger<MessageSender> logger, IMessageSession messageSession)
         {
-            this.serviceProvider = serviceProvider;
+            this.logger = logger;
+            this.messageSession = messageSession;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            var messageSession = serviceProvider.GetService<IMessageSession>();
-
-            Console.WriteLine("Sending a message...");
-
             var guid = Guid.NewGuid();
-            Console.WriteLine($"Requesting to get data by id: {guid:N}");
 
             var message = new RequestMessage
             {
@@ -33,8 +29,8 @@ namespace Sender
             await messageSession.Send(message)
                 .ConfigureAwait(false);
 
-            Console.WriteLine("Message sent.");
-            Console.WriteLine("Use 'docker-compose down' to stop containers.");
+            logger.LogInformation($"Message sent, requesting to get data by id: {guid:N}");
+            logger.LogInformation("Use 'docker-compose down' to stop containers.");
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
@@ -42,6 +38,7 @@ namespace Sender
             return Task.CompletedTask;
         }
 
-        readonly IServiceProvider serviceProvider;
+        readonly ILogger logger;
+        readonly IMessageSession messageSession;
     }
 }

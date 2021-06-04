@@ -1,7 +1,7 @@
 ---
 title: Manual unsubscribe
 summary: Shows how to manually remove subscriptions when subscribers are decommissioned.
-reviewed: 2019-04-15
+reviewed: 2021-03-02
 component: Core
 related:
 - transports
@@ -81,7 +81,7 @@ snippet: event-handler
 
 snippet: publisher-config
 
-This specific sample is configured to use [MSMQ Subscription Persistence](/persistence/msmq/subscription.md).
+This specific sample is configured to use [MSMQ Subscription Persistence](/persistence/msmq/).
 
 
 #### Subscriber decommissioning

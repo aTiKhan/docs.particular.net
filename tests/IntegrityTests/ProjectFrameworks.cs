@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using NUnit.Framework;
@@ -7,10 +11,10 @@ namespace IntegrityTests
 {
     public class ProjectFrameworks
     {
-       [Test]
-        public void DoNotUseTargetFrameworksPlural()
+        [Test]
+        public void TargetFrameworkElementShouldAgreeWithFrameworkCount()
         {
-            new TestRunner("*.csproj", "Project files should not be multi-targeted with <TargetFrameworks> element")
+            new TestRunner("*.csproj", "Project files with <TargetFrameworks> element should list multiple frameworks")
                 .IgnoreSnippets()
                 .Run(projectFilePath =>
                 {
@@ -21,27 +25,65 @@ namespace IntegrityTests
                     }
 
                     var firstTargetFrameworksElement = xdoc.XPathSelectElement("/Project/PropertyGroup/TargetFrameworks");
-                    return firstTargetFrameworksElement == null;
-                });
-        }
-
-        [Test]
-        public void EnsureSingleTargetFramework()
-        {
-            new TestRunner("*.csproj", "Project files should only contain a single <TargetFramework> element")
-                .Run(projectFilePath =>
-                {
-                    var xdoc = XDocument.Load(projectFilePath);
-                    if (xdoc.Root.Attribute("xmlns") != null)
+                    if (firstTargetFrameworksElement == null)
                     {
                         return true;
                     }
 
-                    var targetFrameworkElements = xdoc.XPathSelectElements("/Project/PropertyGroup/TargetFramework");
+                    var tfmList = firstTargetFrameworksElement.Value.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
-                    // Project may have zero of these if it has TargetFrameworks, but then it fails DoNotUseTargetFrameworksPlural
-                    // Projects with no target framework will not build at all
-                    return targetFrameworkElements.Count() <= 1;
+                    return tfmList.Length > 1;
+                });
+        }
+
+        static readonly string[] sdkProjectAllowedTfmList = new[] { "net5.0", "netcoreapp3.1", "netcoreapp2.1", "net48", "netstandard2.0" };
+        static readonly string[] nonSdkProjectAllowedFrameworkList = new[] { "v4.8" };
+
+        [Test]
+        public void RestrictTargetFrameworks()
+        {
+            var tfmString = string.Join(", ", sdkProjectAllowedTfmList);
+
+            new TestRunner("*.csproj", "Allowed target frameworks are: " + tfmString)
+                .Run(projectFilePath =>
+                {
+                    var xdoc = XDocument.Load(projectFilePath);
+                    var xmlnsNode = xdoc.Root.Attribute("xmlns");
+                    if (xmlnsNode != null)
+                    {
+                        var mgr = new XmlNamespaceManager(new NameTable());
+                        mgr.AddNamespace("x", xmlnsNode.Value);
+
+                        foreach(var node in xdoc.XPathSelectElements("/x:Project/x:PropertyGroup/x:TargetFramework", mgr))
+                        {
+                            if(!nonSdkProjectAllowedFrameworkList.Contains(node.Value))
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var node in xdoc.XPathSelectElements("/Project/PropertyGroup/TargetFramework"))
+                        {
+                            if (!sdkProjectAllowedTfmList.Contains(node.Value))
+                            {
+                                return false;
+                            }
+                        }
+                        foreach (var node in xdoc.XPathSelectElements("/Project/PropertyGroup/TargetFrameworks"))
+                        {
+                            foreach(var tfm in node.Value.Split(';'))
+                            {
+                                if (!sdkProjectAllowedTfmList.Contains(tfm))
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+
+                    return true;
                 });
         }
     }

@@ -1,7 +1,7 @@
 ---
 title: Architectural Principles
 summary: NServiceBus helps write code that is robust in production environments, preventing data loss under failure conditions
-reviewed: 2019-05-03
+reviewed: 2021-04-07
 redirects:
  - nservicebus/architectural-principles
 ---
@@ -37,9 +37,7 @@ It's very simple to build an application and get it working using traditional RP
 
 NServiceBus avoids these problems from the beginning. There's no such thing as a blocking call with one-way messaging. Common, transient errors can be resolved automatically with retries, and it's easy to recover from failures that require some manual intervention. Above all, even when a part of the system fails, no data gets lost. 
 
-In order to learn more about the relationship between messaging and reliable, scalable, highly-available systems, watch the presentation about handling failures with NServiceBus:
-
-<iframe src="//fast.wistia.net/embed/iframe/7kr0n04vi5" allowtransparency="true" frameborder="0" scrolling="no" class="wistia_embed" name="wistia_embed" allowfullscreen mozallowfullscreen webkitallowfullscreen oallowfullscreen msallowfullscreen width="640" height="480"></iframe>
+In order to learn more about the relationship between messaging and reliable, scalable, highly-available systems, watch the webinar about [handling failures with NServiceBus](https://particular.net/webinars/handling-failures-with-nservicebus).
 
 See also other webinars and presentations on the [Videos and Presentations](https://particular.net/videos) page.
 

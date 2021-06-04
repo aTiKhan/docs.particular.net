@@ -94,7 +94,7 @@ snippet: 6to7ErrorReadAppSettings
 Configuring endpoint mappings via the following APIs has been deprecated:
 
  * `IProvideConfiguration<UnicastBusConfig>`
- * `UnicastBusConfig` in an app.config `configSections`
+ * `UnicastBusConfig/MessageEndpointMappings` in an app.config `configSections`
  * Returning a `UnicastBusConfig` from an `IConfigurationSource`
 
 NOTE: **MSMQ**: [Machine names are set via the MSMQ transport routing configuration](/transports/msmq/routing.md).
@@ -116,7 +116,7 @@ snippet: 6to7endpoint-mapping-Routing-RegisterPublisher
 
 ### Access to settings
 
-The `GetSettings` extension method has been moved from `NServiceBus.Configuration.AdvanceExtensibility` to the `NServiceBus.Configuration.AdvancedExtensibility` namespace. More details on advanced access to settings can be found [here](/nservicebus/pipeline/features.md#feature-settings-endpointconfiguration).
+The `GetSettings` extension method has been moved from `NServiceBus.Configuration.AdvanceExtensibility` to the `NServiceBus.Configuration.AdvancedExtensibility` namespace.
 
 
 ###  ContextBag extensions
@@ -264,7 +264,9 @@ When running on .NET Core, endpoints **will not search the registry**, even when
 
 ### Named connection strings
 
-Configuring a transport's connection using `.ConnectionStringName(name)` has been removed. To continue to retrieve the connection string by the named value in the configuration, first retrieve the connection string and then pass it to the `.ConnectionString(value)` configuration.
+When running on .NET Core, it is no longer possible to configure a transport's connection using `.ConnectionStringName(name)`. To continue to retrieve the connection string by the named value in the configuration, first retrieve the connection string and then pass it to the `.ConnectionString(value)` configuration.
+
+When running on the .NET Framework, `.ConnectionStringName(name)` will continue to work, but the API has been marked with an obsolete warning suggesting to move to the `.ConnectionString(value)` API.
 
 
 ### Implicit "NServiceBus/Transport" connection string use
@@ -326,30 +328,3 @@ Routing messages to the local endpoint or local instance is no longer allowed fo
 As of NServiceBus version 7, all packages support [Source Link](https://github.com/dotnet/designs/blob/master/accepted/diagnostics/source-link.md), a developer productivity feature that allows debugging into NServiceBus code by downloading the source directly from GitHub.
 
 There is currently a bug with Visual Studio 2017 [SDK-style projects](https://github.com/dotnet/sdk/issues/1458) that prevents Source Link from working when the project targets the .NET Framework. A [workaround](https://github.com/dotnet/sdk/issues/1458#issuecomment-362685678) for the bug is to add the [SourceLink.Copy.PdbFiles NuGet package](https://www.nuget.org/packages/SourceLink.Copy.PdbFiles) to the project.
-
-## Changes in other packages
-
-This article so far covers the changes between NServiceBus 6 and NServiceBus 7. Depending on the other packages in use, there may be other changes to be aware of:
-
-#### Hosting
-
- * [NServiceBus Host](../host-7to8.md)
- * [Azure Cloud Services Host](../acs-host-7to8.md)
-
-#### Transports
-
- * MSMQ - The MSMQ transport has moved to a new package and is [mentioned above](#msmq).
- * [Azure Service Bus](/transports/upgrades/asb-7to8.md)
- * [Azure Storage Queues](/transports/upgrades/asq-7to8.md)
- * [RabbitMQ](/transports/upgrades/rabbitmq-4to5.md)
-
-#### Persistence
-
- * [Azure Storage](/persistence/upgrades/asp-1to2.md)
- * [RavenDB](/persistence/upgrades/ravendb-4to5.md)
-
-
-#### Others
-
- * [NServiceBus Testing](../testing-6to7.md)
- * [Azure Blob Storage Data Bus](../absdatabus-1to2.md)

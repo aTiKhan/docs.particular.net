@@ -3,8 +3,6 @@ title: NServiceBus.Extensions.Logging
 summary: Logging with Microsoft.Extensions.Logging
 reviewed: 2020-03-20
 component: Extensions.Logging
-tags:
-- Logging
 related:
 - samples/logging/extensions-logging
 ---
@@ -13,14 +11,15 @@ The `NServiceBus.Extensions.Logging` package provides support for writing NServi
 
 With this common logging abstraction, it is possible to log to different logging providers. Some third-party frameworks can perform semantic logging, also known as structured logging.
 
+NOTE: This package should only be used when configuring logging in a self-host model. If hosting with the [.NET Generic Host](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/generic-host) use [NServiceBus.Extensions.Hosting](/nservicebus/hosting/extensions-hosting.md) package instead.
+
 ## Compatibility
 
-Although NServiceBus has native support for logging frameworks like log4net, NLog, CommonLogging, and EventSourceLogging, it is recommended to use Microsoft.Extensions.Logging with these frameworks for new projects.
+Although NServiceBus has native support for logging frameworks like log4net, NLog, and CommonLogging, it is recommended to use Microsoft.Extensions.Logging with these frameworks for new projects.
 
 Microsoft.Extensions.Logging can be used to replace the following providers:
 
 - [Common.Logging](common-logging.md) (Only if the configured provider in Common.Logging is supported by Microsoft.Extensions.Logging)
-- [EventSource](eventsourcelogging.md)
 - [Log4net](log4net.md)
 - [NLog](nlog.md)
 

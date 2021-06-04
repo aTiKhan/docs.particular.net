@@ -2,11 +2,10 @@
 title: Azure Storage Queues Transport
 summary: Using Azure Storage Queues as a message transport
 component: ASQ
-tags:
- - Azure
 related:
  - samples/azure/storage-queues
-reviewed: 2020-03-25
+ - samples/azure/native-integration-asq
+reviewed: 2020-11-12
 redirects:
  - nservicebus/azure-storage-queues
 ---
@@ -24,7 +23,7 @@ include: azure-transports
 |Feature                    |   |  
 |:---                       |---
 |Transactions |None, ReceiveOnly (Message visibility timeout)
-|Pub/Sub                    |Message driven
+|Pub/Sub                    |Native (Requires Storage Table)
 |Timeouts                   |Native (Requires Storage Table)
 |Large message bodies       |Data bus
 |Scale-out             |Competing consumer
@@ -33,10 +32,6 @@ include: azure-transports
 
 ## Configuring the endpoint
 
-To use Azure Storage Queues as the underlying transport configure it as follows:
-
-snippet: AzureStorageQueueTransportWithAzure
-
-Then set up appropriate [connection strings](/transports/azure-storage-queues/configuration.md#connection-strings) and consider using aliases to make them [more secure](/transports/azure-storage-queues/configuration.md#connection-strings-using-aliases-for-connection-strings-to-storage-accounts).
+partial: endpointconfig
 
 Note: When using Azure Storage Queues transport, a serializer must be configured explicitly [by the `UseSerializer` API](/nservicebus/serialization/).

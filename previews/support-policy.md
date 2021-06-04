@@ -1,25 +1,29 @@
 ---
 title: Support policy for previews
-summary: Describes the details for the support policy for previews
-reviewed: 2020-04-07
+summary: What is supported for components in the Particular Preview Program
+reviewed: 2020-07-09
 related:
  - nservicebus/upgrades/support-policy
 ---
 
 ## Supported versions
 
-Product previews are released with a major version of 0. When a product is released with a major version of 1 or greater, it is no longer part of the preview program and does not follow this support policy.
+Product previews are released with a major version of 0. When a product is released with a major version of 1 or greater, it is no longer part of the preview program and is subject to the [regular support policy](/nservicebus/upgrades/support-policy.md).
 
 For example:
 
-| Version | Covered by this policy |
-| --- | --- |
-| 0.1.0 | Yes |
-| 0.2.0 | Yes |
-| 0.2.1 | Yes |
-| 1.0.0 | No |
+| Version | Covered by this policy | Covered by regular support policy
+| --- | --- | --- |
+| 0.1.0 | Yes | No |
+| 0.2.0 | Yes | No |
+| 0.2.1 | Yes | No |
+| 1.0.0 | No | Yes |
 
-WARN: Only the latest minor version of a preview is supported.
+Note: Only the highest minor version is supported i.e. when `0.2.0` is released, `0.1.0` is no longer supported.
+
+## Bugfixes
+
+The support policy for preview pacakges guarantees that fixes for critical bugs are released immediately after being fixed. These fixes are available only for the supported version and as such are released as a patch to the latest minor version.
 
 ## Compatibility guarantees
 
@@ -35,4 +39,4 @@ Previews may break backwards compatibility at any time. This includes, but is no
 Product previews are public for a limited time. When this time has elapsed, they are either:
 
 - Promoted to being part of the Particular Service Platform with a 1.0 release, and supported according to standard support policies.
-- Retired and no further maintenance or support is provided.
+- Offered via an open-source license to adopters with no further guaranteed maintenance or support by Particular Software.

@@ -1,8 +1,8 @@
 ---
 title: Failed Message Monitoring
-summary: Describes how ServicePulse detects and monitors failed messages, and allows retrying, or archiving of failed messages
+summary: Describes how ServicePulse detects and monitors failed messages, and allows retrying, or deleting of failed messages
 component: ServicePulse
-reviewed: 2018-11-14
+reviewed: 2020-08-03
 related:
 - serviceinsight/managing-errors-and-retries
 ---
@@ -47,6 +47,8 @@ The display of failed message groups can be changed via the "Group by" drop-down
  * **Exception Type and Stack Trace** - groups messages both by exception type and stack trace. It is the default way of categorizing failed messages.   
  * **Message Type** - groups messages by message type. 
  * **Endpoint Address** - groups messages by endpoint address where the failure occurred.
+ * **Endpoint Instance** - groups messages by endpoint instance identifier where the failure occurred.
+ * **Endpoint Name** - groups messages by name of the endpoint where the failure occurred.
  
 Note: the number of listed groups may differ depending on the selected classifications type view.
 
@@ -59,7 +61,7 @@ The following actions can be performed on a failed message group:
 
 ![Failed message groups retry in progress](images/failed-group-retry-in-progress.png 'width=500')
 
- * **Archive group** - Archives all messages contained in the group. [Learn more about archiving messages](/servicepulse/intro-archived-messages.md).
+ * **Delete group** - Deletes all messages contained in the group. [Learn more about deleting messages](/servicepulse/intro-archived-messages.md).
 
 ### Listing messages
 
@@ -77,17 +79,17 @@ NOTE: Retrying one or a few individual messages can be useful for testing system
 The following actions can also be taken on each message or a selection of messages:
 
 * **Retry** - Sends the message(s) to be reprocessed by the corresponding endpoint.
-* **Archive** - Archives message(s).
+* **Delete** - Deletes message(s).
 
 ### Message details page
 
-As of version 1.8.0 and above, each message can be browsed to see in-depth details about a given failed message, archive or to retry that message.
+As of version 1.8.0 and above, each message can be browsed to see in-depth details about a given failed message, delete or to retry that message.
 
 ![Failed Messages Page](images/failed-message-page.png 'width=500')
 
 Individual messages can be accessed by clicking the respective entry in any of the message list views.
 
-Each invidual failed message page allows for viewing the following additional message details:
+Each individual failed message page allows for viewing the following additional message details:
 
 * **Message metadata** - Failure timestamp, endpoint name and location, retry status.
 * **StackTrace** - Full .NET exception stacktrace.
@@ -97,17 +99,35 @@ Each invidual failed message page allows for viewing the following additional me
 The following actions can also be taken on any given message:
 
 * **Retry** - Sends message to be [retried](/servicepulse/intro-failed-message-retries.md) by the corresponding endpoint.
-* **Archive** - Archives the message.
+* **Delete** - Deletes the message.
 * **View in ServiceInsight** - Launches [ServiceInsight](/serviceinsight/), focusing on the failed message for in-depth analysis of the failure causes. This only works if ServiceInsight is installed on the local machine.
 
 #### Sharing message data from ServicePulse
 
 The URL from that message's page can be copied to share the details of a specific message from ServicePulse.
 
-## Archived Messages tab
+## Deleted Messages
 
-Failed messages that cannot be processed successfully (or could not be retried due to various application-specific reasons) can be archived and later viewed in the Archived Messages tab.
+### Deleted Message Groups
 
-![Archived Messages Tab](images/archive.png 'width=500')
+This list shows all groups of deleted messages.
 
-Learn more about [archiving messages in ServicePulse](/servicepulse/intro-archived-messages.md).
+![Deleted Message Groups Tab](images/archivegroups.png 'width=500')
+
+The display of deleted message groups can be changed via the "Group by" drop-down menu, according to the following classification types:
+
+ * **Exception Type and Stack Trace** - groups messages both by exception type and stack trace. It is the default way of categorizing failed messages.   
+ * **Message Type** - groups messages by message type. 
+ * **Endpoint Address** - groups messages by endpoint address where the failure occurred.
+ * **Endpoint Instance** - groups messages by endpoint instance identifier where the failure occurred.
+ * **Endpoint Name** - groups messages by name of the endpoint where the failure occurred.
+ 
+Note: the number of listed groups may differ depending on the selected classifications type view.
+
+### Deleted Messages
+
+Failed messages that cannot be processed successfully (or could not be retried due to various application-specific reasons) can be deleted and later viewed in the Deleted Messages tab.
+
+![Deleted Messages Tab](images/archive.png 'width=500')
+
+Learn more about [deleting messages in ServicePulse](/servicepulse/intro-archived-messages.md).

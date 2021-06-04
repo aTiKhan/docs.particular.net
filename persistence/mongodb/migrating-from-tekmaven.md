@@ -2,11 +2,9 @@
 title: Migrating from NServiceBus.Persistence.MongoDB
 component: mongodb
 versions: '[1,)'
-tags:
- - Persistence
 related:
  - persistence/mongodb/migrating-from-sbmako
-reviewed: 2019-05-29
+reviewed: 2021-05-11
 ---
 
 The `NServiceBus.Storage.MongoDB` package was designed to be fully compatible with the community [`NServiceBus.Persistence.MongoDB`](https://github.com/tekmaven/NServiceBus.Persistence.MongoDb) package with some minor configuration.
@@ -89,7 +87,7 @@ Subscriptions are recreated by restarting the subscribing endpoints. Alternative
 
 ### Migrating subscriptions
 
-In the tekmaven implementation there is a single document per event type containing a collection of subscribers. In NServiceBus.Storage.MongoDB, subscriptions are individual documents. Each subscription needs to be converted into an `eventsubscription` document.
+In the [Ryan Hoffman](https://github.com/tekmaven) implementation there is a single document per event type containing a collection of subscribers. In NServiceBus.Storage.MongoDB, subscriptions are individual documents. Each subscription needs to be converted into an `eventsubscription` document.
 
 ```javascript
 db.subscriptions.find().forEach(type => {

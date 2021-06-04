@@ -3,13 +3,10 @@ title: Transport Transactions
 summary: Supported transaction modes and their consistency guarantees
 component: Core
 versions: "[4,)"
-tags:
- - Transactions
- - Transport
 redirects:
  - nservicebus/messaging/transactions
  - nservicebus/transports/transactions
-reviewed: 2019-02-07
+reviewed: 2020-12-07
 related:
  - nservicebus/azure/understanding-transactionality-in-azure
 ---
@@ -25,7 +22,7 @@ It does not discuss the transaction isolation aspect. Transaction isolation appl
 
 ## Transactions
 
-Four levels of guarantees with regards to message processing are offered. A levels availability depends on the selected transport.
+Four levels of guarantees with regards to message processing are offered. A level's availability depends on the selected transport.
 
 
 ### Transaction levels supported by NServiceBus transports
@@ -37,13 +34,13 @@ partial: matrix
 
 ### Transaction scope (Distributed transaction)
 
-In this mode the transport receive operation is wrapped in a [`TransactionScope`](https://msdn.microsoft.com/en-us/library/system.transactions.transactionscope). Other operations inside this scope, both sending messages and manipulating data, are guaranteed to be executed (eventually) as a whole or rolled back as a whole.
+In this mode the transport receive operation is wrapped in a [`TransactionScope`](https://docs.microsoft.com/en-us/dotnet/api/system.transactions.transactionscope). Other operations inside this scope, both sending messages and manipulating data, are guaranteed to be executed (eventually) as a whole or rolled back as a whole.
 
-If required, the transaction is escalated to a distributed transaction (following two-phase commit protocol coordinated by [MS DTC](https://msdn.microsoft.com/en-us/library/ms684146.aspx)) if both the transport and the persistence support it. A fully distributed transaction is not always required, for example when using [SQL Server transport](/transports/sql/) with [SQL persistence](/persistence/sql/), both using the same database connection string. In this case the ADO.NET driver guarantees that everything happens inside a single database transaction and ACID guarantees are held for the whole processing.
+If required, the transaction is escalated to a distributed transaction (following two-phase commit protocol coordinated by [MSDTC](https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms684146(v=vs.85))) if both the transport and the persistence support it. A fully distributed transaction is not always required, for example when using [SQL Server transport](/transports/sql/) with [SQL persistence](/persistence/sql/), both using the same database connection string. In this case the ADO.NET driver guarantees that everything happens inside a single database transaction and ACID guarantees are held for the whole processing.
 
 NOTE: MSMQ will escalate to a distributed transaction right away since it doesn't support promotable transaction enlistments.
 
-*Transaction scope* mode is enabled by default for the transports that support it (i.e. MSMQ and SQL Server transport). It can be enabled explicitly via
+*Transaction scope* mode is enabled by default for the transports that support it (i.e. MSMQ and SQL Server transport). It can be enabled explicitly with the following code:
 
 snippet: TransportTransactionScope
 
@@ -79,7 +76,7 @@ partial: native
 
 ### Unreliable (Transactions Disabled)
 
-Disabling transactions is generally not recommended, because it might lead to the message loss. It might be considered if losing some messages is not problematic and if the messages get outdated quickly, e.g. when sending readings from sensors at regular intervals.
+Disabling transactions is generally not recommended, because it might lead to message loss. It might be considered if losing some messages is not problematic and if the messages get outdated quickly, e.g. when sending readings from sensors at regular intervals.
 
 DANGER: In this mode, when encountering a critical failure such as system or endpoint crash, the message is **permanently lost**.
 
@@ -99,7 +96,7 @@ When using the Outbox, any messages resulting from processing a given received m
 
 ## Avoiding partial updates
 
-In transaction modes lower than [TransactionScope](#transactions-transaction-scope-distributed-transaction) there is a risk of partial updates because one handler might succeed in updating business data while another handler fails. To avoid this configure NServiceBus to wrap all handlers in a `TransactionScope` that will act as a unit of work and make sure that there is no partial updates. Use following code to enable a wrapping scope:
+In transaction modes lower than [TransactionScope](#transactions-transaction-scope-distributed-transaction) there is a risk of partial updates because one handler might succeed in updating business data while another handler fails. To avoid this configure NServiceBus to wrap all handlers in a `TransactionScope` that will act as a unit of work and make sure that there are no partial updates. Use the following code to enable a wrapping scope:
 
 snippet: TransactionsWrapHandlersExecutionInATransactionScope
 

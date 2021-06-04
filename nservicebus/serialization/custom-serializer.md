@@ -4,8 +4,6 @@ summary: How to create and register custom serializer for NServiceBus.
 component: Core
 versions: '[5,)'
 reviewed: 2019-12-25
-tags:
-- serialization
 redirects:
 - nservicebus/how-to-register-a-custom-serializer
 ---
@@ -16,8 +14,6 @@ redirects:
 A custom serializer needs to implement `IMessageSerializer` interface:
 
 snippet: CustomSerializer
-
-In order to see sample implementations, refer to the [community-maintained serializers](/components#serializers).
 
 
 ### Register the serializer

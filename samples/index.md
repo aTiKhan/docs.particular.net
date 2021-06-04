@@ -42,12 +42,14 @@ Unless otherwise specified (by an individual sample) the following are the defau
 
 ### Visual Studio and .NET
 
-[Visual Studio 2017 Update 3](https://www.visualstudio.com/en-us/news/releasenotes/vs2017-relnotes) and [.NET 4.6.1](https://www.microsoft.com/en-au/download/details.aspx?id=49981) are required. If any help is required upgrading to a new version of Visual Studio, [raise an issue](https://github.com/Particular/docs.particular.net/issues).
+[Visual Studio 2017 Update 3](https://www.visualstudio.com/en-us/news/releasenotes/vs2017-relnotes). If any help is required upgrading to a new version of Visual Studio, [raise an issue](https://github.com/Particular/docs.particular.net/issues).
+
+Most samples are made available for multiple frameworks, available through a dropdown menu on the download button. Each framework has its own requirements for what version of Visual Studio is supported. For instance, .NET Core 3.1 requires at least Visual Studio 2019.
 
 
 ### C# language level
 
-All samples target **C# 7.1** to take advantage of the new language features. If any help is required in converting to earlier versions of C#, [raise an issue](https://github.com/Particular/docs.particular.net/issues).
+All samples target **C# 7.3** to take advantage of the new language features. If any help is required in converting to earlier versions of C#, [raise an issue](https://github.com/Particular/docs.particular.net/issues).
 
 
 ### ConfigureAwait
@@ -62,7 +64,7 @@ Samples default to the [learning transport](/transports/learning/) as it has the
 
 ### [Persistence](/persistence/)
 
-Samples default to either the [learning persistence](/persistence/learning/) or the [InMemory persistence](/persistence/in-memory/) since both have no requirement on installed infrastructure. **The [learning persistence](/persistence/learning/) is not for production use**.
+Samples default to either the [learning persistence](/persistence/learning/) or the [Non-Durable persistence](/persistence/non-durable/) since both have no requirement on installed infrastructure. **The [learning persistence](/persistence/learning/) is not for production use**.
 
 
 ### Console hosting

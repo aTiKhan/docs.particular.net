@@ -1,11 +1,9 @@
 ---
 title: Azure Storage Queues Transport Configuration
 component: ASQ
-tags:
-- Azure
 related:
-- persistence/azure-storage/performance-tuning
-reviewed: 2019-06-04
+- persistence/azure-table/performance-tuning
+reviewed: 2020-11-12
 redirects:
  - nservicebus/azure-storage-queues/configuration
 ---
@@ -46,7 +44,7 @@ Defaults: `false`, i.e. messages are not removed when endpoint starts.
 
 The [visibilitytimeout mechanism](https://docs.microsoft.com/en-us/rest/api/storageservices/get-messages), supported by Azure Storage Queues, causes the message to become *invisible* after read for a specified period of time. If the processing unit fails to delete the message in the specified time, the message will reappear on the queue. Then another process can retry the message.
 
-Defaults: 30000 ms (i.e. 30 seconds)
+Defaults: 30,000 ms (i.e. 30 seconds)
 
 
 #### BatchSize
@@ -63,8 +61,11 @@ partial: serialization
 
 partial: config
 
+partial: nativepubsub
 
 ## Connection strings
+
+partial: using-clients
 
 Note that multiple connection string formats apply when working with Azure storage services. When running against the emulated environment the format is `UseDevelopmentStorage=true`, but when running against a cloud hosted storage account the format is `DefaultEndpointsProtocol=https;AccountName=myAccount;AccountKey=myKey;`
 

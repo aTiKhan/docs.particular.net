@@ -3,10 +3,7 @@ title: Migrating from the endpoint-oriented topology
 summary: Migrating a system using the Azure Service Bus transport from the endpoint-oriented topology to the forwarding topology
 component: ASB
 versions: '[9.1,)'
-tags:
-- Azure
-- Transport
-reviewed: 2019-02-27
+reviewed: 2020-04-30
 related:
  - transports/azure-service-bus/legacy/topologies
 ---
@@ -22,8 +19,7 @@ Before migrating to the new Azure Service Bus transport, a system using the endp
 
 ## Namespace validation
 
-To proceed with migration, it's recommended to verify Azure Service Bus namespaces support the migration feature.
-Verification steps are described [here](https://github.com/Particular/NServiceBus.AzureServiceBus/issues/810). 
+To proceed with migration, it's recommended to verify Azure Service Bus namespaces support the migration feature. See [verification steps for migration](https://github.com/Particular/NServiceBus.AzureServiceBus/issues/810). 
 
 All namespaces used for development, testing, and production should be validated prior to migration taking place.
 
@@ -43,7 +39,7 @@ After applying the above steps to one or more endpoints, they should be deployed
 
 ### Other Platform components
 
-ServiceControl should now be upgraded to Version 3.5.0 or later and both ServiceControl and Monitoring instances should be updated to latest. The migration mode is enabled automatically.
+ServiceControl should now be upgraded to Version 3.5.0 or later, and both ServiceControl and Monitoring instances should be updated to the latest. The migration mode is enabled automatically.
 
 
 ### Next steps
@@ -69,12 +65,12 @@ NOTE: Endpoints using the endpoint-oriented topology with migration mode enabled
 
 ### Other Platform components
 
-ServiceControl and Monitoring instances should now be switched switched to `Azure Service Bus` transport using ServiceControl Management Utility.
+ServiceControl and Monitoring instances should now be switched to `Azure Service Bus` transport using ServiceControl Management Utility.
 
 
 ## Finalizing migration (cleanup stage)
 
-After all the endpoints have been running in production for some time using the forwarding topology, the [endpoint-oriented topology](/transports/azure-service-bus/legacy/topologies.md#versions-7-and-above-endpoint-oriented-topology) topics with their subscriptions can be removed.
+After all, the endpoints have been running in production for some time using the forwarding topology, the [endpoint-oriented topology](/transports/azure-service-bus/legacy/topologies.md#versions-7-and-above-endpoint-oriented-topology) topics with their subscriptions can be removed.
 
 WARNING: Exercise caution when removing subscriptions. If it is unclear which subscriptions can be removed, contact [Support](https://particular.net/support).
 
@@ -98,7 +94,7 @@ Below is an example of a publisher with two events, `EventA` and `EventB`, and a
 ## Frequently asked questions
 
 Q: Why is the `migration` topic required?
-A: When an instance of a publisher is been migrated to the forwarding topology, and another instance is still in migration, all events published by the endpoint still in migration need to be de-duplicated. The `migration` topic ensures events are de-duplicated regardless of which instance published them.
+A: When an instance of a publisher has been migrated to the forwarding topology, and another instance is still in migration, all events published by the endpoint still in migration need to be de-duplicated. The `migration` topic ensures events are de-duplicated regardless of which instance published them.
 
 Q: What should be migrated first, subscribers or publishers?
 A: The order of migration doesn't matter. A publisher could also be a subscriber and the other way around.
@@ -112,6 +108,6 @@ A: No. Commands work the same way in both topologies and are not affected by mig
 
 ## Additional considerations
 
-When migrating from the legacy Azure Service Bus transport, not all configuration settings will be found with the new Azure Service Bus transport. Certain configuration option will not be found in the new transport as it has sensible and optimal settings configured by the transports and should not be altered.
+When migrating from the legacy Azure Service Bus transport, not all configuration settings will be found with the new Azure Service Bus transport. Certain configuration options will not be found in the new transport as it has sensible and optimal settings configured by the transports and should not be altered.
 
 Particular Services Platform support for new transport was added in Service Control version 3 and later. 

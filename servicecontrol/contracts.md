@@ -4,8 +4,6 @@ summary: Build custom notifications by subscribing to ServiceControl events
 reviewed: 2020-03-30
 component: ServiceControlContracts
 isLearningPath: true
-tags:
- - Notifications
 redirects:
  - servicepulse/custom-notification-and-alerting-using-servicecontol-events
  - servicepulse/custom-notification-and-alerting-using-servicecontrol-events
@@ -44,7 +42,7 @@ To subscribe to the `MessageFailed` event:
  * Create an [NServiceBus endpoint](/nservicebus/hosting/nservicebus-host/).
  * Install the [ServiceControl.Contracts NuGet package](https://www.nuget.org/packages/ServiceControl.Contracts/).
  * Customize the endpoint configuration to use `JsonSerializer` as the message published by ServiceControl uses JSON serialization.
- * Customize the endpoint configuration so that the following conventions are used, as the `MessageFailed` event that is published by ServiceControl does not derive from `IEvent`.
+ * Customize the endpoint configuration so that the following conventions are used, as the events published by ServiceControl do not derive from `IEvent`.
 
 This code sample illustrates how to do this customization:
 
@@ -77,6 +75,16 @@ NOTE: Transports that [natively support publish and subscribe](/transports/types
 ServiceControl will also publish events based on collected monitoring data.
 
 See [Heartbeat Notification Events](/monitoring/heartbeats/notification-events.md) and [Custom Check Notification Events](/monitoring/custom-checks/notification-events.md) for a description of these events.
+
+## Other events
+
+NOTE: Events described in this section are published by ServiceControl starting with version 4.17.
+
+ServiceControl will also publish events related to archiving and retrying messages
+- `FailedMessagesArchived`: Event emitted for failed messages that were archived
+- `FailedMessagesUnArchived`: Event emitted for failed messages that were un-archived
+- `MessageFailureResolvedByRetry`: Event emitted by ServiceControl for each failed message that was resolved by retry
+- `MessageFailureResolvedManually`: Event emitted by ServiceControl for each failed message that was resolved manually
 
 
 ## Decommissioning subscribers to ServiceControl events

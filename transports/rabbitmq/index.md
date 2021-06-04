@@ -9,11 +9,13 @@ related:
 redirects:
  - nservicebus/rabbitmq/configuration-api
  - nservicebus/rabbitmq
-tags:
- - Transport
 ---
 
 Provides support for sending messages over [RabbitMQ](https://www.rabbitmq.com/) using the [RabbitMQ .NET Client](https://www.nuget.org/packages/RabbitMQ.Client/).
+
+## Hosting options
+
+The transport is compatible with RabbitMQ broker version 3.4 or higher either self-hosted or running on [Amazon MQ](https://aws.amazon.com/amazon-mq/) or [CloudAMQP](https://www.cloudamqp.com/).
 
 WARNING: The transport is not compatible with RabbitMQ broker version 3.3.X and below.
 
@@ -58,4 +60,12 @@ partial: topology
  * Doesn't handle [network partitions](https://www.rabbitmq.com/partitions.html) well; partitioning across a WAN requires dedicated features.
  * Requires careful consideration for duplicate messages, e.g. using the [outbox](/nservicebus/outbox/) feature or making all endpoints idempotent.
  * Many organizations don't have the same level of expertise with RabbitMQ as with other technologies, such as SQL Server, so it may require additional training.
- * May require covering additional costs of [commercial RabbitMQ license and support](https://www.rabbitmq.com/services.html).
+ * May require additional costs of [commercial RabbitMQ license and support](https://www.rabbitmq.com/services.html).
+
+## Controlling delivery mode
+
+In AMQP [the `delivery_mode`](https://www.rabbitmq.com/amqp-0-9-1-reference.html) controls how the broker treats the message from a durability standpoint. NServiceBus will default to `persistent` in order to prevent message loss. To optimize for higher throughput this can be changed to `non-persistent`.
+
+DANGER: Any failure in transmission or issues in the broker will result in the message being lost
+
+partial: nonpersistent

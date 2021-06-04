@@ -4,9 +4,6 @@ summary: Resolutions for common problems with the MSMQ transport.
 reviewed: 2019-10-18
 component: MsmqTransport
 isLearningPath: true
-tags:
-- Transport
-- MSMQ
 redirects:
  - nservicebus/messagequeueexception-insufficient-resources-to-perform-operation
  - nservicebus/msmq/messagequeueexception-insufficient-resources-to-perform-operation
@@ -80,13 +77,11 @@ This exception may occur if the MSMQ service is stopped or crashed.
 - For every endpoint [configure dependencies on the MSMQ service](/nservicebus/hosting/windows-service.md#installation-specifying-service-dependencies). The endpoints will then be automatically stopped/restarted in case the MSMQ service is restarted. Note the endpoints will be restarted only if the MSMQ service is _restarted_, but not if it's only _stopped_ or only _started_.
 - If self-hosting, ensure that the [critical error handling is configured](/nservicebus/hosting/critical-errors.md#custom-handling) correctly and custom callback method has been provided.
 
-
 ## Virtual Private Networks (VPN)
 
 MSMQ cannot dynamically detect network interfaces. If a connection to a VPN is established after the MSMQ service starts, a restart of the MSMQ service is required. Once it starts with the interface, the VPN is free to disconnect/reconnect whenever it wants.
 
 It is recommended to have batch setup scripts that run on server startups to connect the VPN, which then restarts the MSMQ service automatically.
-
 
 ## Network Load Balancing cannot be used
 
@@ -107,6 +102,23 @@ When MSMQ dead-lettering is disabled *Number of messages* will only indicate the
 
 For more information, see [MSMQ dead-letter queues](dead-letter-queues.md).
 
+## Monitoring MSMQ
+
+The following precautions can be taken to monitor the health of MSMQ in a production environment:
+
+* Monitor all (transactional) dead letter queues.
+* Monitor the disk space available to MSMQ.
+* Monitor MSMQ performance counters:
+  * MSMQ Service / Total bytes in all queues
+  * MSMQ Service / Total messages in all queues
+
+Define thresholds for the performance counters. Then create alerts that are triggered when the thresholds are exceeded. The alerts can be integrated with monitoring suites like Solarwinds, New Relic, SCOMM, or similar tools.
+
+To determine useful thresholds, determine what values are typical for the specific environment to act as a baseline. This helps detect and address potential issues early, e.g. before MSMQ reaches its limits with regards to disk and memory usage.
+
+## Virus scanners
+
+Ensure that the relevant MSMQ folders are excluded from virus scanning. Virus scanners can prevent certain file actions from happening.
 
 ## Useful links
 

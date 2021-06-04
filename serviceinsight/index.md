@@ -1,6 +1,6 @@
 ---
 title: ServiceInsight
-reviewed: 2019-03-19
+reviewed: 2021-01-18
 component: ServiceInsight
 isLearningPath: true
 redirects:
@@ -25,7 +25,7 @@ NOTE: Endpoint lists, message information, and message flows will not be populat
 
 ```mermaid
 graph RL
-EP[Endpoint]-- Audits -->AQ
+EP[Endpoint]-- Audits/SagaAudits -->AQ
 EP-- Errors -->EQ
 EP-- SagaAudits -->SCQ
 AQ(Audit Queue)-- Ingests -->SC
@@ -33,6 +33,8 @@ EQ(Error Queue)-- Ingests -->SC
 SCQ(ServiceControl Queue)-- Ingests -->SC
 SC[ServiceControl]-- HTTP API ---SI[ServiceInsight]
 ```
+
+Note: In versions of ServiceControl prior to version 4.13.0, saga state change (SagaAudit) information can only be processed via the `ServiceControl Queue` (the input queue of the main ServiceControl instance). Starting with version 4.13.0, the SagaAudit data can also be processed by the ServiceControl audit instance via the `audit` queue. The latter approach is recommended.
 
 ## The Messages window
 
@@ -74,6 +76,10 @@ The Endpoint Explorer indicates the connection to the ServiceControl instance pr
 
 Select endpoints to filter the message list. Select the root ServiceControl connection and the tree view to make the list expand to include all messages.
 
+### Multiple ServiceControl connections
+
+Starting with version 2.4.0, ServiceInsight can be connected to more than one ServiceControl instance at a time. Each ServiceControl connected instance will be displayed in the Endpoint Explorer and endpoints belonging to each instance will be grouped under the instance node. Selecting an instance allows to disconnect ServiceInsight from that ServiceControl instance.
+
 ## Flow diagram
 
 The flow diagram provides extensive message and system information. When messages are selected in the message list, the flow diagram illustrates the message and all related messages from the same conversation, along with the nature of the messages and the endpoints involved.
@@ -114,6 +120,11 @@ ServiceInsight can show the body of a message in either `XML` or `JSON` format, 
 
 ![Body Tab](images/overview-bodyview.png 'width=500')
 
+## Custom message viewers
+
+ServiceInsight has an extensibility point that allows creating custom message viewers. These are suitable when a custom serializer is used or when the message is partially or fully encrypted and access to messages in in clear text is required in ServiceInsight.
+
+Read more about the [custom message viewers](/serviceinsight/custom-message-viewers.md) and the plugin model.
 
 ## Log view
 

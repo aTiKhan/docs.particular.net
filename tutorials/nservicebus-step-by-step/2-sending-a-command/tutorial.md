@@ -1,6 +1,6 @@
 ---
 title: "NServiceBus Step-by-step: Sending a command"
-reviewed: 2018-08-08
+reviewed: 2020-04-29
 summary: In this 15-20 minute tutorial, you'll learn how to define NServiceBus messages and handlers, and send and receive a message.
 redirects:
 - tutorials/intro-to-nservicebus/2-sending-a-command
@@ -18,9 +18,9 @@ In the next 15-20 minutes, you will learn how to define messages and message han
 
 ## What is a message
 
-A [**message**](/nservicebus/messaging/messages-events-commands.md) is a collection of data sent via one-way communication between two endpoints. In NServiceBus, we define message via simple classes.
+A [**message**](/nservicebus/messaging/messages-events-commands.md) is a collection of data sent via one-way communication between two endpoints. In NServiceBus, we define messages via simple classes.
 
-In this lesson, we'll focus on [commands](/nservicebus/messaging/messages-events-commands.md). In [Lesson 4: Publishing events](../4-publishing-events/) we'll expand to look at events as well.
+In this lesson, we'll focus on one type of message: [commands](/nservicebus/messaging/messages-events-commands.md). In [Lesson 4: Publishing events](../4-publishing-events/) we'll expand to look at another type of message, events, as well.
 
 To define a command, create a class and mark it with the `ICommand` interface.
 
@@ -38,7 +38,7 @@ Messages can even contain child objects or collections. The supported range of s
 
 snippet: ComplexCommand
 
-Messages are a contract between two endpoints. Any change to the message will likely involve a change on both the sender and receiver side. The more properties you have on a message, the more reasons it has to change, so keep your messages as slim as possible.
+Messages are a contract between two endpoints. Any change to the message will likely involve a change on both the sender and receiver side. The more properties you have on a message, the more reasons it has to change, so keep your messages [as slim as possible](https://particular.net/blog/putting-your-events-on-a-diet).
 
 Also, do not embed logic within your message classes. Each message should contain only automatic properties and not computed properties or methods. It is a good practice to initialize collection properties as shown above, so that you never have to deal with a null collection.
 
@@ -51,7 +51,7 @@ Messages are data contracts and as such, they are shared between multiple endpoi
 
 **Message assemblies** should be entirely self-contained, meaning they should contain only NServiceBus message types, and any supporting types required by the messages themselves. For example, if a message uses an enumeration type for one of its properties, that enumeration type should also be contained within the same message assembly.
 
-INFO: It is technically possible to embed messages within the endpoint assembly, but those messages can't be exchanged with other endpoints. Some of our samples break this rule and embed the messages in the endpoint assembly in order to make the sample easier to understand. In this tutorial, we'll stick to keeping them in dedicated message assemblies.
+INFO: It is technically possible to embed messages within the endpoint assembly, but those messages can't be exchanged with other endpoints. Some of the samples in our documentation break this rule and embed the messages in the endpoint assembly in order to make the sample easier to understand. In this tutorial, we'll stick to keeping them in dedicated message assemblies.
 
 Additionally, message assemblies should have no dependencies other than libraries included with the .NET Framework, and the NServiceBus core assembly, which is required to reference the `ICommand` interface. 
 
@@ -66,7 +66,7 @@ snippet: EmptyHandler
 
 The implementation of the `IHandleMessages<T>` interface is the `Handle` method, which NServiceBus will invoke when a message of type `T` (in this case `DoSomething`) arrives. The `Handle` method receives the message and an `IMessageHandlerContext` that contains contextual API for working with messages.
 
-Instead of explicitly returning a `Task`, you can add the `async` keyword to a handler method:
+Since the handlers in the tutorials are very simple and mostly just log information, they don't need to have the `async` keyword in the method definition. However, it's possible to add it and modify the handler to not return a `Task`:
 
 snippet: EmptyHandlerAsync
 

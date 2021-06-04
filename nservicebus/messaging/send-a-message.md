@@ -1,6 +1,6 @@
 ---
 title: Sending messages
-reviewed: 2018-10-04
+reviewed: 2020-06-18
 component: Core
 redirects:
  - nservicebus/how-do-i-send-a-message
@@ -23,8 +23,6 @@ To send a message directly from the endpoint:
 
 snippet: BasicSend
 
-partial: batch-sends-performance
-
 Unit testing the process of sending a message is supported by [the `NServiceBus.Testing` library](/nservicebus/testing/#testing-message-session-operations).
 
 ## Inside the incoming message processing pipeline
@@ -35,17 +33,13 @@ To send a message from inside a message handler:
 
 snippet: SendFromHandler
 
-partial: imessagessession-warning
-
+partial: batch-sends-performance
 
 partial: override-default-routing
 
-
 partial: sending-to-self
 
-
 partial: influence-reply
-
 
 ## Dispatching a message immediately
 

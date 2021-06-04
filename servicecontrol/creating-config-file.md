@@ -216,9 +216,15 @@ Default: `14` (14 days).
 
 Valid range for this setting is from 1 hour to 200 days.
 
-
 ## Performance tuning
 
+#### ServiceControl/MaximumConcurrencyLevel
+
+This setting controls how many messages can be processed concurrently (in parallel) by ServiceControl. The default value is 10.
+
+In some cases, the ingestion rate can be too high and the underlying database cannot keep up with indexing the new messages. In this case, consider lowering the maximum concurrency level to a value that still allows a suitable ingestion rate while easing the pressure on the database.
+
+Warning: The maximum concurrency level should be incremented only if there are no verified bottlenecks in CPU, RAM, network I/O, storage I/O, and storage index lag.
 
 #### ServiceControl/MaximumMessageThroughputPerSecond
 

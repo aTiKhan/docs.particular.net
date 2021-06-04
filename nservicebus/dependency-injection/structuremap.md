@@ -3,13 +3,13 @@ title: StructureMap
 summary: Details on how to Configure NServiceBus to use StructureMap for dependency injection.
 component: StructureMap
 reviewed: 2020-02-20
-tags:
- - Dependency Injection
 redirects:
  - nservicebus/containers/structuremap
 related:
  - samples/dependency-injection/structuremap
 ---
+
+include: container-deprecation-notice
 
 partial: usage
 

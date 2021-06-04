@@ -1,7 +1,7 @@
 ---
 title: ServiceControl Hardware Considerations
 summary: Hardware recommendations for running ServiceControl
-reviewed: 2018-10-17
+reviewed: 2020-07-07
 ---
 
 ServiceControl as an application can be used to process the entire message load of a system. This article provides general guidelines, recommendations, and performance benchmarks to help determine the resources to provide for a production environment. To identify the hardware specifications for any system environment, a combination of testing with the system and the information provided below will need to be used.
@@ -9,11 +9,12 @@ ServiceControl as an application can be used to process the entire message load 
 ## General recommendations
 
 * Install ServiceControl on a dedicated server in production.
-* 6 GB of RAM minimum
+* Hosting ServiceControl and ServiceControl.Audit is preferred on seperate servers.
+* A minimum of 12 GB of RAM per instance (excluding RAM for OS and other services).
 * 2 GHz quad core CPU or better
 * [Database path](/servicecontrol/creating-config-file.md#host-settings-servicecontroldbpath) located on disks suitable for low latency write operations (fiber, solid state drives, raid 10), with a recommended IOPS of at least 7500.
 
-NOTE: To ensure disk performance, use a benchmark tool, such as [CrystalDiskMark](https://crystalmark.info/en/software/crystaldiskmark/) (Simple) or [DiskSpd](https://github.com/Microsoft/diskspd) (Advanced).
+NOTE: Use a storage benchmark tool to measure disk performance, such as Windows System Assessment Tool (`winsat disk -drive g`), [CrystalDiskMark](https://crystalmark.info/en/software/crystaldiskmark/), or [DiskSpd](https://github.com/Microsoft/diskspd).
 
 ### Server performance monitoring
 
@@ -21,34 +22,21 @@ Due to changes in the system it supports, the requirements for a server hosting 
 
 Real disk, CPU, RAM, and network performance can be monitored with the Windows Resource Monitor and/or Windows Performance counters.
 
-## Benchmark data
+### Storage
 
-ServiceControl version 3.0.0 was tested to validate performance improvements made between version 2 and version 3. 
+It is recommended to:
 
-NOTE: The test harness used is a simplified test. It is strongly recommended to run performance tests with realistic message loads to validate baseline hardware requirements. This benchmark data is meant only as a point of reference to assist with determining dedicated ServiceControl server requirements.
+- Store ServiceControl data on a dedicated disk. This makes low-level resource monitoring easy and ensures different applications are not competing for storage IOPS.
+- Store multiple ServiceControl databases on seperate physical disks to prevent multiple instances to compete for the same disk resources.
+- Disable disk write caching (read caching is fine) to prevent data corruption if the (virtual) server or disk controler fails. This is a general best practice for databases.
 
-### Hardware used
-
-* 16 vCPU
-* 64 GB RAM
-* 2x7500 IOPS striped disk dedicated for the database
-
-### Audit message processing throughput
-
-Message Size | Messages Per Second
----- | ----
-13 KB | 140 msgs/s
-66 KB | 80 msgs/s
-
-### Disk usage
-
-While disk usage was not captured across all tests, for a scenario using a 66 KB message size and storing 450,000 messages the total database size was 4 GB.
+Note: Do not use an ephemeral AWS or Azure disk for ServiceControl data because these disks will be erased when the virtual machine reboots.
 
 ## Suggestions to improve performance
 
 ### More RAM
 
-The embedded RavenDB will utilize additional RAM to improve indexing performance.
+The embedded RavenDB will utilize additional RAM to improve indexing performance. During load ServiceControl can easily peak to 12GB
 
 ### Message size / MaxBodySizeToStore
 

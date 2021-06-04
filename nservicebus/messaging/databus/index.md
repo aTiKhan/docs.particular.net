@@ -2,9 +2,7 @@
 title: Data Bus
 summary: How to handle messages that are too large to be sent by a transport natively
 component: Core
-reviewed: 2019-01-27
-tags:
- - DataBus
+reviewed: 2020-12-01
 redirects:
  - nservicebus/databus
 related:
@@ -40,7 +38,7 @@ There are two ways to specify the message properties to be sent using the data b
  1. Using the `DataBusProperty<T>` type
  1. Message conventions
 
-Note: The properties must be of type `byte[]`.
+Note: Data bus properties must be of type `byte[]` and be top-level properties on the message class.
 
 
 ### Using DataBusProperty<T>
@@ -67,6 +65,7 @@ snippet: MessageWithLargePayloadUsingConvention
 
 By default NServiceBus uses a `BinaryFormatter` to serialize and deserialize data bus properties.
 
+WARN: When targeting `.net5.0` a customer serializer must be used (see below) since `BinaryFormatter` [no longer is supported](https://docs.microsoft.com/en-us/dotnet/core/compatibility/core-libraries/5.0/binaryformatter-serialization-obsolete).
 
 ### Using a custom serializer
 

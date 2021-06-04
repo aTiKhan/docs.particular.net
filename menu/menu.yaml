@@ -24,17 +24,19 @@
     - Url: tutorials/nservicebus-sagas
       Title: NServiceBus Sagas
       Articles:
-      - Url: tutorials/nservicebus-sagas/1-getting-started
-        Title: Getting started
+      - Url: tutorials/nservicebus-sagas/1-saga-basics
+        Title: Saga basics
       - Url: tutorials/nservicebus-sagas/2-timeouts
         Title: Timeouts
+      - Url: tutorials/nservicebus-sagas/3-integration
+        Title: Third-party integration
     - Url: tutorials
       Title: More tutorials
       Articles:
       - Url: tutorials/monitoring-setup
-        Title: Monitoring NServiceBus solutions
+        Title: NServiceBus monitoring setup
       - Url: tutorials/monitoring-demo
-        Title: Monitoring NServiceBus solutions:demo
+        Title: NServiceBus monitoring demo
     - Url: get-started/high-level-content
       Title: High-level content
     - Url: samples/netcore
@@ -44,6 +46,17 @@
   - Url: nservicebus
     Title: General
     Articles:
+    - Url: nservicebus/best-practices
+      Title: Best practices
+    - Url: nservicebus/concepts
+      Title: Messaging Concepts
+      Articles:
+      - Url: nservicebus/concepts/glossary
+        Title: Glossary
+      - Url: nservicebus/concepts/priority-queues
+        Title: Priority Queues
+      - Url: nservicebus/concepts/data-distribution
+        Title: Data distribution
     - Url: platform
       Title: Service Platform
       Articles:
@@ -53,18 +66,16 @@
         Title: Platform Sample Installation
     - Url: samples/endpoint-configuration
       Title: Configuration choices Sample
-    - Url: nservicebus/concept-overview
-      Title: Concepts
     - Url: nservicebus/dotnet-templates
       Title: dotnet new Templates
     - Url: nservicebus/vscode
       Title: Debugging in VS Code
-    - Url: platform/installer
-      Title: Platform Installer
     - Url: nservicebus/licensing
       Title: License
-    - Url: components
-      Title: Extensions
+    - Url: nservicebus/community
+      Title: Community extensions and integrations
+    - Url: nservicebus/release-notifications
+      Title: Release notifications
     - Url: platform/contributing
       Title: Contributing
     - Url: nservicebus/architecture/principles
@@ -84,9 +95,11 @@
       - Url: nservicebus/upgrades/all-versions
         Title: All versions
       - Url: nservicebus/upgrades/supported-platforms
-        Title: Supported platforms
+        Title: Supported frameworks and platforms
     - Url: nservicebus/upgrades/release-policy
       Title: Release Policy
+    - Url: nservicebus/upgrades/third-party-licenses
+      Title: Third-party licenses
     - Url: security-advisories
       Title: Security Advisories
       Articles:
@@ -100,6 +113,11 @@
       Title: Callbacks 1 to 2
     - Url: nservicebus/upgrades/7to8
       Title: NServiceBus 7 to 8
+      Articles:
+      - Url: nservicebus/upgrades/7to8/transport
+        Title: Transport Configuration Changes
+      - Url: nservicebus/upgrades/7to8/dependency-injection
+        Title: Dependency Injection Changes
     - Url: nservicebus/upgrades/6to7
       Title: NServiceBus 6 to 7
       Articles:
@@ -150,8 +168,6 @@
       Title: NServiceBus 4 to 5
     - Url: nservicebus/upgrades/3to4
       Title: NServiceBus 3 to 4
-    - Url: nservicebus/upgrades/encryption-key-identifiers
-      Title: Upgrade encryption configuration
     - Title: Metrics
       Articles:
       - Url: nservicebus/upgrades/metrics-1to2
@@ -175,7 +191,11 @@
       - Url: nservicebus/upgrades/absdatabus-1to2
         Title: Version 1 to 2
       - Url: nservicebus/upgrades/absdatabus-2to3
-        Title: Version 2 to 3        
+        Title: Version 2 to 3
+      - Url: nservicebus/upgrades/absdatabus-3to4
+        Title: Version 3 to 4
+      - Url: nservicebus/upgrades/absdatabus-4to5
+        Title: Version 4 to 5
     - Title: Azure Cloud Services Host
       Articles:
       - Url: nservicebus/upgrades/acs-host-7to8
@@ -313,12 +333,10 @@
         Title: Upgrade NServiceBus.Bridge to NServiceBus.Router
     - Url: nservicebus/rawmessaging
       Title: Raw messaging
-    - Url: nservicebus/mailer
-      Title: Mailer
     - Url: nservicebus/outbox
       Title: Outbox
     - Url: nservicebus/messaging/databus
-      Title: Databus
+      Title: Data Bus
       Articles:
       - Url: nservicebus/messaging/databus/file-share
         Title: File Share
@@ -344,16 +362,25 @@
       Title: Windows Service Installation
     - Url: nservicebus/hosting/override-hostid
       Title: Overriding the host identifier
+    - Url: nservicebus/hosting/override-machine-name
+      Title: Overriding the machine name
     - Url: nservicebus/hosting/custom-configuration-providers
       Title: Overriding app.config settings
     - Url: nservicebus/hosting/assembly-scanning
       Title: Assembly scanning
+    - Url: nservicebus/hosting/cooperative-cancellation
+      Title: Cooperative cancellation
     - Url: nservicebus/hosting/critical-errors
       Title: Critical Errors
     - Url: nservicebus/hosting/extensions-hosting
       Title: Microsoft Generic Host
     - Url: nservicebus/hosting/web-application
       Title: Web Application
+    - Url: nservicebus/hosting/azure-functions
+      Title: Azure Functions
+      Articles:
+      - Url: nservicebus/hosting/azure-functions/service-bus
+        Title: Service Bus
     - Url: nservicebus/hosting/service-fabric-hosting
       Title: Service Fabric
       Articles:
@@ -442,6 +469,8 @@
       Title: Fluent style tests
     - Url: nservicebus/messaging/callbacks-testing
       Title: Callbacks
+    - Url: nservicebus/messaging/uniformsession-testing
+      Title: Uniform session
   - Url: nservicebus/recoverability
     Title: Recoverability
     Articles:
@@ -504,8 +533,6 @@
       Title: Ninject
     - Url: nservicebus/dependency-injection/spring
       Title: Spring
-    - Url: nservicebus/dependency-injection/simpleinjector
-      Title: SimpleInjector
     - Url: nservicebus/dependency-injection/structuremap
       Title: StructureMap
     - Url: nservicebus/dependency-injection/unity
@@ -525,8 +552,6 @@
       Title: NLog
     - Url: nservicebus/logging/common-logging
       Title: CommonLogging
-    - Url: nservicebus/logging/eventsourcelogging
-      Title: EventSourceLogging
     - Url: nservicebus/operations/auditing
       Title: Auditing Messages
   - Url: nservicebus/security
@@ -538,9 +563,7 @@
     Title: Operations
     Articles:
     - Url: platform/installer/offline
-      Title: Particular Service Platform Installation 
-    - Url: platform/installer
-      Title: Particular Service Platform Installer
+      Title: Particular Service Platform Installation
     - Url: nservicebus/hosting/startup-diagnostics
       Title: Startup diagnostics
     - Url: nservicebus/operations/transactions-message-processing
@@ -570,6 +593,16 @@
       Title: GDPR
     - Url: nservicebus/compliance/fips
       Title: FIPS
+  - Url: nservicebus/tools
+    Title: Supported Tools
+    Articles:
+    - Url: nservicebus/tools/migrate-to-native-delivery
+      Title: Migrating timeouts
+  - Url: nservicebus/troubleshooting
+    Title: Troubleshooting
+    Articles:
+    - Url: nservicebus/troubleshooting/message-loss
+      Title: Message loss
 
 - Name: Transports
   Url: transports
@@ -590,10 +623,22 @@
     Articles:
     - Title: Azure Storage Queues
       Articles:
-      - Url: transports/upgrades/asq-6to7
-        Title: Version 6 to 7
+      - Url: transports/upgrades/asq-10to11
+        Title: Version 10 to 11
+      - Url: transports/upgrades/asq-9to10
+        Title: Version 9 to 10
+      - Url: transports/upgrades/asq-8to9
+        Title: Version 8 to 9
       - Url: transports/upgrades/asq-7to8
         Title: Version 7 to 8
+      - Url: transports/upgrades/asq-6to7
+        Title: Version 6 to 7
+    - Title: Azure Service Bus
+      Articles:
+      - Url: transports/upgrades/asbs-1.7to1.8
+        Title: Verson 1.7 to 1.8
+      - Url: transports/upgrades/asbs-1to2
+        Title: Version 1 to 2
     - Title: Azure Service Bus (Legacy)
       Articles:
       - Url: transports/upgrades/asb-10toasbs-1
@@ -610,6 +655,10 @@
         Title: Version 6 to 7
     - Title: RabbitMQ
       Articles:
+      - Url: transports/upgrades/rabbitmq-6to7
+        Title: Version 6 to 7
+      - Url: transports/upgrades/rabbitmq-5to6
+        Title: Version 5 to 6
       - Url: transports/upgrades/rabbitmq-4to5
         Title: Version 4 to 5
       - Url: transports/upgrades/rabbitmq-4.0to4.1
@@ -618,8 +667,12 @@
         Title: Version 3 to 4
     - Title: SQL Server
       Articles:
+      - Url: transports/upgrades/sqlserver-6to7
+        Title: Version 6 to 7
+      - Url: transports/upgrades/sqlserver-non-clustered-idx
+        Title: Non-clustered index in the input queue
       - Url: transports/upgrades/sqlserver-5to6
-        Title: Version 5 to 6        
+        Title: Version 5 to 6
       - Url: transports/upgrades/sqlserver-4to5
         Title: Version 4 to 5
       - Url: transports/upgrades/sqlserver-31to4
@@ -636,12 +689,20 @@
         Title: Version 1.x to 1.2.5
     - Title: Amazon SQS
       Articles:
+      - Url: transports/upgrades/amazonsqs-5to6
+        Title: Version 5 to 6
+      - Url: transports/upgrades/amazonsqs-4to5
+        Title: Version 4 to 5
       - Url: transports/upgrades/amazonsqs-3to4
         Title: Version 3 to 4
       - Url: transports/upgrades/amazonsqs-2to3
         Title: Version 2 to 3
       - Url: transports/upgrades/amazonsqs-1to3
         Title: Version 1 to 3
+    - Title: MSMQ
+      Articles:
+      - Url: transports/upgrades/msmq-1to2
+        Title: Version 1 to 2
   - Url: transports/learning
     Title: Learning Transport
     Articles:
@@ -656,6 +717,10 @@
       Title: Native message access
     - Url: transports/azure-service-bus/compatibility
       Title: Backwards compatibility
+    - Url: transports/azure-service-bus/native-integration
+      Title: Native Integration
+    - Url: transports/azure-service-bus/topology
+      Title: Topology
     - Url: transports/azure-service-bus/transaction-support
       Title: Transaction support
       Articles:
@@ -665,10 +730,6 @@
           Title: Avoiding Transactions
     - Url: transports/azure-service-bus/operational-scripting
       Title: Operational scripting
-    - Title: Routing
-      Articles:
-      - Url: nservicebus/azure/data-distribution
-        Title: Data distribution      
   - Url: transports/azure-service-bus/legacy
     Title: Azure Service Bus (Legacy)
     Articles:
@@ -699,8 +760,6 @@
         Title: Publishers name configuration
       - Url: transports/azure-service-bus/legacy/multiple-namespaces-support
         Title: Multiple namespaces
-      - Url: nservicebus/azure/data-distribution
-        Title: Data distribution
     - Url: transports/azure-service-bus/legacy/performance-tuning
       Title: Performance Tuning
       Articles:
@@ -742,16 +801,14 @@
       Title: Configuration
     - Url: transports/azure-storage-queues/delayed-delivery
       Title: Delayed Delivery
+    - Url: transports/azure-storage-queues/native-publish-subscribe
+      Title: Native Publish Subscribe
     - Url: transports/azure-storage-queues/sanitization
       Title: Sanitization
     - Url: transports/azure-storage-queues/performance-tuning
       Title: Performance Tuning
     - Url: transports/azure-storage-queues/multi-storageaccount-support
       Title: Multiple storage accounts
-    - Title: Routing
-      Articles:
-      - Url: nservicebus/azure/data-distribution
-        Title: Data distribution
   - Url: transports/sql
     Title: SQL Server
     Articles:
@@ -779,6 +836,8 @@
       Title: Entity Framework caveats
     - Url: transports/sql/callbacks
       Title: Callback support
+    - Url: transports/sql/sql-azure
+      Title: Azure SQL considerations
   - Url: transports/msmq
     Title: MSMQ
     Articles:
@@ -795,6 +854,9 @@
       Title: Viewing content
     - Url: transports/msmq/transportconfig
       Title: Configuration
+      Articles:
+      - Url: transports/msmq/discard-expired-messages
+        Title: Discarding expired messages
     - Url: transports/msmq/troubleshooting
       Title: Troubleshooting
     - Url: transports/msmq/subscription-authorisation
@@ -851,19 +913,19 @@
     - Url: transports/sqs/configuration-options
       Title: Configuration Options
     - Url: transports/sqs/delayed-delivery
-      Title: Delayed Delivery      
+      Title: Delayed Delivery
     - Url: transports/sqs/why-use-sqs
       Title: Why use SQS?
     - Url: transports/sqs/topology
       Title: Topology
     - Url: transports/sqs/transaction-support
       Title: Transaction
+    - Url: transports/sqs/native-integration
+      Title: Native Integration
     - Url: transports/sqs/operations-scripting
       Title: Scripting
     - Url: transports/sqs/troubleshooting
       Title: Troubleshooting
-  - Url: transports/eventstore
-    Title: Event Store
 
 - Name: Persistence
   Url: persistence
@@ -878,22 +940,24 @@
   - Url: persistence/upgrades
     Title: Upgrade Guides
     Articles:
-    - Title: Azure Storage
+    - Title: Azure Table
       Articles:
+      - Url: persistence/upgrades/asp-2to3
+        Title: Version 2 to 3
       - Url: persistence/upgrades/asp-1to2
         Title: Version 1 to 2
       - Url: persistence/upgrades/asp-6to1
-        Title: NServiceBus.Azure Version 6 to Version 1
+        Title: Legacy Version 6 to Version 1
       - Url: persistence/upgrades/asp-saga-pruning
-        Title: Version 6.2.4 to 6.2.5
+        Title: Legacy Version 6.2.4 to 6.2.5
       - Url: persistence/upgrades/asp-saga-deduplication
-        Title: Version 6.2.3 to 6.2.4
+        Title: Legacy Version 6.2.3 to 6.2.4
     - Title: NHibernate
       Articles:
       - Url: persistence/upgrades/nhibernate-8to9
-        Title: Version 8 to 9     
+        Title: Version 8 to 9
       - Url: persistence/upgrades/nhibernate-8to8.1
-        Title: Version 8 to 8.1      
+        Title: Version 8 to 8.1
       - Url: persistence/upgrades/nhibernate-6to7
         Title: Version 6 to 7
       - Url: persistence/upgrades/nhibernate-timeouts-index
@@ -904,6 +968,8 @@
       Articles:
       - Url: persistence/upgrades/ravendb-6to7
         Title: Version 6 to 7
+      - Url: persistence/upgrades/ravendb-6.2to6.3
+        Title: Version 6.2 to 6.3
       - Url: persistence/upgrades/ravendb-5to6
         Title: Version 5 to 6
       - Url: persistence/upgrades/ravendb-4to5
@@ -912,10 +978,16 @@
         Title: Version 3 to 4
     - Title: SQL
       Articles:
+      - Url: persistence/upgrades/sql-6to7
+        Title: Version 6 to 7
+      - Url: persistence/upgrades/sql-5to6
+        Title: Version 5 to 6
       - Url: persistence/upgrades/sql-4to5
-        Title: Version 4 to 5        
+        Title: Version 4 to 5
       - Url: persistence/upgrades/sql-4.2to4.3
         Title: Version 4.2 to 4.3
+      - Url: persistence/upgrades/sql-4.0to4.1.1
+        Title: Version 4.0 to 4.1.1
       - Url: persistence/upgrades/sql-2to3
         Title: Version 2 to 3
       - Url: persistence/upgrades/sql-1to2
@@ -926,10 +998,10 @@
         Title: Support NServiceBus 5 subscribers
   - Url: persistence/learning
     Title: Learning Persistence
-  - Url: persistence/in-memory
-    Title: In-Memory
+  - Url: persistence/non-durable
+    Title: Non-Durable
     Articles:
-    - Url: persistence/in-memory/gateway-deduplication
+    - Url: persistence/non-durable/gateway-deduplication
       Title: Gateway Deduplication
   - Url: persistence/sql
     Title: SQL
@@ -956,6 +1028,9 @@
         Title: Scripts
     - Url: persistence/sql/controlling-script-generation
       Title: Script generation
+      Articles:
+      - Url: persistence/sql/operational-scripting
+        Title: Operational Scripting
     - Url: persistence/sql/accessing-data
       Title: Business data
     - Url: persistence/sql/saga
@@ -980,23 +1055,27 @@
     - Url: persistence/sql/installer-workflow
       Title: Installer Workflow
     - Url: persistence/sql/migrating-from-nhibernate
-      Title: Migrating from NHibernate      
-  - Url: persistence/azure-storage
-    Title: Azure Storage
+      Title: Migrating from NHibernate
+  - Url: persistence/azure-table
+    Title: Azure Table
     Articles:
-    - Url: persistence/azure-storage/configuration
+    - Url: persistence/azure-table/configuration
       Title: Configuration
+    - Url: persistence/azure-table/transactions
+      Title: Transactions
     - Url: nservicebus/azure/understanding-transactionality-in-azure
       Title: Transactions in Azure
-    - Url: persistence/azure-storage/performance-tuning
+    - Url: persistence/azure-table/performance-tuning
       Title: Performance Tuning
-    - Url: persistence/azure-storage/scripting
+    - Url: persistence/azure-table/scripting
       Title: Scripting
+    - Title: Migration from Azure Table Storage to Cosmos DB Table API
+      Url: persistence/azure-table/migration-from-azure-storage-table-to-cosmos-table
   - Url: persistence/ravendb
     Title: RavenDB
     Articles:
     - Url: persistence/ravendb/connection
-      Title: Connection Options
+      Title: Connection options
     - Url: persistence/ravendb/saga-concurrency
       Title: Saga concurrency
     - Url: persistence/ravendb/operations-scripting
@@ -1007,14 +1086,14 @@
       Title: Configure DTC
     - Url: persistence/ravendb/outbox
       Title: Outbox
-    - Url: persistence/ravendb/version-compatibility
-      Title: RavenDB Client Versions
     - Url: persistence/ravendb/reroute-existing-timeouts
-      Title: Reroute Existing Timeouts
+      Title: Reroute existing timeouts
     - Url: persistence/ravendb/subscription-versioning
       Title: Subscription versioning
     - Url: persistence/ravendb/dtc
       Title: DTC not supported
+    - Url: persistence/ravendb/cluster-configuration
+      Title: Cluster configuration with multiple nodes not supported
   - Url: persistence/service-fabric
     Title: Service Fabric
     Articles:
@@ -1037,7 +1116,7 @@
       Title: SQL Azure
     - Url: persistence/nhibernate/scripting
       Title: Scripting
-  - Url: persistence/msmq/subscription
+  - Url: persistence/msmq
     Title: MSMQ Subscription
   - Url: persistence/mongodb
     Title: MongoDB
@@ -1064,10 +1143,12 @@
       Title: Managing Errors and Retries
     - Url: serviceinsight/sequence-diagram
       Title: Sequence Diagram
-    - Url: serviceinsight/logging
-      Title: Logging
+    - Url: serviceinsight/custom-message-viewers
+      Title: Custom Message Viewers
     - Url: serviceinsight/no-data-available
       Title: Data not available
+    - Url: serviceinsight/logging
+      Title: Logging
 
 - Name: ServicePulse
   Topics:
@@ -1082,13 +1163,15 @@
     - Url: servicepulse/intro-editing-messages
       Title: Fixing malformed messages
     - Url: servicepulse/intro-archived-messages
-      Title: Archived Messages
+      Title: Deleted Messages
     - Url: servicepulse/intro-pending-retries
       Title: Pending Retries
     - Url: servicepulse/redirect
       Title: Redirects
     - Url: servicepulse/event-types
       Title: Events
+    - Url: servicepulse/health-check-notifications
+      Title: Health check notifications
   - Title: Configuration
     Articles:
     - Url: servicepulse/host-config
@@ -1104,11 +1187,11 @@
   Topics:
   - Title: Upgrade Guides
     Url: servicecontrol/upgrades
-    Articles:  
+    Articles:
     - Title: Support policy
-      Url: servicecontrol/upgrades/support-policy    
+      Url: servicecontrol/upgrades/support-policy
     - Title: Version 3 to 4
-      Url: servicecontrol/upgrades/3to4    
+      Url: servicecontrol/upgrades/3to4
     - Title: Version 2 to 3
       Url: servicecontrol/upgrades/2to3
     - Title: Version 1 to 2
@@ -1141,9 +1224,9 @@
       - Title: Cluster Deployment
         Url: servicecontrol/deploying-servicecontrol-in-a-cluster
       - Title: Remote Instances
-        Url: servicecontrol/servicecontrol-instances/remotes          
+        Url: servicecontrol/servicecontrol-instances/remotes
       - Title: Multiple Instances
-        Url: servicecontrol/servicecontrol-instances/distributed-instances  
+        Url: servicecontrol/servicecontrol-instances/distributed-instances
       - Title: Settings
         Url: servicecontrol/creating-config-file
       - Title: Overriding the host identifier
@@ -1181,7 +1264,7 @@
       - Title: Settings
         Url: servicecontrol/audit-instances/creating-config-file
       - Title: Maintenance Mode
-        Url: servicecontrol/audit-instances/maintenance-mode            
+        Url: servicecontrol/audit-instances/maintenance-mode
   - Title: Monitoring instances
     Url: servicecontrol/monitoring-instances
     Articles:
@@ -1197,6 +1280,8 @@
   - Title: Integration
     Url: servicecontrol/integration
     Articles:
+    - Title: Azure Application Insights
+      Url: servicecontrol/app-insights-integration
     - Title: Plugins
       Url: servicecontrol/plugins
       Articles:
@@ -1216,7 +1301,7 @@
     Url: monitoring
   - Title: Heartbeats
     Url: monitoring/heartbeats
-    Articles: 
+    Articles:
     - Title: Install plugin
       Url: monitoring/heartbeats/install-plugin
     - Title: Managing in ServicePulse
@@ -1252,13 +1337,26 @@
     Articles:
     - Title: Upgrading to native queue length metric
       Url: monitoring/upgrade-guides/native-queue-length
-
-## This section has been staged for Preview launch. Contact Exploration for questions
-#- Name: Previews
-#  Url: previews
-#  Topics:
-#  - Title: General
-#    Url: previews
-#    Articles:
-#    - Title: Support Policy
-#      Url: previews/support-policy
+- Name: Previews
+  Url: previews
+  Topics:
+  - Title: General
+    Url: previews
+    Articles:
+    - Title: Support Policy
+      Url: previews/support-policy
+  - Title: Azure Functions
+    Articles:   
+    - Title: NServiceBus.AzureFunctions.StorageQueues
+      Url: previews/azure-functions-storage-queues
+  - Title: AWS Lambda
+    Articles:
+    - Title: NServiceBus.AwsLambda.Sqs
+      Url: previews/aws-lambda-simple-queue-service
+  - Title: Cosmos DB
+    Url: previews/cosmosdb
+    Articles:
+    - Title: Transactions
+      Url: previews/cosmosdb/transactions
+    - Title: Migration from Azure Table Persistence
+      Url: previews/cosmosdb/migration-from-azure-table

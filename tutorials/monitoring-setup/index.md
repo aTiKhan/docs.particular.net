@@ -1,5 +1,5 @@
 ---
-title: "Monitoring NServiceBus solutions: Getting started"
+title: "NServiceBus monitoring setup"
 reviewed: 2019-10-24
 summary: Setting up the Particular Service Platform to monitor an NServiceBus system.
 component: Core
@@ -11,7 +11,7 @@ redirects:
 
 This tutorial will guide you through the steps required to set up your NServiceBus solution for monitoring with the Particular Service Platform. The tutorial assumes that you're configuring monitoring for an existing solution and doesn't explain how to create a new application. See the [quick start tutorial](/tutorials/quickstart/) for details on how to do that.
 
-Note: If you are not yet sure which transport to choose and are looking to see the monitoring capabilities of the Particular platform, try the [monitoring demo](/tutorials/monitoring-demo/)
+Note: If you are not yet sure which transport to choose and are looking to see the monitoring capabilities of the Particular platform, try the [monitoring demo](/tutorials/monitoring-demo/).
 
 - [Component overview](/tutorials/monitoring-setup/#component-overview)
 - [Setting up Particular Service Platform](/tutorials/monitoring-setup/#setting-up-the-particular-service-platform)
@@ -78,9 +78,6 @@ Both of these instance types can be set-up and managed with the `ServiceControl 
 ## Setting up the Particular Service Platform
 
 In order to configure an environment for monitoring with the Particular Service Platform you will need to install and configure the components in the order listed.
-
-NOTE: The easiest way to install the Platform tools is by running the [Particular Platform Installer](https://particular.net/downloads) which automates downloading and installing all tools. Individual installers can still be downloaded for environments that are not directly connected to the internet.
-
 
 ### Install ServiceControl
 
@@ -197,7 +194,7 @@ An NServiceBus endpoint can be configured to send data about its health and perf
 
 The monitoring queue is created with a new monitoring instance. By default, it is named `Particular.Monitoring`.
 
-To get an NServiceBus endpoint to send metric data to the monitoring queue, install the `NServiceBus.Metrics.ServiceControl` Nuget package. From the Visual Studio **Package Manager Console** window, execute the following:
+To get an NServiceBus endpoint to send metric data to the monitoring queue, install the `NServiceBus.Metrics.ServiceControl` NuGet package. From the Visual Studio **Package Manager Console** window, execute the following:
 
 snippet: SetupMonitoring-InstallPackage
 

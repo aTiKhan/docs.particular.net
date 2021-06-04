@@ -3,8 +3,6 @@ title: Configuration Options
 summary: Configuration options for the SQS transport.
 component: SQS
 reviewed: 2019-10-17
-tags:
-- AWS
 redirects:
 - nservicebus/sqs/configuration-options
 ---
@@ -82,3 +80,9 @@ partial: s3clientfactory
 partial: v1compatibilitymode
 
 partial: delayeddelivery
+
+partial: topics
+
+partial: policy
+
+partial: message-driven-pubsub-compatibility-mode

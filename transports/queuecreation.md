@@ -2,7 +2,7 @@
 title: Creating queues
 summary: Explains how queues are created
 component: Core
-reviewed: 2019-02-27
+reviewed: 2021-01-04
 versions: '[4,]'
 redirects:
 - nservicebus/queuecreation
@@ -14,7 +14,7 @@ WARNING: NServiceBus will automatically request the transport to create queues n
 
 The scripting guidelines shows how to take full control over queue creation:
 
- * [SqlServer](/transports/sql/operations-scripting.md#create-queues)
+ * [SQLServer](/transports/sql/operations-scripting.md#create-queues)
  * [MSMQ](/transports/msmq/operations-scripting.md#create-queues)
  * [RabbitMQ](/transports/rabbitmq/operations-scripting.md#create-queues)
  * [Azure ServiceBus](/transports/azure-service-bus/operational-scripting.md)
@@ -28,5 +28,6 @@ A built-in example is the audit feature which needs the audit queue. During star
 
 snippet: queuebindings
 
+## Creation
 
-partial: creation
+Queues are created only during [installation](/nservicebus/operations/installers.md).

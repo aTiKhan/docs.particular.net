@@ -1,32 +1,21 @@
 ---
-title: Supported platforms
-summary: Platforms that are supported by NServiceBus
-reviewed: 2019-07-19
+title: Supported frameworks and platforms
+summary: Frameworks and platforms supported by NServiceBus
+reviewed: 2021-02-04
 related:
  - nservicebus/licensing
  - nservicebus/upgrades/release-policy
  - nservicebus/upgrades/supported-versions
 ---
 
-NServiceBus is supported on the .NET Framework and .NET Core.
+| Framework | Version | Platform | Support | Notes |
+|------------------|:-------:|:--------:|:-------:|:------|
+| .NET Framework | 4.5.2 or later | [Windows](https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/versions-and-dependencies) | Supported | Some packages may require a later version. |
+| .NET Core | 2.1 (LTS) | [Windows / Linux](https://github.com/dotnet/core/blob/master/release-notes/2.1/2.1-supported-os.md) | Supported | macOS is supported only for development purposes. |
+| .NET Core | 3.1 (LTS) | [Windows / Linux](https://github.com/dotnet/core/blob/master/release-notes/3.1/3.1-supported-os.md) | Supported | macOS is supported only for development purposes. |
+| .NET | 5.0 | [Windows / Linux](https://github.com/dotnet/core/blob/main/release-notes/5.0/5.0-supported-os.md) | Supported | macOS is supported only for development purposes. |
 
-Note: If possible, packages will target [.NET Standard](https://docs.microsoft.com/en-us/dotnet/standard/net-standard) instead of individual platforms. While this means that packages might work with additional platforms, only the .NET Framework and .NET Core are officially supported by Particular Software.
-
-
-## .NET Framework
-
-NServiceBus is supported for applications targeting the .NET Framework 4.5.2 or later on Windows (note that some packages may require a later version). For the list of supported Windows versions, refer to [.NET Framework Versions and Dependencies](https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/versions-and-dependencies).
-
-
-## .NET Core
-
-NServiceBus is supported for applications targeting .NET Core on a variety of operating systems:
-
-* **Windows**: All Windows versions according to [.NET Core 2.1 - Supported OS versions](https://github.com/dotnet/core/blob/master/release-notes/2.1/2.1-supported-os.md) are fully supported.
-* **Linux**: All Linux versions according to [.NET Core 2.1 - Supported OS versions](https://github.com/dotnet/core/blob/master/release-notes/2.1/2.1-supported-os.md) are fully supported.
-* **macOS**: macOS is supported only for development purposes.
-
-### Packages not supporting .NET Core
+### Packages not supporting .NET Core/ .NET 5
 
 Some packages do not currently support .NET Core or running on non-Windows platforms:
 

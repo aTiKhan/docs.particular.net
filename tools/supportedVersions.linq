@@ -16,9 +16,8 @@ async Task Main()
 {
 	var endOfLifePackages = new Dictionary<string, string>
 	{
-		{ "NServiceBus.Azure", "This package has been split into NServiceBus.DataBus.AzureBlobStorage and NServiceBus.Persistence.AzureStorage." }
 	};
-	
+
 	var source = "https://api.nuget.org/v3/index.json";
 	var mygetSource = "https://www.myget.org/F/particular/api/v3/index.json";
 	var componentsPath = Path.Combine(Util.CurrentQuery.Location, @"..\components\components.yaml");
@@ -26,7 +25,7 @@ async Task Main()
 	var corePackageId = "NServiceBus";
 	var serviceControlPackageId = "Particular.PlatformSample.ServiceControl";
 
-	var extendedSupportVersions = new[] { 5 };
+	var extendedSupportVersions = new[] { 6 };
 	var servicControlExtendedSupportVersions = new int[0];
 
 	var coreMajorOverlapYears = 2;
@@ -36,7 +35,7 @@ async Task Main()
 	var downstreamMajorOverlapYears = 1;
 	var downstreamMinorOverlapMonths = 3;
 	var downstreamMonthsToShowUnsupportedVersions = 6;
-	
+
 	var serviceControlMajorOverlapYears = 1;
 	var serviceControlMinorOverlapMonths = 0;
 	var serviceControlMonthsToShowUnsupportedVersions = 12;
@@ -58,10 +57,10 @@ async Task Main()
 		Category = ComponentCategory.Core,
 		Versions = await searcher.GetVersions(corePackageId, logger, coreMajorOverlapYears, coreMinorOverlapMonths, new List<Version>(), endOfLifePackages, extendedSupportVersions)
 	};
-	
+
 	var mygetPackageMetadata = await new SourceRepository(new PackageSource(mygetSource), Repository.Provider.GetCoreV3()).GetResourceAsync<PackageMetadataResource>();
 	var mygetSearcher = new NuGetSearcher(mygetPackageMetadata, logger);
-	
+
 	var serviceControlPackage = new Package
 	{
 		Id = serviceControlPackageId,
@@ -89,9 +88,10 @@ async Task Main()
 				})))
 		.OrderBy(package => package.Id)
 		.ToList();
-	
+
 	AssignExtendedSupport(corePackage, extendedSupportVersions, version => version.First.Identity.Version.Major);
-	foreach(var pkg in downstreamPackages)
+
+	foreach (var pkg in downstreamPackages)
 	{
 		AssignExtendedSupport(pkg, extendedSupportVersions, version =>
 		{
@@ -103,10 +103,12 @@ async Task Main()
 	}
 
 	corePackage.Dump(utcTomorrow);
+
 	foreach (var package in downstreamPackages)
 	{
 		package.Dump(utcTomorrow);
 	}
+
 	serviceControlPackage.Dump(utcTomorrow);
 
 	using (var output = new StreamWriter(corePath, append: false))
@@ -124,7 +126,7 @@ async Task Main()
 		output.Write(corePackage, utcTomorrow, null, true);
 		output.Write(downstreamPackages, utcTomorrow, null, true, endOfLifePackages);
 	}
-	
+
 	using (var output = new StreamWriter(serviceControlVersionsPath, append: false))
 	{
 		output.WriteServiceControl(serviceControlPackage, utcTomorrow, utcTomorrow.AddMonths(-serviceControlMonthsToShowUnsupportedVersions), true);
@@ -133,18 +135,19 @@ async Task Main()
 
 private static void AssignExtendedSupport(Package package, int[] extendedSupportVersions, Func<Version, int?> getCoreVersion)
 {
-	foreach(var version in package.Versions)
+	foreach (var version in package.Versions)
 	{
 		version.CoreMajorVersion = getCoreVersion(version);
 	}
-	foreach(var extSupportVersion in extendedSupportVersions)
+
+	foreach (var extSupportVersion in extendedSupportVersions)
 	{
 		var extSupportPackageVersion = package.Versions
 			.Where(v => v.CoreMajorVersion == extSupportVersion)
 			.OrderByDescending(v => v.First.Identity.Version)
 			.FirstOrDefault();
-		
-		if(extSupportPackageVersion != null)
+
+		if (extSupportPackageVersion != null)
 		{
 			extSupportPackageVersion.ExtendedSupport = true;
 		}
@@ -164,7 +167,7 @@ public static class TextWriterExtensions
 				output.WriteLine($"### [{package.Id}](/nuget/{package.Id})");
 				output.WriteLine();
 			});
-			
+
 	public static void WriteServiceControl(this TextWriter output, Package package, DateTimeOffset utcTomorrow, DateTimeOffset? earliest, bool force) =>
 		output.Write(
 			package,
@@ -175,7 +178,7 @@ public static class TextWriterExtensions
 			{
 				output.WriteLine($"### ServiceControl");
 				output.WriteLine();
-			});			
+			});
 
 	public static void Write(this TextWriter output, IEnumerable<Package> packages, DateTimeOffset utcTomorrow, DateTimeOffset? earliest, bool force, Dictionary<string, string> endOfLifePackages)
 	{
@@ -260,15 +263,25 @@ public static class TextWriterExtensions
 			output.Write($" | ");
 			output.Write($"{open}{version.PatchingEnd?.ToString("yyyy-MM-dd") ?? "-"}{close}".PadRight(17));
 			output.Write($" | ");
-			if(version.ExtendedSupport)
+
+			if (version.ExtendedSupport)
 			{
 				var end = version.PatchingEnd.Value.AddYears(2);
 				output.Write($"[Extended support](/nservicebus/upgrades/support-policy.md#extended-support) until {end:yyyy-MM-dd}");
 			}
 			else
 			{
-				output.Write($"{open}{(version.PatchingEnd.HasValue ? version.PatchingEndReason : "-")}{close}".PadRight(33));
+				// Indicate deprecated package which is a bit of an odditiy that we haven't had before, in case we have more cases like this it might make sense to generalize it
+				if (package.Id == "NServiceBus.Azure.Transports.WindowsAzureServiceBus" && version.Last.Identity.Version.Major >= 10 && version.Last.Identity.Version.Minor >= 1)
+				{
+					output.Write($"Deprecated as of 2021-05-01. ".PadRight(33));
+				}
+				else
+				{
+					output.Write($"{open}{(version.PatchingEnd.HasValue ? version.PatchingEndReason : "-")}{close}".PadRight(33));
+				}
 			}
+
 			output.WriteLine(" |");
 		}
 
@@ -278,12 +291,6 @@ public static class TextWriterExtensions
 
 public static class PackageMetadataResourceExtensions
 {
-	private static SourceCacheContext sourceCacheContext = new SourceCacheContext
-	{
-		MaxAge = DateTimeOffset.UtcNow,
-		NoCache = true,
-	};
-
 	public static async Task<List<Version>> GetVersions(
 		this NuGetSearcher searcher, string packageId, ILogger logger, int majorOverlapYears, int minorOverlapMonths, List<Version> upstreamVersions, Dictionary<string, string> endOfLifePackages, int[] extendedSupportVersions)
 	{
@@ -309,7 +316,7 @@ public static class PackageMetadataResourceExtensions
 						version.Last.Identity.Id == dep.Id && dep.VersionRange.Satisfies(version.Last.Identity.Version)))
 					.Where(version => version != null && version.PatchingEnd.HasValue)
 					.OrderBy(version => version.PatchingEnd)
-					.ToList();				
+					.ToList();
 
 				var lastUpstreamToEndPatching = latestUpstreamsWithPatchingEnd.LastOrDefault();
 
@@ -334,7 +341,6 @@ public static class PackageMetadataResourceExtensions
 
 				DateTime? patchingEnd = null;
 				string patchingEndReason = null;
-				var extendedSupport = false;
 
 				var boundedBy = latestUpstreamsWithPatchingEnd.FirstOrDefault();
 				var extendedBy = lastMinorToSupportLastUpstreamToEndPatching?.Last.Identity.Version == minor.Last.Identity.Version
@@ -370,8 +376,6 @@ public static class PackageMetadataResourceExtensions
 					patchingEnd = minor.Last.Published.Value.UtcDateTime.Date;
 					patchingEndReason = $"End of life";
 				}
-
-				
 
 				return new Version
 				{
@@ -442,39 +446,37 @@ public class NuGetSearcher
 	SourceCacheContext cacheContext;
 	ILogger logger;
 	ConcurrentDictionary<string, IEnumerable<IPackageSearchMetadata>> dictionary;
-	
+
 	public NuGetSearcher(PackageMetadataResource resource, ILogger logger)
 	{
 		this.resource = resource;
 		this.logger = logger;
-		cacheContext = new SourceCacheContext
-		{
-			MaxAge = DateTime.UtcNow,
-			NoCache = true
-		};
+		cacheContext = new SourceCacheContext { MaxAge = DateTime.UtcNow, NoCache = true };
 		dictionary = new ConcurrentDictionary<string, IEnumerable<IPackageSearchMetadata>>();
 	}
-	
+
 	public async Task<IEnumerable<IPackageSearchMetadata>> GetPackageAsync(string packageId)
 	{
-		if(!dictionary.TryGetValue(packageId, out var metadata))
+		if (!dictionary.TryGetValue(packageId, out var metadata))
 		{
 			metadata = await resource.GetMetadataAsync(packageId, false, false, cacheContext, logger, CancellationToken.None);
 			dictionary.TryAdd(packageId, metadata);
 		}
+
 		return metadata;
 	}
 
 	public IEnumerable<PackageDependency> GetDependencies(IPackageSearchMetadata package)
 	{
-		foreach(var dependency in package.DependencySets.SelectMany(x => x.Packages))
+		foreach (var dependency in package.DependencySets.SelectMany(x => x.Packages))
 		{
 			yield return dependency;
-			if(dictionary.TryGetValue(dependency.Id, out var dependencyPackageList))
+
+			if (dictionary.TryGetValue(dependency.Id, out var dependencyPackageList))
 			{
-				foreach(var subPackage in dependencyPackageList.OrderBy(x => x.Identity.Version))
+				foreach (var subPackage in dependencyPackageList.OrderBy(x => x.Identity.Version))
 				{
-					if(dependency.VersionRange.Satisfies(subPackage.Identity.Version))
+					if (dependency.VersionRange.Satisfies(subPackage.Identity.Version))
 					{
 						foreach (var subDependency in GetDependencies(subPackage))
 						{
@@ -510,7 +512,7 @@ public class Version
 public class ExtendedSupportVersion
 {
 	public string PackageId { get; set; }
-	public int Major { get; set;}
+	public int Major { get; set; }
 }
 
 public class SerializationComponent
@@ -526,7 +528,7 @@ public class SerializationComponent
 	public string Name { get; set; }
 	public string Description { get; set; }
 	public string Key { get; set; }
-	public string DocoUrl { get; set; }
+	public string DocsUrl { get; set; }
 	public string ProjectUrl { get; set; }
 	public string LicenseUrl { get; set; }
 	public string GitHubOwner { get; set; }
@@ -541,6 +543,7 @@ public enum SupportLevel
 	Regular,
 	Labs,
 	Community,
+	Preview
 }
 
 public enum ComponentCategory

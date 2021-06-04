@@ -1,11 +1,8 @@
 ---
 title: Security
 summary: Security features for messages, transports, and persisters
-reviewed: 2018-10-11
+reviewed: 2020-06-26
 isLearningPath: true
-tags:
- - Encryption
- - Security
 redirects:
  - nservicebus/security/encryption
 ---
@@ -68,7 +65,7 @@ As NServiceBus is layered over the top of existing data stores and queuing techn
  * [SQL Server Encryption](https://docs.microsoft.com/en-us/sql/relational-databases/security/encryption/sql-server-encryption)
 
 
-### [Azure Storage Persistence](/persistence/azure-storage/)
+### [Azure Table Persistence](/persistence/azure-table/)
 
  * [Security Guide](https://docs.microsoft.com/en-us/azure/storage/storage-security-guide)
  * [Azure Storage Service Encryption for Data at Rest](https://docs.microsoft.com/en-us/azure/storage/storage-service-encryption)

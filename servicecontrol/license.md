@@ -1,8 +1,6 @@
 ---
 title: Licensing ServiceControl
-reviewed: 2018-10-10
-tags:
- - license
+reviewed: 2020-06-23
 ---
 
 There are a few options to add a license to ServiceControl.
@@ -13,7 +11,9 @@ include: registry-licensing
 
 ServiceControl has a license user interface which can be accessed in ServiceControl Management. ServiceControl Management is installed together with ServiceControl and can be found in the Windows Start Menu.
 
-The designated license file will be imported into the registry. The license file is added to the `HKEY_LOCAL_MACHINE` registry hive so it is available to all instances of ServiceControl regardless of the service account used.
+The designated license file will be imported into the file system at `%ProgramData%\ParticularSoftware\license.xml` so it is available to all instances of ServiceControl regardless of the service account used.
+
+A copy of the imported license will be added to the `HKEY_LOCAL_MACHINE` registry hive for backward compatibility with older instances of ServiceControl.
 
 ![](managementutil-addlicense.png 'width=500')
 
@@ -58,4 +58,4 @@ NOTE: Instance Licensing is deprecated in Version 1.18 and above. Use ServiceCon
 
 ### ServiceControl license was updated, but ServicePulse reports the license has expired
 
-License information is read at service startup and cached. Once a new license is applied the ServiceControl instance must be restarted to detect the license change, until then the license status shown in ServicePulse is based on the cached state.
+License information is read at service startup and cached for 8 hours. Therefore, either wait for the cache to expire or restart the ServiceControl instance manually to have ServicePulse reflect the new license.

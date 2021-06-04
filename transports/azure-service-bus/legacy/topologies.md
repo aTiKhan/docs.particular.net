@@ -1,13 +1,10 @@
 ---
 title: Topologies
-reviewed: 2018-12-11
+reviewed: 2021-05-12
 component: ASB
 versions: '[7,)'
-tags:
- - Azure
 related:
  - nservicebus/operations
- - samples/azure/azure-service-bus
 redirects:
  - nservicebus/azure-service-bus/topologies
  - transports/azure-service-bus/topologies
@@ -47,7 +44,7 @@ The example below demonstrates a publisher called `Publisher` and a subscriber c
 The `EndpointOrientedTopology` topology has several drawbacks:
 
  1. In order to subscribe to an event, the subscriber must know the publishing endpoint's name, causing coupling between publisher and subscriber. Refer to the [Publisher names configuration](/transports/azure-service-bus/legacy/publisher-names-configuration.md) article for more details.
- 1. Multiple subscription entities per subscriber cause polymorphic events to be delivered multiple times to the subscribing endpoint. A [workaround](/samples/azure/polymorphic-events-asb/) has to be implemented in order to handle polymorphic events correctly.
+ 1. Multiple subscription entities per subscriber cause polymorphic events to be delivered multiple times to the subscribing endpoint. A workaround has to be implemented in order to handle polymorphic events correctly.
  1. When a single subscriber is offline for an extended period of time and events are not consumed, it can cause event overflow. Since a single topic per publisher is used for all the subscribers, when event overflow is happening it will affect all subscribers and not just the one that is offline.
 
 ![EndpointOrientedTopology](endpoint-oriented-topology.png "width=500")

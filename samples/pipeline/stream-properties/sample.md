@@ -3,8 +3,6 @@ title: Handling Stream Properties Via the Pipeline
 summary: Add support for writing streams to a file share that can be accessed by multiple endpoints.
 reviewed: 2019-12-11
 component: Core
-tags:
-- Pipeline
 related:
 - nservicebus/pipeline
 ---
@@ -97,4 +95,4 @@ snippet: message-with-stream-handler
 
 ## Difference to the databus
 
-The [built-in database](/nservicebus/messaging/databus/) relies on byte arrays and memory streams to operate. As such, there are limits to the amount of data that it can send.
+The [built-in databus](/nservicebus/messaging/databus/) relies on byte arrays and memory streams to operate. As such, there are limits to the amount of data that it can send.

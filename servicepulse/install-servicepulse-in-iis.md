@@ -3,8 +3,6 @@ title: Install ServicePulse in IIS
 summary: Describes how to manually install ServicePulse in IIS
 reviewed: 2019-12-25
 component: ServicePulse
-tags:
-- Security
 ---
 
 
@@ -112,7 +110,7 @@ snippet: RoleBasedSecurity
 
 There are three roles defined:
  * `SPReaders` members can read all the content but cannot trigger any actions
- * `SPFailedMessages` members can manage the failed messages (retry, archive, groups etc.)
+ * `SPFailedMessages` members can manage the failed messages (retry, delete, groups etc.)
  * `SPMonitoring` members can manage monitoring (e.g. enabling/disabling heartbeat monitoring for a particular endpoint)
 
 ### ServiceControl monitoring

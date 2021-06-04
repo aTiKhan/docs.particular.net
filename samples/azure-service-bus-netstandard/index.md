@@ -1,5 +1,5 @@
 ---
-title: Azure Service Bus transport samples
-reviewed: 2018-08-21
+title: Azure Service Bus transport
+reviewed: 2021-02-04
 component: ASBS
 ---

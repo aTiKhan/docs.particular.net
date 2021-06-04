@@ -4,8 +4,6 @@ summary: How NServiceBus routes messages between endpoints.
 reviewed: 2019-12-23
 component: Core
 isLearningPath: true
-tags:
-- routing
 redirects:
 - nservicebus/how-do-i-specify-to-which-destination-a-message-will-be-sent
 - nservicebus/messaging/specify-message-destination
@@ -50,7 +48,7 @@ When events are published, they can be received by multiple logical endpoints. H
 
 [Multicast transports](/transports/types.md#multicast-enabled-transports) support the Publish-Subscribe pattern natively. In this case the subscriber uses the APIs of the transport to create a route for a given subscribed message type.
 
-Note: The Azure Service Bus `EndpointOrientedTopology` requires [publisher names](/transports/azure-service-bus/legacy/publisher-names-configuration.md) to be configured.
+Note: The Azure Service Bus (Legacy) `EndpointOrientedTopology` requires [publisher names](/transports/azure-service-bus/legacy/publisher-names-configuration.md) to be configured.
 
 
 ### Message-driven
@@ -59,11 +57,38 @@ Note: The Azure Service Bus `EndpointOrientedTopology` requires [publisher names
 
 partial: events
 
-In the `UnicastBusConfig/MessageEndpointMappings` configuration section, publishers are registered in the same way as the command destinations are defined. If a given assembly or namespace contains both events and commands, the mapping will recognize that fact and configure the routing correctly (both commands and subscribe messages will be routed to the destination specified in the `Endpoint` attribute).
-
-`MessageEndpointMappings` routing configuration can also take advantage of message inheritance: base types "inherit" routes from the derived types (opposite to member inheritance in .NET). If both `EventOne` and `EventTwo` inherit from `BaseEvent`, when subscribing to `BaseEvent` the subscription messages are sent to publishers of both `EventOne` and `EventTwo`.
-
 
 ## Reply routing
 
 Reply message are always routed based on the `ReplyTo` header of the initial message regardless of the endpoint's routing configuration. Only the sender of the initial message can influence the routing of a reply. Refer to documentation on [sending messages](/nservicebus/messaging/send-a-message.md) for further details.
+
+
+## Make instance uniquely addressable
+
+When using a message broker, multiple instances of a scaled-out endpoint are consuming from the same address via the [competing consumer](/nservicebus/architecture/scaling.md#scaling-out-to-multiple-nodes-competing-consumers) model.
+
+To address specific instances of a scaled-out endpoint, instances can be configured to be individually addressable by providing a unique discriminator to each instance:
+
+The following queues will be created for endpoint `Sales` configured with discriminator `B`:
+
+- `Sales`
+- `Sales-B`
+
+```c#
+var endpointConfiguration = new EndpointConfiguration("Sales");
+endpointConfiguration.MakeInstanceUniquelyAddressable("B");
+```
+
+Uniquely addressable instances are used for [callbacks](/nservicebus/messaging/callbacks.md) but can be used for other purposes like data partitioning with processing affinity or a form or processing prioritization.
+
+```c#
+var options = new SendOptions();
+options.RouteToSpecificInstance("B");
+endpointInstance.Send(new MyMessage(), options);
+```
+
+Recommendations:
+
+- Avoid hard-coding the discriminator when sending messages.
+- Avoid using `MakeInstanceUniquelyAddressable` for priority queues.
+- Consider using [routing extensibility](/nservicebus/messaging/routing-extensibility.md) for routing to specific instances.

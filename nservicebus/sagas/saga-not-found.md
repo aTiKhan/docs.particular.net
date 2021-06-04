@@ -3,8 +3,6 @@ title: Sagas Not Found
 summary: How a message is handled when it could be executed by a saga but no saga could be found.
 component: Core
 reviewed: 2019-07-17
-tags:
-- Saga
 related:
 - samples/saga
 ---
@@ -14,6 +12,15 @@ The messages which are handled by sagas can either start a new saga (if handled 
 snippet: saga-not-found
 
 Note that in the example above the message will be considered successfully processed and sent to the audit queue even if no saga was found. Throw an exception from the `IHandleSagaNotFound` implementation to cause the message to end up in the error queue.
+
+Note: If there are multiple saga types that handle a given message type and one of them is found while others are not, the `IHandleSagaNotFound` handlers **will not be executed**. The `IHandleSagaNotFound` handlers are only executed if no saga instances are invoked. The following table illustrates when the `IHandleSagaNotFound` handlers are invoked in cases when a message is mapped to two different saga types, A and B.
+
+| Saga A found | Saga B found | Not found handler invoked |
+|--------|--------|---------|
+| ✔️    | ✔️     | ❌     |
+| ✔️    | ❌     | ❌     |
+| ❌    | ✔️     | ❌     |
+| ❌    | ❌     | ✔️     |
 
 include: non-null-task
 

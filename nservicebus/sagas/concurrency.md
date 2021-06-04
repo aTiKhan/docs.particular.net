@@ -2,8 +2,6 @@
 title: Saga concurrency
 summary: NServiceBus ensures consistency between saga state and messaging.
 component: Core
-tags:
-- Saga
 redirects:
 - nservicebus/nservicebus-sagas-and-concurrency
 reviewed: 2019-09-24
@@ -13,7 +11,7 @@ related:
 - persistence/sql/saga-concurrency
 ---
 
-An [endpoint](/nservicebus/concept-overview.md#endpoint) may be configured to allow [concurrent handling of messages](/nservicebus/operations/tuning.md#tuning-concurrency). An endpoint may also be [scaled out](/nservicebus/architecture/scaling.md#scaling-out-to-multiple-nodes) to multiple nodes. In these scenarios, multiple messages may be received simultaneously which correlate to a single saga instance. Handling those messages may cause saga state to be created, updated, or deleted, and may cause new messages to be sent.
+An [endpoint](/nservicebus/concepts/glossary.md#endpoint) may be configured to allow [concurrent handling of messages](/nservicebus/operations/tuning.md#tuning-concurrency). An endpoint may also be [scaled out](/nservicebus/architecture/scaling.md#scaling-out-to-multiple-nodes) to multiple nodes. In these scenarios, multiple messages may be received simultaneously which correlate to a single saga instance. Handling those messages may cause saga state to be created, updated, or deleted, and may cause new messages to be sent.
 
 NOTE: With respect to sagas, "handling" a message refers to the invocation of any saga method that processes a message, such as `IAmStartedByMessages<T>.Handle()`, `IHandleTimeouts<T>.Timeout()`, etc.
 
@@ -88,8 +86,8 @@ Due to recoverability, OCC conflicts in high data contention scenarios may resul
 
 The following saga persisters use OCC:
 
-- [Azure Storage](/persistence/azure-storage/)
-- [In-Memory](/persistence/in-memory/)
+- [Azure Storage](/persistence/azure-table/)
+- [Non-Durable](/persistence/non-durable/)
 - [MongoDB](/persistence/mongodb/) (prior to 2.2.0)
 - [RavenDB](/persistence/ravendb/)
 - [Service Fabric](/persistence/service-fabric/) (prior to 2.2.0)
@@ -152,6 +150,10 @@ For example, instead of a saga creating 1,000 requests, it could split the reque
 In the above example, the requests are split into two groups each time. Depending on the dynamics of the system, splitting them into more groups is also an option.
 
 A simpler approach is to split the request just once and have a single level of sub-sagas sending the requests and aggregating the responses. This will not reduce data contention to the same degree, since the originating saga will be aggregating more multiple responses.
+
+#### Sequential scatter/gather
+
+When using a [scatter-gather](https://www.enterpriseintegrationpatterns.com/patterns/messaging/BroadcastAggregate.html) pattern or similar, simultaneously sending a large number of requests may result in simultaneous processing of a large number of responses, which may lead to data contention. Instead, consider sending requests sequentially. In each iteration, send the next request only after the response from the previous request was processed. This approach removes data contention when processing responses but may increase the overall duration. Also, the size of the saga state may increase, because it may need to contain some of the data from the message which initiated the scatter-gather so that that data can be included in each request.
 
 #### Create an append-only saga data model
 

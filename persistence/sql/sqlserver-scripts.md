@@ -1,9 +1,10 @@
 ---
 title: MS SQL Server Scripts
 component: SqlPersistence
-reviewed: 2018-10-26
+reviewed: 2020-07-16
 related:
  - nservicebus/operations
+ - persistence/sql/operational-scripting
 redirects:
  - nservicebus/sql-persistence/sqlserver-scripts
 ---
@@ -103,7 +104,7 @@ snippet: MsSqlServer_OutboxSetAsDispatchedSql
 
 Used by `IOutboxStorage.Store`.
 
-snippet: MsSqlServer_OutboxStoreSql
+partial: outbox
 
 
 ### Saga
